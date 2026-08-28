@@ -163,19 +163,41 @@
         .locked-title { font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; color: #64748b; font-size: 0.95rem; }
         .locked-desc { color: #46536a; font-size: 0.72rem; line-height: 1.6; max-width: 200px; }
 
-        #species-toast-root { position: fixed; top: 18px; right: 18px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
-        .species-toast {
-            pointer-events: auto; min-width: 260px; max-width: 320px; background: rgba(10,14,20,0.95);
-            border: 1px solid var(--accent-default); border-left: 4px solid var(--accent-default); border-radius: 6px;
-            padding: 12px 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15);
-            backdrop-filter: blur(6px); animation: toast-in 0.35s ease forwards;
+        /* Log panel (Journey เท่านั้น) — แทนที่ toast popup เดิม บันทึกทุกอย่างที่
+           เกิดขึ้น (พบ species ใหม่/tier ขยับ, ทักษะเรียนครบ, AP ฟื้นฟู) ไว้ถาวร
+           ให้อ่านย้อนได้แทนโผล่มาแล้วหายไป — จัดเป็นคอลัมน์ข้าง .journey-main
+           ผ่าน .journey-layout (flex row) ไม่ใช่ fixed overlay ลอยทับเนื้อหา
+           อีกต่อไป — sticky ให้เลื่อนตามแต่ยังอยู่ในผังหน้าปกติ */
+        .journey-layout { display: flex; gap: 24px; align-items: flex-start; }
+        .journey-main { flex: 1 1 auto; min-width: 0; }
+        #vn-log-panel {
+            position: sticky; top: 20px; flex: 0 0 260px; width: 260px; max-height: calc(100vh - 40px);
+            background: rgba(10,14,20,0.92); border: 1px solid var(--border-color); border-radius: 8px;
+            backdrop-filter: blur(6px); display: flex; flex-direction: column;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
-        .species-toast.leaving { animation: toast-out 0.3s ease forwards; }
-        .species-toast .toast-eyebrow { font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; letter-spacing: 3px; color: var(--accent-default); text-transform: uppercase; margin-bottom: 4px; }
-        .species-toast .toast-title { color: #fff; font-size: 0.95rem; font-weight: 600; }
-        .species-toast .toast-title em { color: var(--alive); font-style: normal; }
-        @keyframes toast-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
-        @keyframes toast-out { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(30px); } }
+        @media (max-width: 900px) {
+            .journey-layout { flex-direction: column; }
+            #vn-log-panel { position: static; width: 100%; flex-basis: auto; max-height: 240px; }
+        }
+        .vn-log-header {
+            display: flex; justify-content: space-between; align-items: center; padding: 10px 14px;
+            font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; font-size: 0.72rem; color: var(--accent-default);
+            text-transform: uppercase; cursor: pointer; border-bottom: 1px solid var(--border-color); user-select: none; flex-shrink: 0;
+        }
+        .vn-log-header .arrow { transition: transform 0.2s ease; }
+        #vn-log-panel.collapsed .vn-log-header .arrow { transform: rotate(-90deg); }
+        #vn-log-panel.collapsed .vn-log-list { display: none; }
+        .vn-log-list { list-style: none; margin: 0; padding: 10px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
+        .vn-log-entry { font-size: 0.78rem; line-height: 1.6; color: #94a3b8; border-left: 2px solid var(--border-color); padding-left: 8px; opacity: 0; animation: vn-fade-in 0.4s ease forwards; }
+        .vn-log-entry .log-eyebrow { display: block; font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
+        .vn-log-entry.kind-species { border-left-color: var(--accent-default); }
+        .vn-log-entry.kind-species .log-eyebrow { color: var(--accent-default); }
+        .vn-log-entry.kind-skill { border-left-color: #a78bfa; }
+        .vn-log-entry.kind-skill .log-eyebrow { color: #a78bfa; }
+        .vn-log-entry.kind-ap { border-left-color: #6ef2a0; }
+        .vn-log-entry.kind-ap .log-eyebrow { color: #6ef2a0; }
+        .vn-log-empty { font-size: 0.75rem; color: #4a5568; font-style: italic; }
         .status-extinct { color: var(--danger); border: 1px solid rgba(255,59,40,0.3); background: rgba(255,59,40,0.1); }
         .status-alive { color: var(--alive); border: 1px solid rgba(110,242,160,0.3); background: rgba(110,242,160,0.1); }
         .status-draft { color: var(--accent-default); border: 1px solid rgba(56,189,248,0.35); background: rgba(56,189,248,0.1); }
@@ -265,6 +287,8 @@
         .note-block em { color: var(--accent-default); font-style: normal; }
         .note-block.warn { background: rgba(255,184,74,0.06); border-color: rgba(255,184,74,0.3); border-left-color: #ffb84a; }
         .note-block.warn em { color: #ffb84a; }
+        .note-block.lore-locked { background: rgba(10,14,18,0.5); border: 1px dashed rgba(255,255,255,0.18); border-left: 1px dashed rgba(255,255,255,0.18); color: #64748b; font-style: italic; }
+        .section-label.lore-locked-label { color: #4a5568; border-color: rgba(255,255,255,0.08); }
 
         /* --- Journey of Confluence — visual-novel style stepper --- */
         .scene-container { max-width: 720px; margin: 0 auto; }
@@ -279,12 +303,12 @@
         .vn-tp.end.current { background: #ffb84a; border-color: #ffb84a; box-shadow: 0 0 10px #ffb84a; }
         .vn-tp-line { flex: 1 0 10px; height: 1px; background: #334155; min-width: 10px; }
         .vn-tp-line.unlocked { background: rgba(56, 189, 248, 0.4); }
-        .vn-stage { min-height: 36vh; max-height: 60vh; display: flex; flex-direction: column; justify-content: center; overflow-y: auto; overflow-x: hidden; padding: 4px 2px; }
+        .vn-stage { min-height: 36vh; display: flex; flex-direction: column; justify-content: center; padding: 4px 2px; }
         .scene-tag { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; letter-spacing: 4px; color: var(--accent-default); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
         .scene-tag::before { content: ''; width: 18px; height: 1px; background: var(--accent-default); flex-shrink: 0; }
         .scene-tag.key { color: #ffb84a; }
         .scene-tag.key::before { background: #ffb84a; }
-        .scene-text { font-family: 'Sarabun', sans-serif; font-size: 1.02rem; line-height: 1.95; color: #c3ceda; margin: 0 0 13px 0; opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
+        .scene-text { font-family: 'Sarabun', sans-serif; font-size: 1.15rem; font-weight: 600; line-height: 1.95; color: #c3ceda; margin: 0 0 13px 0; opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
         .scene-text:last-child { margin-bottom: 0; }
         .scene-text em { color: var(--accent-default); font-style: normal; }
         .scene-text em.glow-danger { color: var(--danger); }
@@ -302,14 +326,35 @@
         .vn-continue-btn .arrow { font-size: 1rem; transition: transform 0.25s ease; }
         .vn-continue-btn:hover .arrow { transform: translateX(3px); }
 
-        .vn-choice-block { margin-top: 26px; text-align: center; }
-        .vn-choice-question { font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; color: #ffb84a; font-size: 1.05rem; margin-bottom: 18px; }
-        .vn-choice-row { display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; }
         .vn-choice-btn {
             background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.15); color: #e2e8f0; padding: 14px 22px;
             border-radius: 8px; font-family: 'Sarabun', sans-serif; font-size: 0.95rem; cursor: pointer; transition: all 0.25s ease; min-width: 200px;
         }
         .vn-choice-btn:hover { border-color: var(--accent-default); background: rgba(56,189,248,0.08); transform: translateY(-2px); }
+
+        /* ปุ่มตัดสินใจแบบไม่สปอยล์ — เริ่มเป็นปุ่มเดียว (คำถามล้วนๆ) เมื่อ
+           hover (เมาส์) หรือแตะ (คลาส .revealed จาก JS สำหรับทัชสกรีน) ถึง
+           แยกออกเป็นตัวเลือกจริง ให้ความรู้สึกต้อง "ตัดสินใจ" มากกว่าการเห็น
+           ตัวเลือกล่วงหน้าแบบปุ่มแยกทันที */
+        .vn-decision { margin-top: 26px; text-align: center; }
+        .vn-decision-prompt {
+            display: inline-block; background: rgba(255,184,74,0.06); border: 1px solid rgba(255,184,74,0.35); color: #ffb84a;
+            padding: 16px 28px; border-radius: 8px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1px; font-size: 1.05rem;
+            cursor: pointer; transition: opacity 0.25s ease, transform 0.25s ease; user-select: none;
+            animation: decision-glow-pulse 2.4s ease-in-out infinite;
+        }
+        @keyframes decision-glow-pulse {
+            0%, 100% { box-shadow: 0 0 0 rgba(255,184,74,0); }
+            50% { box-shadow: 0 0 18px rgba(255,184,74,0.35); }
+        }
+        .vn-decision-prompt .hint { display: block; font-family: monospace; font-size: 0.68rem; letter-spacing: 2px; color: #8a6a3a; margin-top: 6px; }
+        .vn-decision-options {
+            display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 18px;
+            max-height: 0; opacity: 0; overflow: hidden; pointer-events: none;
+            transition: max-height 0.3s ease, opacity 0.25s ease 0.05s;
+        }
+        .vn-decision:hover .vn-decision-prompt, .vn-decision.revealed .vn-decision-prompt { opacity: 0.4; transform: scale(0.97); }
+        .vn-decision:hover .vn-decision-options, .vn-decision.revealed .vn-decision-options { max-height: 200px; opacity: 1; pointer-events: auto; }
         .vn-warning-box { margin-top: 20px; padding: 16px 18px; border: 1px solid rgba(255,59,40,0.35); background: rgba(255,59,40,0.06); border-radius: 6px; color: #ffb4a8; font-size: 0.9rem; line-height: 1.7; text-align: center; }
         .vn-warning-box strong { color: #ff3b28; }
 
@@ -319,6 +364,16 @@
         .vn-explore-btn { background: rgba(167,139,250,0.08); border: 1px solid #a78bfa; color: #c4b5fd; padding: 9px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1.5px; font-size: 0.82rem; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 7px; }
         .vn-explore-btn:hover { background: rgba(167,139,250,0.18); border-color: #c4b5fd; transform: translateY(-1px); }
         .vn-explore-done { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; }
+        .vn-explore-btn:disabled { opacity: 0.35; cursor: not-allowed; }
+        .vn-explore-btn:disabled:hover { background: rgba(167,139,250,0.08); border-color: #a78bfa; transform: none; }
+        .vn-rest-btn { background: rgba(110,242,160,0.08); border-color: #6ef2a0; color: #a8e8c0; }
+        .vn-rest-btn:hover { background: rgba(110,242,160,0.18); border-color: #6ef2a0; }
+        .vn-ap-hud { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 1px; color: #8fa6b8; }
+        .vn-ap-pips { display: inline-flex; gap: 4px; }
+        .vn-ap-pip { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #a78bfa; background: transparent; }
+        .vn-ap-pip.filled { background: #a78bfa; box-shadow: 0 0 6px rgba(167,139,250,0.6); }
+        .vn-skill-progress { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; margin-top: 6px; }
+        .vn-action-row { display: flex; flex-wrap: wrap; gap: 10px; }
 
         .scene-close { margin-top: 8px; padding: 28px; border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 8px; background: rgba(0,0,0,0.3); text-align: center; }
         .scene-close .scene-close-tag { font-family: 'Rajdhani', sans-serif; letter-spacing: 4px; color: #94a3b8; font-size: 0.78rem; text-transform: uppercase; margin-bottom: 10px; }
@@ -553,12 +608,14 @@
 
             <div id="d-extended"></div>
 
-            <div class="section-label">◈ AI IMAGE GEN PROMPT</div>
-            <div class="info-box" style="padding:0; overflow:hidden;">
-                <pre id="d-prompt" style="margin:0; padding:18px 20px; font-family:monospace; font-size:0.78rem; line-height:1.7; color:#94a3b8; white-space:pre-wrap; word-break:break-word; max-height:280px; overflow-y:auto; background:rgba(0,0,0,0.3);"></pre>
-                <div style="display:flex; justify-content:flex-end; align-items:center; gap:14px; padding:12px 20px; border-top:1px solid var(--border-color);">
-                    <span class="font-hud" id="d-copy-ok" style="font-size:0.8rem; color:var(--alive); opacity:0; transition:opacity .2s;">✓ COPIED TO CLIPBOARD</span>
-                    <button class="btn-back" style="margin:0;" onclick="copyPrompt()">⧉ COPY AI PROMPT</button>
+            <div id="d-ai-prompt-section">
+                <div class="section-label">◈ AI IMAGE GEN PROMPT</div>
+                <div class="info-box" style="padding:0; overflow:hidden;">
+                    <pre id="d-prompt" style="margin:0; padding:18px 20px; font-family:monospace; font-size:0.78rem; line-height:1.7; color:#94a3b8; white-space:pre-wrap; word-break:break-word; max-height:280px; overflow-y:auto; background:rgba(0,0,0,0.3);"></pre>
+                    <div style="display:flex; justify-content:flex-end; align-items:center; gap:14px; padding:12px 20px; border-top:1px solid var(--border-color);">
+                        <span class="font-hud" id="d-copy-ok" style="font-size:0.8rem; color:var(--alive); opacity:0; transition:opacity .2s;">✓ COPIED TO CLIPBOARD</span>
+                        <button class="btn-back" style="margin:0;" onclick="copyPrompt()">⧉ COPY AI PROMPT</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -607,7 +664,7 @@
 
         <div id="story-view" class="view-section">
             <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> ABORT SIMULATION</button>
-            
+
             <div class="sub-header">
                 <div>
                     <h1 style="color: var(--accent-default); text-shadow: 0 0 15px rgba(56,189,248,0.5);">JOURNEY OF CONFLUENCE</h1>
@@ -619,8 +676,17 @@
                 </div>
             </div>
 
-            <!-- เนื้อหา VN stepper คุมโดย data/journey.js (JOURNEY_STEPS + journeyRender()) -->
-            <div id="journey-view-content"></div>
+            <div class="journey-layout">
+                <!-- เนื้อหา VN stepper คุมโดย data/journey.js (JOURNEY_STEPS + journeyRender()) -->
+                <div id="journey-view-content" class="journey-main"></div>
+
+                <div id="vn-log-panel">
+                    <div class="vn-log-header" onclick="document.getElementById('vn-log-panel').classList.toggle('collapsed')">
+                        <span>📜 SYSTEM LOG</span><span class="arrow">▾</span>
+                    </div>
+                    <ul class="vn-log-list" id="vn-log-list"></ul>
+                </div>
+            </div>
         </div>
 
     </div>
@@ -648,6 +714,7 @@
     <script src="data/ecosystem.js"></script>
     <script src="data/memoryMechanics.js"></script>
     <script src="data/rulebook.js"></script>
+    <script src="data/skillSystem.js"></script>
     <script src="data/journey.js"></script>
 
     <script>
@@ -672,31 +739,34 @@
             if (viewId === 'story-view') { journeyReset(); }
         }
 
-        /* --- Unknown Species lock system ---
+        /* --- Unknown Species lock system + Lore Tier reveal ---
            creature ที่ยังไม่ถูกกล่าวถึงในเนื้อเรื่อง Journey of Confluence
            จะแสดงเป็นการ์ดเงา "??? UNKNOWN SPECIES" ใน Species Database
-           ปลดล็อกอัตโนมัติเมื่อผู้เล่นไปถึง checkpoint ที่เกี่ยวข้อง (ดู field
-           `unlocks` ใน JOURNEY_STEPS ที่ data/journey.js ซึ่งเรียก
-           unlockSpecies() กลับมาที่นี่) — บันทึกไว้ใน localStorage เหมือนกับ
-           ความคืบหน้าของ Journey ทนต่อการ refresh
-           DEV MODE toggle ไว้สำหรับดูข้อมูลทั้งหมดระหว่างพัฒนา ไม่ถือเป็น
-           การปลดล็อกจริง (ไม่เขียนลง knownSpeciesSet) */
-        const KNOWN_SPECIES_KEY = 'ithra_known_species_v1';
+           เมื่อ "รู้จัก" แล้ว (tier >= 0) ข้อมูลก็ยังไม่เปิดครบทันที — แบ่งเป็น
+           5 ชั้น (ดู LORE_TIER_LABELS ด้านล่าง) ปลดทีละชั้นตาม checkpoint ที่
+           เกี่ยวข้อง (ดู field `unlocksTier` ใน JOURNEY_STEPS ที่
+           data/journey.js ซึ่งเรียก unlockSpeciesTier() กลับมาที่นี่)
+           ปลด tier N แปลว่าปลด 0..N ทั้งหมดพร้อมกันเสมอ (tier สูงขึ้นเรื่อยๆ
+           ไม่มีวันลดลง) — บันทึกไว้ใน localStorage ทนต่อการ refresh
+           DEV MODE toggle ไว้สำหรับดูข้อมูลทั้งหมด (tier 4) ระหว่างพัฒนา
+           ไม่ถือเป็นการปลดล็อกจริง (ไม่เขียนลง knownTiers) */
+        const KNOWN_SPECIES_KEY = 'ithra_known_species_tiers_v1';
         const DEV_MODE_KEY = 'ithra_dev_mode_v1';
-        let knownSpeciesSet = new Set();
+        const LORE_TIER_LABELS = ['SIGHTING LOGGED', 'ANATOMY DOCUMENTED', 'BEHAVIOR OBSERVED', 'ANALYSIS COMPLETE', 'FULL DOSSIER COMPLETE'];
+        let knownTiers = {}; // { [imageKey]: tier 0-4 } — key ไม่มีอยู่เลย = ยังไม่รู้จักเลย
         let devModeOn = false;
 
         function loadKnownSpecies() {
             try {
                 const raw = localStorage.getItem(KNOWN_SPECIES_KEY);
-                return raw ? new Set(JSON.parse(raw)) : new Set();
-            } catch (e) { return new Set(); }
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) { return {}; }
         }
         function saveKnownSpecies() {
-            try { localStorage.setItem(KNOWN_SPECIES_KEY, JSON.stringify([...knownSpeciesSet])); } catch (e) {}
+            try { localStorage.setItem(KNOWN_SPECIES_KEY, JSON.stringify(knownTiers)); } catch (e) {}
         }
         function resetKnownSpecies() {
-            knownSpeciesSet = new Set();
+            knownTiers = {};
             try { localStorage.removeItem(KNOWN_SPECIES_KEY); } catch (e) {}
             renderSpeciesGrid();
         }
@@ -708,18 +778,27 @@
         }
 
         function isSpeciesKnown(imageKey) {
-            return devModeOn || knownSpeciesSet.has(imageKey);
+            return devModeOn || knownTiers[imageKey] !== undefined;
         }
 
-        function unlockSpecies(keys, opts) {
+        /* -1 = ยังไม่รู้จักเลย (การ์ดเงา), 0-4 = tier ปัจจุบัน — DEV MODE คือ 4 เสมอ */
+        function getSpeciesTier(imageKey) {
+            if (devModeOn) return 4;
+            return knownTiers[imageKey] !== undefined ? knownTiers[imageKey] : -1;
+        }
+
+        /* ปลด keys ทั้งหมดถึง tier ที่ระบุ (ไม่ทำอะไรถ้า tier ปัจจุบันสูงกว่าหรือเท่ากันอยู่แล้ว) */
+        function unlockSpeciesTier(keys, tier, opts) {
             if (!keys || !keys.length) return;
             const silent = opts && opts.silent;
             keys.forEach(key => {
-                if (knownSpeciesSet.has(key)) return;
-                knownSpeciesSet.add(key);
+                const current = knownTiers[key];
+                if (current !== undefined && current >= tier) return; // ไม่มีอะไรใหม่
+                const isFirstDiscovery = current === undefined;
+                knownTiers[key] = tier;
                 if (!silent) {
                     const creature = creaturesData.find(c => c.imageKey === key);
-                    showSpeciesToast(creature ? creature.name : key);
+                    showSpeciesToast(creature ? creature.name : key, tier, isFirstDiscovery);
                 }
             });
             saveKnownSpecies();
@@ -740,21 +819,92 @@
             btn.textContent = devModeOn ? '🔓 DEV MODE: ON' : '🔒 DEV MODE: OFF';
         }
 
-        function showSpeciesToast(name) {
-            let root = document.getElementById('species-toast-root');
-            if (!root) {
-                root = document.createElement('div');
-                root.id = 'species-toast-root';
-                document.body.appendChild(root);
+        function showSpeciesToast(name, tier, isFirstDiscovery) {
+            playHudSfx('species');
+            if (isFirstDiscovery) {
+                journeyLogAdd('◈ UNKNOWN SPECIES DETECTED', `"${name}" — พบตัวครั้งแรก`, 'species');
+            } else {
+                journeyLogAdd('◈ DOSSIER UPDATED', `"${name}" — ${LORE_TIER_LABELS[tier]}`, 'species');
             }
-            const toast = document.createElement('div');
-            toast.className = 'species-toast';
-            toast.innerHTML = `<div class="toast-eyebrow">◈ UNKNOWN SPECIES DETECTED</div><div class="toast-title">"${name}" — <em>LEARNED</em></div>`;
-            root.appendChild(toast);
-            setTimeout(() => {
-                toast.classList.add('leaving');
-                setTimeout(() => toast.remove(), 320);
-            }, 4200);
+        }
+
+        function showSkillToast(learnedLabel) {
+            playHudSfx('skill');
+            journeyLogAdd('◈ CONFLUENCE PATTERN INTEGRATED', learnedLabel, 'skill');
+        }
+
+        /* sfx สังเคราะห์สดด้วย Web Audio API (ไม่ต้องพึ่งไฟล์เสียงภายนอก) ยิงกับ
+           ทุก toast — 'species' คือ blip เดี่ยวสั้นๆ เบากว่า (เรื่องรอง), 'skill'
+           คือ confirm chirp สองโน้ตไล่เสียงสูงขึ้น + shimmer ความถี่สูงทับ
+           (เรื่องหลัก ให้ความรู้สึกพิเศษกว่า) สไตล์ sci-fi HUD ยืนยันข้อมูล */
+        let sfxCtx = null;
+        function playHudSfx(variant) {
+            try {
+                if (!sfxCtx) sfxCtx = new (window.AudioContext || window.webkitAudioContext)();
+                const ctx = sfxCtx;
+                const now = ctx.currentTime;
+
+                const tone = (freq, start, dur, peak, type) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.type = type || 'sine';
+                    osc.frequency.setValueAtTime(freq, start);
+                    gain.gain.setValueAtTime(0, start);
+                    gain.gain.linearRampToValueAtTime(peak, start + 0.01);
+                    gain.gain.exponentialRampToValueAtTime(0.001, start + dur);
+                    osc.connect(gain).connect(ctx.destination);
+                    osc.start(start);
+                    osc.stop(start + dur);
+                };
+
+                if (variant === 'skill') {
+                    tone(880, now, 0.09, 0.18);
+                    tone(1320, now + 0.09, 0.16, 0.18);
+                    tone(2200, now, 0.26, 0.05, 'triangle');
+                } else {
+                    tone(1040, now, 0.1, 0.12);
+                }
+            } catch (e) {} // เบราว์เซอร์บล็อก AudioContext ก่อน user gesture ได้ — ข้ามเงียบๆ
+        }
+
+        /* Log panel — เก็บทุกอย่างที่เกิดขึ้นระหว่าง Journey ไว้ถาวร (persist
+           ผ่าน refresh เหมือน progress อื่นๆ) แทนที่ toast popup เดิมที่โผล่มา
+           4 วินาทีแล้วหายไป อ่านย้อนดูได้ทั้งหมดว่าเจออะไรมาบ้าง */
+        const JOURNEY_LOG_KEY = 'ithra_journey_log_v1';
+        const JOURNEY_LOG_MAX = 50;
+        let journeyLogEntries = [];
+
+        function journeyLoadLog() {
+            try {
+                const raw = localStorage.getItem(JOURNEY_LOG_KEY);
+                return raw ? JSON.parse(raw) : [];
+            } catch (e) { return []; }
+        }
+
+        function journeyLogAdd(eyebrow, text, kind) {
+            journeyLogEntries.push({ eyebrow, text, kind });
+            if (journeyLogEntries.length > JOURNEY_LOG_MAX) journeyLogEntries.shift();
+            try { localStorage.setItem(JOURNEY_LOG_KEY, JSON.stringify(journeyLogEntries)); } catch (e) {}
+            journeyRenderLog();
+        }
+
+        function journeyClearLog() {
+            journeyLogEntries = [];
+            try { localStorage.removeItem(JOURNEY_LOG_KEY); } catch (e) {}
+            journeyRenderLog();
+        }
+
+        function journeyRenderLog() {
+            const list = document.getElementById('vn-log-list');
+            if (!list) return;
+            if (!journeyLogEntries.length) {
+                list.innerHTML = '<li class="vn-log-empty">// ยังไม่มีบันทึก</li>';
+                return;
+            }
+            list.innerHTML = journeyLogEntries.map(e =>
+                `<li class="vn-log-entry kind-${e.kind}"><span class="log-eyebrow">${e.eyebrow}</span>${e.text}</li>`
+            ).join('');
+            list.scrollTop = list.scrollHeight;
         }
 
         function renderSpeciesGrid() {
@@ -827,52 +977,70 @@
             imgEl.src = dataUri;
         }
 
+        const LORE_LOCKED_TEXT = '??? ยังไม่มีข้อมูลเพียงพอ — ต้องเข้าใกล้กว่านี้';
+
         function showCreatureDetail(index) {
             const data = creaturesData[index];
-            
+            const tier = getSpeciesTier(data.imageKey);
+
             document.getElementById('d-id').innerText = data.id;
             document.getElementById('d-id').style.color = data.color;
             document.getElementById('d-name').innerText = data.name;
             document.getElementById('d-era').innerText = data.era;
             document.getElementById('d-desc').innerText = data.desc;
             document.getElementById('d-desc').style.borderLeftColor = data.color;
-            
+
             const statusEl = document.getElementById('d-status');
             statusEl.innerText = data.status;
             statusEl.className = `status-badge ${statusClassFor(data.status)}`;
-            
+
             document.getElementById('d-category').innerText = data.category;
             document.getElementById('d-habitat').innerText = data.habitat;
 
+            // TIER 2 — พฤติกรรม: ตำแหน่งในห่วงโซ่อาหารต้องเห็นมันล่า/ถูกล่าจริงถึงจะสรุปได้
             const fcRow = document.getElementById('d-foodchain-row');
-            if (data.foodChain) {
+            if (data.foodChain && tier >= 2) {
                 document.getElementById('d-foodchain').innerText = data.foodChain;
+                fcRow.style.display = 'flex';
+            } else if (data.foodChain) {
+                document.getElementById('d-foodchain').innerText = LORE_LOCKED_TEXT;
                 fcRow.style.display = 'flex';
             } else {
                 fcRow.style.display = 'none';
             }
-            
+
             const dangerEl = document.getElementById('d-danger');
             dangerEl.innerText = data.danger;
             dangerEl.style.color = data.danger.includes('88') ? 'var(--danger)' : (data.danger.includes('20') ? 'var(--alive)' : '#ffb84a');
 
-            document.getElementById('d-size').innerText = data.size;
-            document.getElementById('d-height').innerText = data.height;
-            document.getElementById('d-weight').innerText = data.weight;
+            // TIER 1 — กายวิภาค: ขนาด/ยีนเด่น-ด้อย ต้องเข้าใกล้พอจะสังเกตรายละเอียดร่างกาย
+            const t1 = tier >= 1;
+            document.getElementById('d-size').innerText = t1 ? data.size : LORE_LOCKED_TEXT;
+            document.getElementById('d-height').innerText = t1 ? data.height : LORE_LOCKED_TEXT;
+            document.getElementById('d-weight').innerText = t1 ? data.weight : LORE_LOCKED_TEXT;
 
             const mutBox = document.getElementById('d-pro').closest('.info-box');
-            if (data.mutation) {
-                mutBox.style.display = '';
+            mutBox.style.display = '';
+            if (!t1) {
+                document.getElementById('d-pro').innerText = LORE_LOCKED_TEXT;
+                document.getElementById('d-con').innerText = LORE_LOCKED_TEXT;
+            } else if (data.mutation) {
                 document.getElementById('d-pro').innerText = data.mutation.pro;
                 document.getElementById('d-con').innerText = data.mutation.con;
             } else {
                 document.getElementById('d-pro').innerText = 'ยังไม่ได้ออกแบบ — รอต่อยอดในอนาคต';
                 document.getElementById('d-con').innerText = 'ยังไม่ได้ออกแบบ — รอต่อยอดในอนาคต';
             }
-            
+
+            // TIER 2 — พฤติกรรม: อาวุธ/การป้องกันตัวต้องเห็นมันใช้งานจริง
             const ul = document.getElementById('d-weapons');
             ul.innerHTML = '';
-            if (data.weapons && data.weapons.length) {
+            if (tier < 2 && data.weapons && data.weapons.length) {
+                const li = document.createElement('li');
+                li.innerText = LORE_LOCKED_TEXT;
+                li.style.color = '#64748b';
+                ul.appendChild(li);
+            } else if (data.weapons && data.weapons.length) {
                 data.weapons.forEach(w => {
                     const li = document.createElement('li');
                     li.innerText = w;
@@ -888,102 +1056,132 @@
 
             document.getElementById('d-icon-color').style.color = data.color;
 
+            // AI Gen Prompt เป็นข้อมูล production/dev tool ไม่ใช่ lore ในเรื่อง — โชว์เฉพาะ DEV MODE
+            document.getElementById('d-ai-prompt-section').style.display = devModeOn ? '' : 'none';
             document.getElementById('d-prompt').textContent = data.prompt || 'ยังไม่ได้ออกแบบรายละเอียด Body Part ครบถ้วน — สร้าง AI Prompt ได้เมื่อกำหนด Head/Body/Limb/Surface ตามระบบ Monster Design Codex เรียบร้อยแล้ว';
             document.getElementById('d-copy-ok').classList.remove('show-copy');
             document.getElementById('d-copy-ok').style.opacity = 0;
 
-            renderExtendedSections(data);
+            renderExtendedSections(data, tier);
             loadCreatureImage(data.imageKey);
             switchView('detail-view');
         }
 
-        function renderExtendedSections(data) {
+        /* placeholder เดียวต่อกลุ่ม tier (ไม่ใช่ต่อ field) — โชว์เฉพาะกลุ่มที่
+           creature ตัวนี้มีข้อมูลออกแบบไว้จริงแล้วแต่ tier ยังไปไม่ถึง กัน
+           ไม่ให้ creature ที่ยังไม่ได้ออกแบบ field นั้นเลยโชว์ placeholder
+           ปนกับ "ยังไม่ได้ออกแบบ — รอต่อยอดในอนาคต" ของทีมพัฒนา */
+        function lockedSectionBlock(label, neededTier) {
+            return `<div class="section-label lore-locked-label">◈ ${label}</div>
+            <div class="note-block lore-locked">🔒 ต้องเข้าใกล้/เผชิญหน้ามากกว่านี้ถึงจะบันทึกส่วนนี้ได้ (TIER ${neededTier} DOSSIER)</div>`;
+        }
+
+        function renderExtendedSections(data, tier) {
             let html = '';
 
-            if (data.social) {
+            const hasTier1Data = (data.head && data.head.length) || (data.body && data.body.length) || (data.limbs && data.limbs.length) || (data.skin && data.skin.length) || (data.pal && data.pal.length);
+            const hasTier2Data = data.social || (data.combat && data.combat.length);
+            const hasTier3Data = data.mutationFull || data.dangerDetail;
+            const hasTier4Data = data.extinction || (data.confusion && data.confusion.length) || (data.notes && data.notes.length);
+
+            if (tier >= 2 && data.social) {
                 html += `<div class="note-block" style="margin-top:0;"><strong>พฤติกรรมสังคม</strong> — ${data.social}</div>`;
             }
 
-            if (data.head && data.head.length) {
-                html += `<div class="section-label">◈ HEAD SECTION — ส่วนหัว</div>
-                <table class="data-table"><tr><th>ตำแหน่ง</th><th>ลักษณะ</th><th>รายละเอียด</th></tr>
-                ${data.head.map(h => `<tr><td>${h[0]}</td><td>${h[1]}</td><td>${h[2]}</td></tr>`).join('')}</table>`;
+            if (tier < 1 && hasTier1Data) {
+                html += lockedSectionBlock('ANATOMY — กายวิภาค', 1);
+            } else if (tier >= 1) {
+                if (data.head && data.head.length) {
+                    html += `<div class="section-label">◈ HEAD SECTION — ส่วนหัว</div>
+                    <table class="data-table"><tr><th>ตำแหน่ง</th><th>ลักษณะ</th><th>รายละเอียด</th></tr>
+                    ${data.head.map(h => `<tr><td>${h[0]}</td><td>${h[1]}</td><td>${h[2]}</td></tr>`).join('')}</table>`;
+                }
+
+                if (data.body && data.body.length) {
+                    html += `<div class="section-label">◈ BODY SECTION — ส่วนตัว</div>
+                    <table class="data-table"><tr><th>ตำแหน่ง</th><th>ลักษณะ</th><th>รายละเอียด</th></tr>
+                    ${data.body.map(b => `<tr><td>${b[0]}</td><td>${b[1]}</td><td>${b[2]}</td></tr>`).join('')}</table>`;
+                }
+
+                if (data.limbs && data.limbs.length) {
+                    html += `<div class="section-label">◈ LIMB SLOTS — ${data.limbs.length} คู่</div>
+                    <table class="data-table"><tr><th>Slot</th><th>ประเภท</th><th>ตำแหน่ง</th><th>รายละเอียด</th></tr>
+                    ${data.limbs.map(l => `<tr><td>${l[0]}</td><td>${l[1]}</td><td>${l[2]}</td><td>${l[3]}</td></tr>`).join('')}</table>`;
+                }
+
+                if (data.skin && data.skin.length) {
+                    html += `<div class="section-label">◈ SURFACE — พื้นผิวและลวดลาย</div>
+                    <table class="data-table"><tr><th>บริเวณ</th><th>ลักษณะผิว</th></tr>
+                    ${data.skin.map(s => `<tr><td>${s[0]}</td><td>${s[1]}</td></tr>`).join('')}</table>
+                    ${data.pattern ? `<div class="note-block" style="margin-top:12px;"><strong>Pattern</strong> — ${data.pattern}</div>` : ''}`;
+                }
+
+                if (data.pal && data.pal.length) {
+                    html += `<div class="section-label">◈ COLOR PROFILE — Split Complementary</div>
+                    <div class="swatch-row">
+                        ${data.pal.map(c => `<div class="swatch"><div class="chip" style="background:${c[1]};"></div><div class="lbl">${c[0]}</div></div>`).join('')}
+                        <div class="swatch"><div class="chip" style="background:${data.hl[0]};box-shadow:0 0 12px ${data.hl[0]};"></div><div class="lbl">Highlight</div></div>
+                    </div>
+                    <div class="note-block"><strong>จุดที่ใช้ Highlight</strong> — ${data.hlAt}${data.palNote ? `<br><br>${data.palNote}` : ''}</div>`;
+                }
             }
 
-            if (data.body && data.body.length) {
-                html += `<div class="section-label">◈ BODY SECTION — ส่วนตัว</div>
-                <table class="data-table"><tr><th>ตำแหน่ง</th><th>ลักษณะ</th><th>รายละเอียด</th></tr>
-                ${data.body.map(b => `<tr><td>${b[0]}</td><td>${b[1]}</td><td>${b[2]}</td></tr>`).join('')}</table>`;
-            }
-
-            if (data.limbs && data.limbs.length) {
-                html += `<div class="section-label">◈ LIMB SLOTS — ${data.limbs.length} คู่</div>
-                <table class="data-table"><tr><th>Slot</th><th>ประเภท</th><th>ตำแหน่ง</th><th>รายละเอียด</th></tr>
-                ${data.limbs.map(l => `<tr><td>${l[0]}</td><td>${l[1]}</td><td>${l[2]}</td><td>${l[3]}</td></tr>`).join('')}</table>`;
-            }
-
-            if (data.skin && data.skin.length) {
-                html += `<div class="section-label">◈ SURFACE — พื้นผิวและลวดลาย</div>
-                <table class="data-table"><tr><th>บริเวณ</th><th>ลักษณะผิว</th></tr>
-                ${data.skin.map(s => `<tr><td>${s[0]}</td><td>${s[1]}</td></tr>`).join('')}</table>
-                ${data.pattern ? `<div class="note-block" style="margin-top:12px;"><strong>Pattern</strong> — ${data.pattern}</div>` : ''}`;
-            }
-
-            if (data.pal && data.pal.length) {
-                html += `<div class="section-label">◈ COLOR PROFILE — Split Complementary</div>
-                <div class="swatch-row">
-                    ${data.pal.map(c => `<div class="swatch"><div class="chip" style="background:${c[1]};"></div><div class="lbl">${c[0]}</div></div>`).join('')}
-                    <div class="swatch"><div class="chip" style="background:${data.hl[0]};box-shadow:0 0 12px ${data.hl[0]};"></div><div class="lbl">Highlight</div></div>
-                </div>
-                <div class="note-block"><strong>จุดที่ใช้ Highlight</strong> — ${data.hlAt}${data.palNote ? `<br><br>${data.palNote}` : ''}</div>`;
-            }
-
-            if (data.mutationFull) {
-                const m = data.mutationFull;
-                html += `<div class="section-label">◈ MUTATION — ยีนเด่น ⇄ ยีนด้อย</div>
-                <div class="mutation-box">
-                    <div class="mut-pro"><span style="display:block;font-weight:bold;color:var(--alive);font-family:'Rajdhani';margin-bottom:4px;">[+] ${m.proTitle}</span>${m.proDesc}</div>
-                    <div class="mut-con"><span style="display:block;font-weight:bold;color:var(--danger);font-family:'Rajdhani';margin-bottom:4px;">[-] ${m.conTitle}</span>${m.conDesc}</div>
-                </div>`;
-            }
-
-            if (data.dangerDetail) {
-                const d = data.dangerDetail;
-                html += `<div class="section-label">◈ THREAT BREAKDOWN — การประเมินอันตราย</div>
-                <div class="note-block"><strong>คะแนนดิบ ${d.raw}</strong> (${d.percent}%) — ระดับ <em>${d.tier}</em><br><br>
-                <strong>ปัจจัยเสี่ยงหลัก</strong> — ${d.factors.join(' · ')}<br><br>${d.note}</div>`;
-            }
-
-            if (data.combat && data.combat.length) {
+            if (tier < 2 && hasTier2Data) {
+                html += lockedSectionBlock('BEHAVIOR — พฤติกรรม', 2);
+            } else if (tier >= 2 && data.combat && data.combat.length) {
                 html += `<div class="section-label">◈ COMBAT PATTERNS — รูปแบบการต่อสู้</div>
                 <table class="data-table"><tr><th>ท่า</th><th>รายละเอียด</th></tr>
                 ${data.combat.map(c => `<tr><td>${c[0]}</td><td>${c[1]}</td></tr>`).join('')}</table>`;
             }
 
-            if (data.extinction) {
-                const e = data.extinction;
-                html += `<div class="section-label">◈ EXTINCTION EVENT — เหตุการณ์สูญพันธุ์</div>
-                <div class="note-block" style="border-color:rgba(255,59,40,0.35); border-left-color:var(--danger);"><strong style="color:#ff8a7f;">☠ ${e.title}</strong><br><br><strong>สาเหตุ</strong> — ${e.cause}</div>
-                <div class="note-block"><strong>ทำไมจึงรอดไม่ได้</strong>${e.why.map(w => `<br>▸ ${w}`).join('')}</div>
-                <div class="note-block" style="border-color:rgba(255,184,74,0.3); border-left-color:#ffb84a;"><strong>ความย้อนแย้ง</strong> — ${e.irony}</div>
-                ${e.fate ? `<div class="note-block"><strong>ชะตากรรมของตัวเอก</strong> — ${e.fate}</div>` : ''}`;
+            if (tier < 3 && hasTier3Data) {
+                html += lockedSectionBlock('DEEP ANALYSIS — การวิเคราะห์เชิงลึก', 3);
+            } else if (tier >= 3) {
+                if (data.mutationFull) {
+                    const m = data.mutationFull;
+                    html += `<div class="section-label">◈ MUTATION — ยีนเด่น ⇄ ยีนด้อย</div>
+                    <div class="mutation-box">
+                        <div class="mut-pro"><span style="display:block;font-weight:bold;color:var(--alive);font-family:'Rajdhani';margin-bottom:4px;">[+] ${m.proTitle}</span>${m.proDesc}</div>
+                        <div class="mut-con"><span style="display:block;font-weight:bold;color:var(--danger);font-family:'Rajdhani';margin-bottom:4px;">[-] ${m.conTitle}</span>${m.conDesc}</div>
+                    </div>`;
+                }
+
+                if (data.dangerDetail) {
+                    const d = data.dangerDetail;
+                    html += `<div class="section-label">◈ THREAT BREAKDOWN — การประเมินอันตราย</div>
+                    <div class="note-block"><strong>คะแนนดิบ ${d.raw}</strong> (${d.percent}%) — ระดับ <em>${d.tier}</em><br><br>
+                    <strong>ปัจจัยเสี่ยงหลัก</strong> — ${d.factors.join(' · ')}<br><br>${d.note}</div>`;
+                }
             }
 
-            if (data.confusion && data.confusion.length) {
-                const verdictMap = {
-                    no: '<span style="color:var(--danger);">✕ แยกไม่ออก</span>',
-                    warn: '<span style="color:#ffb84a;">△ ต่างมาก แต่มองไม่เห็น</span>',
-                    yes: '<span style="color:var(--alive);">✓ ต่างชัด</span>'
-                };
-                html += `<div class="section-label">◈ INSTINCT CONFUSION ANALYSIS — วิเคราะห์ความสับสนของสัญชาตญาณ</div>
-                <div class="note-block" style="border-color:rgba(255,184,74,0.3); border-left-color:#ffb84a;">Thessek กับ Karvos ไม่ใช่ญาติกันเลย อยู่คนละยุคห่างกัน 40 ล้านปี และล่าด้วยวิธีตรงข้ามกันสิ้นเชิง แต่มีจุดทับซ้อนกันพอดีในระดับที่อันตรายที่สุด</div>
-                <table class="data-table" style="margin-top:12px;"><tr><th>ลักษณะ</th><th>Thessek</th><th>Karvos</th><th>แยกออก?</th></tr>
-                ${data.confusion.map(c => `<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td>${verdictMap[c[3]]}</td></tr>`).join('')}</table>`;
-            }
+            if (tier < 4 && hasTier4Data) {
+                html += lockedSectionBlock('FIELD DOSSIER — บันทึกพิเศษ', 4);
+            } else if (tier >= 4) {
+                if (data.extinction) {
+                    const e = data.extinction;
+                    html += `<div class="section-label">◈ EXTINCTION EVENT — เหตุการณ์สูญพันธุ์</div>
+                    <div class="note-block" style="border-color:rgba(255,59,40,0.35); border-left-color:var(--danger);"><strong style="color:#ff8a7f;">☠ ${e.title}</strong><br><br><strong>สาเหตุ</strong> — ${e.cause}</div>
+                    <div class="note-block"><strong>ทำไมจึงรอดไม่ได้</strong>${e.why.map(w => `<br>▸ ${w}`).join('')}</div>
+                    <div class="note-block" style="border-color:rgba(255,184,74,0.3); border-left-color:#ffb84a;"><strong>ความย้อนแย้ง</strong> — ${e.irony}</div>
+                    ${e.fate ? `<div class="note-block"><strong>ชะตากรรมของตัวเอก</strong> — ${e.fate}</div>` : ''}`;
+                }
 
-            if (data.notes && data.notes.length) {
-                html += `<div class="section-label">◈ FIELD NOTES — หมายเหตุเชิงเรื่องราว</div>
-                ${data.notes.map(n => `<div class="note-block${n[0] === 'warn' ? ' warn' : ''}">${n[1]}</div>`).join('')}`;
+                if (data.confusion && data.confusion.length) {
+                    const verdictMap = {
+                        no: '<span style="color:var(--danger);">✕ แยกไม่ออก</span>',
+                        warn: '<span style="color:#ffb84a;">△ ต่างมาก แต่มองไม่เห็น</span>',
+                        yes: '<span style="color:var(--alive);">✓ ต่างชัด</span>'
+                    };
+                    html += `<div class="section-label">◈ INSTINCT CONFUSION ANALYSIS — วิเคราะห์ความสับสนของสัญชาตญาณ</div>
+                    <div class="note-block" style="border-color:rgba(255,184,74,0.3); border-left-color:#ffb84a;">Thessek กับ Karvos ไม่ใช่ญาติกันเลย อยู่คนละยุคห่างกัน 40 ล้านปี และล่าด้วยวิธีตรงข้ามกันสิ้นเชิง แต่มีจุดทับซ้อนกันพอดีในระดับที่อันตรายที่สุด</div>
+                    <table class="data-table" style="margin-top:12px;"><tr><th>ลักษณะ</th><th>Thessek</th><th>Karvos</th><th>แยกออก?</th></tr>
+                    ${data.confusion.map(c => `<tr><td>${c[0]}</td><td>${c[1]}</td><td>${c[2]}</td><td>${verdictMap[c[3]]}</td></tr>`).join('')}</table>`;
+                }
+
+                if (data.notes && data.notes.length) {
+                    html += `<div class="section-label">◈ FIELD NOTES — หมายเหตุเชิงเรื่องราว</div>
+                    ${data.notes.map(n => `<div class="note-block${n[0] === 'warn' ? ' warn' : ''}">${n[1]}</div>`).join('')}`;
+                }
             }
 
             document.getElementById('d-extended').innerHTML = html;
@@ -1274,7 +1472,8 @@
         }
 
         // Initialize the app
-        knownSpeciesSet = loadKnownSpecies();
+        knownTiers = loadKnownSpecies();
+        journeyLogEntries = journeyLoadLog();
         devModeOn = loadDevMode();
         updateDevModeButtonLabel();
         initContentSections();
