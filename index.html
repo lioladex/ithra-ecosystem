@@ -484,7 +484,7 @@
                         <div class="nav-card" onclick="switchView('species-view')">
                             <span class="card-id" style="position: absolute; top: 12px; right: 12px;">DIR-01</span>
                             <div class="card-icon" style="color: #38bdf8;">🧬</div>
-                            <h3 class="card-title">SPECIES DATABASE</h3>
+                            <h3 class="card-title">LIFE-FORM DATABASE</h3>
                             <p class="card-desc">แฟ้มข้อมูลประวัติ โครงสร้างร่างกาย และระดับความอันตรายของสิ่งมีชีวิตบนดาว Ithra</p>
                         </div>
                         <div class="nav-card" onclick="switchView('world-view')">
@@ -535,7 +535,7 @@
 
             <div class="sub-header">
                 <div>
-                    <h1>SPECIES DATABASE</h1>
+                    <h1>LIFE-FORM DATABASE</h1>
                     <p style="color: #64748b; margin: 5px 0 0 0; font-size: 0.85rem; letter-spacing: 2px;">FILE DIRECTORY // ITHRA ECOSYSTEM</p>
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
@@ -565,7 +565,7 @@
                         <div class="scan-line"></div>
                     </div>
                     <div class="no-image" id="d-no-img">NO VISUAL DATA</div>
-                    <img id="d-image" src="" alt="Creature Image" style="display: none;">
+                    <img id="d-image" src="" alt="Life-Form Image" style="display: none;">
                 </div>
 
                 <div class="profile-title">
@@ -822,7 +822,7 @@
         function showSpeciesToast(name, tier, isFirstDiscovery) {
             playHudSfx('species');
             if (isFirstDiscovery) {
-                journeyLogAdd('◈ UNKNOWN SPECIES DETECTED', `"${name}" — พบตัวครั้งแรก`, 'species');
+                journeyLogAdd('◈ UNKNOWN LIFE-FORM DETECTED', `"${name}" — พบตัวครั้งแรก`, 'species');
             } else {
                 journeyLogAdd('◈ DOSSIER UPDATED', `"${name}" — ${LORE_TIER_LABELS[tier]}`, 'species');
             }
@@ -861,6 +861,8 @@
                     tone(880, now, 0.09, 0.18);
                     tone(1320, now + 0.09, 0.16, 0.18);
                     tone(2200, now, 0.26, 0.05, 'triangle');
+                } else if (variant === 'hover') {
+                    tone(1600, now, 0.04, 0.045); // ติ๊กสั้นๆ เบามาก แค่บอกว่า "ตรวจจับแล้ว" ไม่ใช่ยืนยันอะไร
                 } else {
                     tone(1040, now, 0.1, 0.12);
                 }
@@ -925,7 +927,7 @@
                     card.innerHTML = `
                         <div class="card-content">
                             <div class="locked-icon">◈</div>
-                            <div class="locked-title">??? UNKNOWN SPECIES</div>
+                            <div class="locked-title">??? UNKNOWN LIFE-FORM</div>
                             <div class="locked-desc">รอการค้นพบผ่านเนื้อเรื่อง JOURNEY OF CONFLUENCE</div>
                         </div>
                     `;
@@ -1470,6 +1472,17 @@
                 planetRenderer.render(planetScene, planetCamera);
             }
         }
+
+        /* sfx hover แบบ sci-fi HUD — delegate ตัวเดียวที่ document แทนผูก
+           listener ทุกปุ่ม (ปุ่มส่วนใหญ่ถูกสร้างแบบ dynamic ผ่าน innerHTML
+           เช่น vn-explore-btn/vn-choice-btn อยู่แล้ว ผูกทีละปุ่มจะตกหล่น)
+           เช็ค relatedTarget กันยิงซ้ำตอนเมาส์ขยับอยู่ในปุ่มเดิม (ลูกๆ ข้างใน) */
+        document.addEventListener('mouseover', function (e) {
+            const el = e.target.closest('button:not(:disabled), .btn-story, .nav-card, .species-card:not(.locked)');
+            if (!el) return;
+            if (el.contains(e.relatedTarget)) return;
+            playHudSfx('hover');
+        });
 
         // Initialize the app
         knownTiers = loadKnownSpecies();
