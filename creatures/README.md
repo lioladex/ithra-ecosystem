@@ -7,9 +7,8 @@
 | ไฟล์ | หน้าที่ |
 |---|---|
 | `_registry.js` | ประกาศ `const creaturesData = []` — ต้องโหลดก่อนไฟล์อื่นในโฟลเดอร์นี้เสมอ |
-| `_imageLibrary.js` | ประกาศ `const IMAGE_LIBRARY = {...}` (ลิงก์รูปภาพจาก Google Drive) |
-| `vorthak.js`, `thessek.js`, `luvenn.js`, `karvos.js`, `skyther.js`, `vashli.js`, `glimmerwing.js` | โปรไฟล์เต็ม (มี field `prompt` สำหรับ AI image-gen) |
-| `mistcrawler.js`, `korrune.js`, `threndle.js`, `pallowfin.js`, `dunkrell.js`, `frostmane.js`, `cindergrub.js` | สถานะ `DRAFT` — ยังไม่มี field ครบ/ยังไม่มี `prompt` |
+| `_imageLibrary.js` | ประกาศ `const IMAGE_LIBRARY = {...}` และ `const ITHRA_CDN_BASE` (รูปภาพเสิร์ฟผ่าน jsDelivr CDN จาก repo นี้เอง) |
+| `vorthak.js`, `thessek.js`, `luvenn.js`, `karvos.js`, `skyther.js`, `vashli.js`, `glimmerwing.js`, `mistcrawler.js`, `korrune.js`, `threndle.js`, `pallowfin.js`, `dunkrell.js`, `frostmane.js`, `cindergrub.js` | โปรไฟล์เต็มทั้ง 14 ตัว (ครบ field รวม `prompt` สำหรับ AI image-gen) |
 
 แต่ละไฟล์ `creatures/<name>.js` มีรูปแบบเดียวกัน:
 
@@ -27,6 +26,16 @@ creaturesData.push({
 1. สร้าง/แก้ไข `creatures/<slug>.js` ตามรูปแบบด้านบน
 2. เพิ่ม `<script src="creatures/<slug>.js"></script>` ต่อจากไฟล์ตัวอื่นใน `index.html` (ถ้ายังไม่มี)
 3. ถ้าตัวนั้นมี field `prompt` (AI image-gen) **ต้องเขียนตามกฎด้านล่างเท่านั้น**
+
+## ALIEN INTENSITY SCALE (Tier I–V)
+
+ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและเหตุผลรายตัวได้ในหน้า Design Rulebook (`data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE") สรุปสั้นๆ:
+
+- **Tier I (เบาบาง)**: Vorthak, Thessek, Karvos, Luvenn — ห้ามเปลี่ยน silhouette เด็ดขาด เพราะ Thessek/Karvos ผูกกลไก "สัญชาตญาณสับสน" กันเอง และ Luvenn คือร่างปัจจุบันของตัวเอก ปรับได้แค่พื้นผิว/ลาย
+- **Tier II (เล็กน้อย)**: Skyther, Vashli, Frostmane
+- **Tier III (ปานกลาง)**: Dunkrell, Pallowfin, Mistcrawler
+- **Tier IV (เข้มข้น)**: Threndle, Glimmerwing
+- **Tier V (สุดขั้ว)**: Korrune, Cindergrub — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
 
 ## RULE: AI Image-Gen Prompt Style (field `prompt`)
 
