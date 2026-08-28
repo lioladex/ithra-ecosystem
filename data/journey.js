@@ -54,7 +54,8 @@ const JOURNEY_STEPS = [
             `หลายพันปีผ่านไปแบบนั้น ตื่น เดิน กิน หนี นอน วนซ้ำไปเรื่อยๆ จนกระทั่งวันหนึ่งลึกเข้าไปในป่าหมอกชั้นกลางของทวีป Verath ที่ซึ่งแสงแดดจาก Ashvel ไม่เคยตกกระทบพื้นดินตรงๆ อีกต่อไป มีเพียงกระจายผ่านหมอกหนาลงมาเป็นลำสีส้ม-ทองอ่อนๆ ท่ามกลางความชื้นที่จับตัวเป็นหยดน้ำอยู่บนทุกใบไม้ตลอดเวลา — ร่างที่คุณกำลังสวมอยู่ตอนนี้ก็หยุดเดินลง`,
             `มันเป็นร่างสูงโปร่งสี่ขา คอเรียวยาวชะลูด มีแผงคล้ายใบไม้พับแนบเรียงเป็นริ้วลงมาตามท้ายทอย ยืนอยู่ท่ามกลางลำต้นไม้ปกคลุมมอสสูงชะลูดที่ทะลุผ่านชั้นหมอกขึ้นไปเกินสองร้อยเมตร รากอากาศห้อยระย้าลงมาจากกิ่งสูง เถาวัลย์เลื้อยพันรอบลำต้นจนแทบมองไม่เห็นเปลือกไม้ด้านใน — เสียงหยดน้ำจากใบไม้ที่ตกกระทบพื้นดินชื้นเป็นจังหวะเดียวที่แทรกความเงียบของป่าทั้งผืน`
         ],
-        continueLabel: "ที่นี่คือที่ไหน ?"
+        continueLabel: "ที่นี่คือที่ไหน ?",
+        unlocks: ["LUVENN"]
     },
     {
         tag: "T-0 — ฝูงอาบแสง",
@@ -77,6 +78,7 @@ const JOURNEY_STEPS = [
     {
         tag: "T+3 — ภาพซ้อนทับ",
         key: true,
+        unlocks: ["KARVOS"],
         paragraphs: [
             `เงาสี่ขาตัวหนึ่งพุ่งทะลุพุ่มไม้เบื้องหน้าออกมากลางแอ่งโคลนที่แสงสีส้มยังทาบอยู่ ลำตัวลึก อกกว้าง สันหลังโหนกเป็นแนวยาว หูตั้งแหลมสองข้างสั่นไหวรับเสียง หางยาวพวัดตามจังหวะการกระโจน`,
             `และในเสี้ยววินาทีนั้นเอง เกิดบางอย่างที่ไม่ควรเกิดขึ้นได้เลยในร่างที่เพิ่งมีสติมาได้ไม่กี่พันปี — ภาพเงาตรงหน้าซ้อนทับพอดีเป๊ะกับบางสิ่งที่ไม่เคยเห็นมาก่อนเลยในชีวิตนี้ แต่กลับคุ้นเคยอย่างที่สุด ราวกับเคยเผชิญหน้ากับมันมาแล้วนับล้านครั้งในอีกชีวิตหนึ่งที่จำไม่ได้อีกต่อไป`,
@@ -160,14 +162,34 @@ function journeyReset() {
         journeyIndex = 0;
         journeyState = 'step';
     }
+    journeyBackfillUnlocks();
     journeyRender();
+}
+
+/* ปลดล็อก species ของทุก checkpoint ที่เคยไปถึงแล้วแบบเงียบๆ (ไม่ toast ซ้ำ)
+   เผื่อกรณี resume จาก progress เก่า หรือระบบ unlock นี้เพิ่งถูกเพิ่มเข้ามา
+   ทีหลังหลังจากผู้เล่นบางคนเล่นผ่านจุดนั้นไปแล้ว */
+function journeyBackfillUnlocks() {
+    if (typeof unlockSpecies !== 'function') return;
+    const maxStepIndex = Math.min(journeyFurthest, JOURNEY_STEPS.length - 1);
+    for (let i = 0; i <= maxStepIndex; i++) {
+        const step = JOURNEY_STEPS[i];
+        if (step.unlocks) unlockSpecies(step.unlocks, { silent: true });
+    }
 }
 
 function journeyContinue() {
     journeyIndex++;
     journeyState = 'step';
-    if (journeyIndex > journeyFurthest) journeyFurthest = journeyIndex;
+    const isNewGround = journeyIndex > journeyFurthest;
+    if (isNewGround) journeyFurthest = journeyIndex;
     journeySaveProgress();
+
+    const step = JOURNEY_STEPS[journeyIndex];
+    if (isNewGround && step && step.unlocks && typeof unlockSpecies === 'function') {
+        unlockSpecies(step.unlocks);
+    }
+
     journeyRender();
 }
 

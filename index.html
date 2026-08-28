@@ -151,6 +151,31 @@
         .species-card-name { font-size: 1.6rem; color: white; margin: 8px 0 12px 0; letter-spacing: 1px; font-weight: 600; text-shadow: 0 2px 8px rgba(0,0,0,0.6); }
 
         .status-badge { font-size: 0.65rem; padding: 2px 6px; border-radius: 3px; letter-spacing: 1px; font-weight: bold; font-family: 'Rajdhani', sans-serif; display: inline-block; }
+
+        /* --- Unknown Species lock system --- */
+        .dev-toggle-btn { background: rgba(255,255,255,0.05); border: 1px solid #475569; color: #94a3b8; padding: 6px 12px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.72rem; letter-spacing: 1.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease; }
+        .dev-toggle-btn:hover { border-color: var(--accent-default); color: var(--accent-default); }
+        .dev-toggle-btn.active { background: rgba(255,184,74,0.12); border-color: #ffb84a; color: #ffb84a; }
+        .species-card.locked { cursor: default; border-style: dashed; border-color: rgba(255,255,255,0.1); background: rgba(10,14,18,0.5); }
+        .species-card.locked:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,0.18); }
+        .species-card.locked .card-content { align-items: center; justify-content: center; text-align: center; gap: 8px; }
+        .locked-icon { font-size: 1.7rem; color: #334155; }
+        .locked-title { font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; color: #64748b; font-size: 0.95rem; }
+        .locked-desc { color: #46536a; font-size: 0.72rem; line-height: 1.6; max-width: 200px; }
+
+        #species-toast-root { position: fixed; top: 18px; right: 18px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
+        .species-toast {
+            pointer-events: auto; min-width: 260px; max-width: 320px; background: rgba(10,14,20,0.95);
+            border: 1px solid var(--accent-default); border-left: 4px solid var(--accent-default); border-radius: 6px;
+            padding: 12px 16px; box-shadow: 0 8px 24px rgba(0,0,0,0.5), 0 0 20px rgba(56,189,248,0.15);
+            backdrop-filter: blur(6px); animation: toast-in 0.35s ease forwards;
+        }
+        .species-toast.leaving { animation: toast-out 0.3s ease forwards; }
+        .species-toast .toast-eyebrow { font-family: 'Rajdhani', sans-serif; font-size: 0.65rem; letter-spacing: 3px; color: var(--accent-default); text-transform: uppercase; margin-bottom: 4px; }
+        .species-toast .toast-title { color: #fff; font-size: 0.95rem; font-weight: 600; }
+        .species-toast .toast-title em { color: var(--alive); font-style: normal; }
+        @keyframes toast-in { from { opacity: 0; transform: translateX(30px); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes toast-out { from { opacity: 1; transform: translateX(0); } to { opacity: 0; transform: translateX(30px); } }
         .status-extinct { color: var(--danger); border: 1px solid rgba(255,59,40,0.3); background: rgba(255,59,40,0.1); }
         .status-alive { color: var(--alive); border: 1px solid rgba(110,242,160,0.3); background: rgba(110,242,160,0.1); }
         .status-draft { color: var(--accent-default); border: 1px solid rgba(56,189,248,0.35); background: rgba(56,189,248,0.1); }
@@ -451,8 +476,11 @@
                     <h1>SPECIES DATABASE</h1>
                     <p style="color: #64748b; margin: 5px 0 0 0; font-size: 0.85rem; letter-spacing: 2px;">FILE DIRECTORY // ITHRA ECOSYSTEM</p>
                 </div>
-                <div class="font-hud" style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
-                    TOTAL RECORDS: <span style="color: white;">14</span>
+                <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                    <div class="font-hud" style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
+                        KNOWN: <span id="known-count" style="color: white;">0</span> / 14
+                    </div>
+                    <button id="dev-mode-toggle" class="dev-toggle-btn" onclick="toggleDevMode()">🔒 DEV MODE: OFF</button>
                 </div>
             </div>
 
@@ -634,15 +662,114 @@
             if (viewId === 'story-view') { journeyReset(); }
         }
 
+        /* --- Unknown Species lock system ---
+           creature ที่ยังไม่ถูกกล่าวถึงในเนื้อเรื่อง Journey of Confluence
+           จะแสดงเป็นการ์ดเงา "??? UNKNOWN SPECIES" ใน Species Database
+           ปลดล็อกอัตโนมัติเมื่อผู้เล่นไปถึง checkpoint ที่เกี่ยวข้อง (ดู field
+           `unlocks` ใน JOURNEY_STEPS ที่ data/journey.js ซึ่งเรียก
+           unlockSpecies() กลับมาที่นี่) — บันทึกไว้ใน localStorage เหมือนกับ
+           ความคืบหน้าของ Journey ทนต่อการ refresh
+           DEV MODE toggle ไว้สำหรับดูข้อมูลทั้งหมดระหว่างพัฒนา ไม่ถือเป็น
+           การปลดล็อกจริง (ไม่เขียนลง knownSpeciesSet) */
+        const KNOWN_SPECIES_KEY = 'ithra_known_species_v1';
+        const DEV_MODE_KEY = 'ithra_dev_mode_v1';
+        let knownSpeciesSet = new Set();
+        let devModeOn = false;
+
+        function loadKnownSpecies() {
+            try {
+                const raw = localStorage.getItem(KNOWN_SPECIES_KEY);
+                return raw ? new Set(JSON.parse(raw)) : new Set();
+            } catch (e) { return new Set(); }
+        }
+        function saveKnownSpecies() {
+            try { localStorage.setItem(KNOWN_SPECIES_KEY, JSON.stringify([...knownSpeciesSet])); } catch (e) {}
+        }
+        function loadDevMode() {
+            try { return localStorage.getItem(DEV_MODE_KEY) === '1'; } catch (e) { return false; }
+        }
+        function saveDevMode() {
+            try { localStorage.setItem(DEV_MODE_KEY, devModeOn ? '1' : '0'); } catch (e) {}
+        }
+
+        function isSpeciesKnown(imageKey) {
+            return devModeOn || knownSpeciesSet.has(imageKey);
+        }
+
+        function unlockSpecies(keys, opts) {
+            if (!keys || !keys.length) return;
+            const silent = opts && opts.silent;
+            keys.forEach(key => {
+                if (knownSpeciesSet.has(key)) return;
+                knownSpeciesSet.add(key);
+                if (!silent) {
+                    const creature = creaturesData.find(c => c.imageKey === key);
+                    showSpeciesToast(creature ? creature.name : key);
+                }
+            });
+            saveKnownSpecies();
+            renderSpeciesGrid();
+        }
+
+        function toggleDevMode() {
+            devModeOn = !devModeOn;
+            saveDevMode();
+            renderSpeciesGrid();
+            updateDevModeButtonLabel();
+        }
+
+        function updateDevModeButtonLabel() {
+            const btn = document.getElementById('dev-mode-toggle');
+            if (!btn) return;
+            btn.classList.toggle('active', devModeOn);
+            btn.textContent = devModeOn ? '🔓 DEV MODE: ON' : '🔒 DEV MODE: OFF';
+        }
+
+        function showSpeciesToast(name) {
+            let root = document.getElementById('species-toast-root');
+            if (!root) {
+                root = document.createElement('div');
+                root.id = 'species-toast-root';
+                document.body.appendChild(root);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'species-toast';
+            toast.innerHTML = `<div class="toast-eyebrow">◈ UNKNOWN SPECIES DETECTED</div><div class="toast-title">"${name}" — <em>LEARNED</em></div>`;
+            root.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.add('leaving');
+                setTimeout(() => toast.remove(), 320);
+            }, 4200);
+        }
+
         function renderSpeciesGrid() {
             const container = document.getElementById('card-container');
             container.innerHTML = '';
-            
+
+            let knownCount = 0;
+
             creaturesData.forEach((creature, index) => {
-                const statusClass = statusClassFor(creature.status);
+                const known = isSpeciesKnown(creature.imageKey);
+                if (known) knownCount++;
+
                 const card = document.createElement('div');
-                card.className = 'species-card';
                 card.style.setProperty('--accent-default', creature.color);
+
+                if (!known) {
+                    card.className = 'species-card locked';
+                    card.innerHTML = `
+                        <div class="card-content">
+                            <div class="locked-icon">◈</div>
+                            <div class="locked-title">??? UNKNOWN SPECIES</div>
+                            <div class="locked-desc">รอการค้นพบผ่านเนื้อเรื่อง JOURNEY OF CONFLUENCE</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                    return;
+                }
+
+                const statusClass = statusClassFor(creature.status);
+                card.className = 'species-card';
 
                 const dataUri = creature.imageKey ? IMAGE_LIBRARY[creature.imageKey] : null;
                 const bgLayers = dataUri
@@ -663,6 +790,9 @@
                 card.onclick = () => showCreatureDetail(index);
                 container.appendChild(card);
             });
+
+            const countEl = document.getElementById('known-count');
+            if (countEl) countEl.textContent = knownCount;
         }
 
         function loadCreatureImage(imageKey) {
@@ -1117,9 +1247,12 @@
         }
 
         // Initialize the app
+        knownSpeciesSet = loadKnownSpecies();
+        devModeOn = loadDevMode();
+        updateDevModeButtonLabel();
         initContentSections();
+        journeyReset(); // backfill ปลดล็อกจาก progress เดิม (เงียบ) แล้วค่อย render
         renderSpeciesGrid();
-        journeyReset();
         init3DPlanet();
     </script>
 </body>
