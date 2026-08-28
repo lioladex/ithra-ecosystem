@@ -1,0 +1,39 @@
+/* =================================================================
+   MEMORY MECHANICS (DIR-03)
+   โหลดเข้า container ผ่าน JS (ดู index.html initContentSections())
+================================================================= */
+const MEMORY_MECHANICS_HTML = `
+            <div class="lead-text">Confluence ไม่ได้ "จำ" ในความหมายทั่วไป — มันสะสม <em style="color:#38bdf8">"ความรู้สึกว่าอะไรถูกต้อง"</em> ตลอด 2,000 ล้านปีก่อนจุดตื่นรู้ ไม่มีภาพ ไม่มีเสียง ไม่มีลำดับเวลา มีเพียงแรงผลักดันอัตโนมัติที่ก่อตัวจากการทำสิ่งเดิมซ้ำนับล้านครั้ง</div>
+
+            <div class="section-label">◈ กฎอิทธิพลของร่างเก่า</div>
+            <table class="data-table">
+                <tr><th style="color:var(--alive)">✓ ส่งต่อได้</th><th style="color:var(--danger)">✕ ส่งต่อไม่ได้</th></tr>
+                <tr><td>จังหวะและรูปแบบการเคลื่อนไหว</td><td>ภาพของร่างเก่าหรือสถานที่</td></tr>
+                <tr><td>ความรู้สึกว่าอะไรเป็นภัย/ไม่เป็นภัย</td><td>ชื่อ เสียง หรือลำดับเหตุการณ์</td></tr>
+                <tr><td>แรงผลักให้เข้าหาหรือถอยหนี</td><td>ความเข้าใจว่า "ฉันเคยเป็นสิ่งนั้น"</td></tr>
+                <tr><td>ความรู้สึกคุ้นเคยกับสถานการณ์บางแบบ</td><td><strong style="color:#ffb84a">ความรู้ว่าร่างปัจจุบันทำอะไรได้/ไม่ได้</strong></td></tr>
+            </table>
+            <div class="note-block warn"><strong>ข้อสุดท้ายคือจุดอันตรายที่สุด</strong> — สัญชาตญาณจากร่าง Vorthak สั่งให้ "ยืนหยัดและปะทะ" โดยไม่มีข้อมูลว่าร่างปัจจุบันหนักเท่าไหร่หรือมีอาวุธหรือไม่ <em>เป็นคำสั่งที่ไม่ผ่านการตรวจสอบความเป็นไปได้เลย</em></div>
+
+            <div class="section-label">◈ พัฒนาการความทรงจำ 5 ระยะ</div>
+            <div class="timeline-flow">
+                <div class="tl-item"><div class="tl-tag">ระยะ 0</div><div class="tl-title">ก่อนตื่นรู้ (2,000 ล้านปี)</div><div class="tl-desc">ไม่มีความทรงจำใดๆ ทั้งสิ้น มีแต่ปฏิกิริยาอัตโนมัติล้วนๆ</div></div>
+                <div class="tl-item key"><div class="tl-tag">ระยะ 1</div><div class="tl-title">ตื่นรู้ (จุดเริ่มเรื่อง)</div><div class="tl-desc">เกิดความสามารถ "หยุดและรู้สึกถึงความรู้สึกตัวเอง" เป็นครั้งแรก ยังจำอะไรไม่ได้เลย</div></div>
+                <div class="tl-item key"><div class="tl-tag">ระยะ 2</div><div class="tl-title">ยุคความรู้สึกนำทาง (1,000–3,000 ปี)</div><div class="tl-desc">ตอบสนองตาม "ความรู้สึกว่าอะไรถูกต้อง" — ช่วงที่ยาวนานและเปราะบางที่สุด มีสติแต่ยังไม่มีความทรงจำเรียนรู้จากความผิดพลาด</div></div>
+                <div class="tl-item key"><div class="tl-tag">ระยะ 3</div><div class="tl-title">ความทรงจำแรก (หลายพันปีต่อมา)</div><div class="tl-desc">เริ่มจำจากเรื่องพื้นฐานที่สุด: "สิ่งนี้กินได้ / กินไม่ได้"</div></div>
+                <div class="tl-item"><div class="tl-tag">ระยะ 4</div><div class="tl-title">ความทรงจำเชิงเหตุการณ์</div><div class="tl-desc">เริ่มมีสำนึกเรื่องเวลา — เงื่อนไขจำเป็นของคำถาม "ฉันเคยเป็นอะไรมาก่อน"</div></div>
+            </div>
+
+            <div class="section-label">◈ เส้นเวลาฉากตื่นรู้ (T-0 → T+7)</div>
+            <div class="timeline-flow">
+                <div class="tl-item"><div class="tl-tag">T-0</div><div class="tl-title">ฝูงอาบแสง</div><div class="tl-desc">ฝูง Luvenn กางแผงคอรับแสงพร้อมกัน — ร่างกายที่อิ่มแสงแผ่ความร้อนออกมาโดยไม่รู้ตัว</div></div>
+                <div class="tl-item"><div class="tl-tag">T+1 / T+2</div><div class="tl-title">ถูกล้อม → สัญญาณเตือน</div><div class="tl-desc">ฝูง Karvos ล้อมเงียบจากชั้นพื้นดิน ฝูง Luvenn จับแรงสั่นได้และแตกกระจายวิ่งหนี</div></div>
+                <div class="tl-item key"><div class="tl-tag">T+3</div><div class="tl-title">⚡ ภาพซ้อนทับ</div><div class="tl-desc">ตัวเอกเห็นเงาร่าง Karvos ตรงกับ Thessek ทุกประการ — สัญชาตญาณ Vorthak สั่ง "ยืนหยัดไว้" ปะทะกับสัญชาตญาณ Luvenn ที่สั่ง "หนี!" ร่างกายค้างกลางก้าว</div></div>
+                <div class="tl-item key"><div class="tl-tag">T+4</div><div class="tl-title">สวนกลางอากาศ</div><div class="tl-desc">รอ Karvos ลอยกลางอากาศแล้วยกขาหน้ากระแทก — น้ำหนัก 310 กก. ปะทะ 58 กก. ทำให้กระเด็นบาดเจ็บสาหัส</div></div>
+                <div class="tl-item"><div class="tl-tag">T+5 / T+6</div><div class="tl-title">ถูกรุม → ฝูงแตก</div><div class="tl-desc">ใช้จังหวะเข้า-ออกของ Vorthak รับมือ 5 ตัวที่เหลือ จนฝูงตื่นกลัวและถอยหนี</div></div>
+                <div class="tl-item key"><div class="tl-tag">T+7</div><div class="tl-title">★ ความเงียบ — สติดวงแรก</div><div class="tl-desc">ยืนแน่นิ่งเพื่อ "รู้สึกถึงสิ่งที่เพิ่งเกิดขึ้น" เป็นครั้งแรกในชีวิต — จุดกำเนิดของสติปัญญา</div></div>
+            </div>
+
+            <div class="note-block"><strong>หัวใจของฉาก</strong> — ตัวเอกไม่ได้รอดเพราะแข็งแกร่ง แต่รอดเพราะมี <em>ความรู้ที่ไม่ควรมีในร่างที่ไม่ควรมีความรู้นั้น</em> การไม่เข้าใจว่าตัวเองรอดมาได้อย่างไร คือคำถามแรกที่จุดชนวนทุกอย่างต่อจากนี้</div>
+            <div class="note-block warn">เอกสารฉบับเต็ม (รวมตารางวิเคราะห์ความสับสนสัญชาตญาณ) อยู่ในไฟล์ <em>codex/memory-and-awakening.md</em></div>
+`;
