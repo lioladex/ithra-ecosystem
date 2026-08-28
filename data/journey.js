@@ -430,7 +430,7 @@ const JOURNEY_STEPS = [
                 text: `หยุดอยู่บนกิ่งไม้สูงชั่วครู่ กางปีกออกเต็มที่มองมันอย่างตั้งใจเป็นครั้งแรก ทบทวนทุกอย่างที่ร่างกายเพิ่งเรียนรู้มาทีละเสี้ยว — มุมเอียงตอนเลี้ยว จังหวะกระพือตอนไต่ระดับ ท่วงท่าตอนร่อนนิ่ง ทุกอย่างเริ่มประกอบกันเป็นภาพเดียวในหัว ก่อนจะกระโดดออกจากกิ่งไม้พุ่งทะยานสู่ทิศทางที่จำได้`
             }
         ],
-        continueLabel: "จบบทที่ 1 — ไปหา Karvos"
+        continueLabel: "Continue Journey"
     }
 ];
 
@@ -487,6 +487,7 @@ let journeyPendingWarning = '';
 let journeyExploredMap = {}; // { [stepId]: { [actionId]: { text, unlockKey } } } — action ที่ใช้ไปแล้วต่อ step (ทน refresh, กดซ้ำไม่ได้)
 let apCurrent = 0;
 let apMax = 0;
+let journeyApPulse = false; // true = เพิ่งฟื้น AP มา — ให้ journeyRenderActionsBlock() เล่น animation เน้นย้ำครั้งเดียวตอน render ถัดไป แล้วเคลียร์ทิ้ง
 let skillsLearned = {}; // { [skillId]: { count, learned } }
 
 function journeyIdToIndex(id) {
@@ -554,8 +555,11 @@ function apRecoverCustom(amount, label, flavor) {
     apSaveState();
 
     const gained = apCurrent - before;
-    if (gained > 0 && typeof journeyLogAdd === 'function') {
-        journeyLogAdd('⚡ AP RESTORED', `${label} — ${flavor} (+${gained} AP)`, 'ap');
+    if (gained > 0) {
+        journeyApPulse = true;
+        if (typeof journeyLogAdd === 'function') {
+            journeyLogAdd('⚡ AP RESTORED', `${label} — ${flavor} (+${gained} AP)`, 'ap');
+        }
     }
 }
 
@@ -776,6 +780,7 @@ function journeyDoAction(actionId) {
         if (used[actionId]) return; // ใช้ไปแล้ว กดซ้ำไม่ได้
         if (action.requires && !used[action.requires]) return; // ยังไม่ปลดล็อกลำดับ
         if (action.visibleIf && !action.visibleIf()) return; // เงื่อนไขเนื้อเรื่อง (เช่น ต้องเตะ Skyther มาก่อน) ยังไม่ตรง
+        if (action.teachesSkill && skillsLearned[action.teachesSkill] && skillsLearned[action.teachesSkill].learned) return; // เรียนจบไปแล้ว ไม่มีอะไรให้เรียนเพิ่ม
 
         // action พักผ่อน (มี `restores`) กับ action อื่นที่ใช้ AP ในสเต็ปเดียวกัน
         // กันคนละทาง — เลือกได้อย่างใดอย่างหนึ่งต่อการมาเยือน 1 ครั้งเท่านั้น
@@ -787,6 +792,7 @@ function journeyDoAction(actionId) {
         if (action.restores) {
             apCurrent = Math.min(apMax, apCurrent + action.restores);
             apSaveState();
+            journeyApPulse = true;
         } else {
             const cost = action.apCost || 1;
             if (!apSpend(cost)) return; // AP ไม่พอ
@@ -824,7 +830,11 @@ function journeyRenderActionsBlock(step) {
 
     let pips = '';
     for (let i = 0; i < apMax; i++) pips += `<span class="vn-ap-pip${i < apCurrent ? ' filled' : ''}"></span>`;
-    const apHud = `<div class="vn-ap-hud">⚡ AP <span class="vn-ap-pips">${pips}</span> ${apCurrent}/${apMax}</div>`;
+    // เพิ่งฟื้น AP มา (ดู journeyApPulse) — เล่น animation เน้นย้ำครั้งเดียวตอน
+    // render นี้ แล้วเคลียร์ flag ทิ้ง กัน render ครั้งถัดไปเล่นซ้ำเอง
+    const justRecovered = journeyApPulse;
+    journeyApPulse = false;
+    const apHud = `<div class="vn-ap-hud${justRecovered ? ' vn-ap-pulse' : ''}">⚡ AP <span class="vn-ap-pips">${pips}</span> ${apCurrent}/${apMax}</div>`;
 
     // log เรียงตามลำดับที่ "กดจริง" (ลำดับ insertion ของ object key ซึ่ง JS
     // การันตีคงลำดับไว้ให้สำหรับ string key) ไม่ใช่ลำดับที่นิยาม action ไว้ใน
@@ -846,6 +856,8 @@ function journeyRenderActionsBlock(step) {
     if (!isPast) step.actions.forEach(action => {
         if (used[action.id]) return; // แสดงใน log ไปแล้ว ไม่ต้องมีปุ่มซ้ำ
         if (action.visibleIf && !action.visibleIf()) return; // เงื่อนไขเนื้อเรื่องยังไม่ตรง ไม่แสดงปุ่มเลย
+        // ทักษะที่ผูกกับ action นี้เรียนจบแล้ว (เก็บครบ obsNeeded) ไม่มีอะไรให้เรียนรู้เพิ่มอีก — ซ่อนปุ่มไปเลย
+        if (action.teachesSkill && skillsLearned[action.teachesSkill] && skillsLearned[action.teachesSkill].learned) return;
 
         if (action.restores) {
             if (otherActionUsed) return; // ทำ action อื่นไปแล้ว พักไม่ได้อีก

@@ -370,8 +370,21 @@
         .vn-rest-btn:hover { background: rgba(110,242,160,0.18); border-color: #6ef2a0; }
         .vn-ap-hud { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 1px; color: #8fa6b8; }
         .vn-ap-pips { display: inline-flex; gap: 4px; }
-        .vn-ap-pip { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #a78bfa; background: transparent; }
+        .vn-ap-pip { width: 12px; height: 12px; border-radius: 50%; border: 1px solid #a78bfa; background: transparent; transition: transform 0.2s ease; }
         .vn-ap-pip.filled { background: #a78bfa; box-shadow: 0 0 6px rgba(167,139,250,0.6); }
+        /* เล่นครั้งเดียวตอน AP เพิ่งฟื้น (ดู journeyApPulse ใน journey.js) — สีเขียว
+           แยกจากสีม่วงปกติของ AP ให้รู้สึกชัดว่าเป็น "แต้มที่เพิ่งได้คืนมา" ไม่ใช่แค่ค่าปกติ */
+        .vn-ap-hud.vn-ap-pulse { border-radius: 6px; padding: 4px 8px; margin: -4px -8px 8px; animation: vn-ap-glow 0.9s ease; }
+        .vn-ap-hud.vn-ap-pulse .vn-ap-pip.filled { animation: vn-ap-pip-flash 0.9s ease; }
+        @keyframes vn-ap-glow {
+            0% { background: rgba(110,242,160,0.32); box-shadow: 0 0 0 rgba(110,242,160,0); }
+            35% { background: rgba(110,242,160,0.2); box-shadow: 0 0 16px rgba(110,242,160,0.45); }
+            100% { background: transparent; box-shadow: 0 0 0 rgba(110,242,160,0); }
+        }
+        @keyframes vn-ap-pip-flash {
+            0% { transform: scale(1.7); box-shadow: 0 0 14px #6ef2a0; }
+            100% { transform: scale(1); }
+        }
         .vn-skill-progress { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; margin-top: 6px; }
         .vn-action-row { display: flex; flex-wrap: wrap; gap: 10px; }
 
@@ -752,7 +765,7 @@
            ไม่ถือเป็นการปลดล็อกจริง (ไม่เขียนลง knownTiers) */
         const KNOWN_SPECIES_KEY = 'ithra_known_species_tiers_v1';
         const DEV_MODE_KEY = 'ithra_dev_mode_v1';
-        const LORE_TIER_LABELS = ['SIGHTING LOGGED', 'ANATOMY DOCUMENTED', 'BEHAVIOR OBSERVED', 'ANALYSIS COMPLETE', 'FULL DOSSIER COMPLETE'];
+        const LORE_TIER_LABELS = ['พบตัวอีกครั้ง', 'เห็นรูปร่างชัดเจนขึ้น', 'สังเกตพฤติกรรมได้แล้ว', 'วิเคราะห์เชิงลึกสำเร็จ', 'เข้าใจครบทุกด้านแล้ว'];
         let knownTiers = {}; // { [imageKey]: tier 0-4 } — key ไม่มีอยู่เลย = ยังไม่รู้จักเลย
         let devModeOn = false;
 

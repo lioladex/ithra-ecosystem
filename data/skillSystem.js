@@ -136,6 +136,6 @@ const SKILL_DEFINITIONS = {
         progressLabel: "พยายามทำความเข้าใจรูปแบบการเคลื่อนไหวบางอย่าง",
         requiresOrgan: "ปีก",
         obsNeeded: 6, // Skyther สอน — Alien Intensity Tier II (base 3) ×2 ตามที่ปรับความยากขึ้น
-        learnedLabel: "FLIGHT PATTERN UNDERSTOOD"
+        learnedLabel: "เรียนรู้การบิน"
     }
 };
