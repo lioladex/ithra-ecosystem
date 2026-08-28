@@ -24,6 +24,7 @@
 
 const JOURNEY_STEPS = [
     {
+        id: "genesis",
         tag: "T −2,000,000,000 ปี — ก่อนสิ่งใดมีชื่อ",
         paragraphs: [
             `ไม่มีเวลา ไม่มีสถานที่ ไม่มีคำว่า "ที่นี่" หรือ "ตอนนี้" มีเพียงการตอบสนองที่ไหลต่อกันไปเรื่อยๆ โดยไม่เคยหยุดพักสักครั้งเดียว`,
@@ -35,6 +36,7 @@ const JOURNEY_STEPS = [
         continueLabel: "มันคืออะไร ?"
     },
     {
+        id: "awakening",
         tag: "T-0 — วินาทีที่หยุด",
         key: true,
         paragraphs: [
@@ -48,6 +50,7 @@ const JOURNEY_STEPS = [
         continueLabel: "เริ่มต้นยังไง ?"
     },
     {
+        id: "verath-arrival",
         tag: "หลายพันปีถัดมา — ยุคที่ความรู้สึกนำทาง",
         paragraphs: [
             `จำอะไรไม่ได้เลยสักอย่าง ไม่มีภาพร่างเก่าหลงเหลืออยู่ ไม่มีชื่อสถานที่ มีเพียง <em>ความรู้สึกว่าอะไรถูกต้อง</em> ล่องลอยอยู่เหนือสัญชาตญาณเดิมเหมือนเงาบางๆ ที่ปกคลุมมันไว้ทั้งหมดโดยไม่เคยเปลี่ยนแปลงมันเลยแม้แต่นิดเดียว`,
@@ -58,15 +61,46 @@ const JOURNEY_STEPS = [
         unlocks: ["LUVENN"]
     },
     {
+        id: "sun-bath",
         tag: "T-0 — ฝูงอาบแสง",
         paragraphs: [
             `ช่องว่างเล็กๆ บนเรือนยอดเปิดออกพอดีเหนือหัว ปล่อยให้ลำแสงสีทองอมส้มลอดผ่านม่านหมอกลงมาทาบบนพื้นป่าเป็นวงกลมนวลๆ ทั่วทั้งฝูงหยุดเดินพร้อมกันโดยไม่มีใครสั่ง เหมือนรู้กันเองว่านี่คือช่วงเวลาที่รอคอย`,
             `รากฝอยสีเขียวอ่อนที่ปลายกีบผุดออกมาจิกลงในดินชื้นเย็น คอทุกคอถูกชูขึ้นจนสุดความยาว หันไปทางเดียวกันเหมือนดอกไม้พร้อมใจกันบานรับแดด แล้วแผงที่เคยพับแนบกับต้นคอก็เริ่มคลี่ตัวออกทีละริ้ว ก่อนจะกางแผ่กว้างเต็มที่เป็นวงพัดใหญ่รอบหัวคล้ายหางนกยูง เส้นใบบางๆ บนแผงเรืองแสงสีเขียวมรกตจางๆ สั่นไหวทุกครั้งที่รับแสงแต่ละหยดที่ลอดผ่านเรือนยอดลงมากระทบ`,
             `ไอน้ำอุ่นลอยขึ้นจากแผงที่เพิ่งกางเต็มที่ ปนกับกลิ่นดินชื้นและใบไม้เน่าที่หอมอ่อนๆ ไม่มีคำใดอธิบายความรู้สึกนี้ได้ครบถ้วน แต่ถ้าต้องมีคำสักคำ คำที่ใกล้เคียงที่สุดคือ — <em>อุ่น อิ่ม ปลอดภัย มีชีวิต</em> นี่คือครั้งแรกที่ความรู้สึกทั้งหมดประกอบรวมกันเป็นสิ่งที่เกือบจะเรียกได้ว่า "ความสุข"`
         ],
+        explore: {
+            prompt: "🔍 สำรวจรอบๆ",
+            pool: [
+                {
+                    unlockKey: "GLIMMERWING",
+                    text: `กลุ่มแมลงตัวเล็กโปร่งแสงบินวนเป็นฝูงหนาแน่นอยู่รอบแผงคอที่เพิ่งกางออก แสงสีฟ้าอ่อนกะพริบไปมาระหว่างตัวมันราวกับกำลังคุยกันด้วยภาษาที่ไม่มีเสียง มันไม่กลัวเลยแม้จะบินใกล้แค่ไหน เหมือนรู้ว่าที่นี่ปลอดภัย`
+                },
+                {
+                    unlockKey: "KORRUNE",
+                    text: `ลมพัดพากลิ่นแปลกปลอมบางอย่างผ่านมาแวบหนึ่ง ไม่เหมือนกลิ่นของสิ่งมีชีวิตใดที่เคยผ่านมาทางนี้เลย ทั่วทั้งป่าเงียบลงพร้อมกันในเสี้ยววินาทีนั้น ก่อนกลิ่นจะจางหายไปในสายลม เหมือนไม่มีอะไรเกิดขึ้น`
+                },
+                {
+                    unlockKey: "MISTCRAWLER",
+                    text: `ระหว่างลำต้นไม้สองต้นมีใยเหนียวขึงบางๆ สะท้อนแสงเป็นเส้นระยิบระยับ เจ้าของใยหลบซ่อนตัวนิ่งสนิทจนแทบแยกไม่ออกจากเปลือกไม้ ขยับเพียงขาปล้องบางๆ ทีละก้าวช้าๆ เมื่อมีแมลงเรืองแสงตัวเล็กบินเข้ามาใกล้เกินไป`
+                },
+                {
+                    unlockKey: "SKYTHER",
+                    text: `เงาปีกกว้างร่อนผ่านช่องแสงบนเรือนยอดเบื้องบนอย่างเงียบเชียบ ไม่ขยับปีกเลยสักครั้ง ลอยตัวอยู่กับกระแสลมเหมือนไม่ต้องออกแรงอะไรเลย ก่อนจะเบี่ยงตัวหายลับไปหลังกลุ่มหมอกอีกครั้ง`
+                },
+                {
+                    unlockKey: "VASHLI",
+                    text: `ก้อนสิ่งที่ดูเหมือนปุ่มไม้บนกิ่งข้างบนขยับตัวเบาๆ ก่อนจะเผยดวงตากลมโตคู่หนึ่งจ้องกลับมา แล้วมันก็พลิกตัวห้อยหัวลงใต้กิ่งไม้อย่างรวดเร็ว หายวับไปในพริบตาราวกับไม่เคยอยู่ตรงนั้นมาก่อน`
+                },
+                {
+                    unlockKey: "DUNKRELL",
+                    text: `สิ่งที่เข้าใจว่าเป็นท่อนไม้ผุปกคลุมเชื้อราอยู่ริมทาง ขยับตัวช้าๆ อย่างไม่น่าเชื่อ มันไม่สนใจอะไรรอบตัวเลยแม้แต่น้อย เคลื่อนผ่านไปทีละก้าวด้วยจังหวะที่ช้ากว่าทุกสิ่งที่เคยเห็นมา`
+                }
+            ]
+        },
         continueLabel: "เกิดอะไรขึ้นกันแน่ ?"
     },
     {
+        id: "tremor",
         tag: "T+1 / T+2 — แรงสั่นใต้ดิน",
         paragraphs: [
             `แล้วพื้นดินก็สั่น — ไม่ใช่จังหวะของสายลมที่พัดผ่านเรือนยอด ไม่ใช่ฝีเท้าของฝูงเดียวกันเอง แต่เป็นจังหวะที่แผ่วเบา สม่ำเสมอ เยือกเย็น และกำลังเข้าใกล้จากหลายทิศพร้อมกันอย่างมีการวางแผน`,
@@ -76,6 +110,7 @@ const JOURNEY_STEPS = [
         continueLabel: "นั่นคืออะไร ?"
     },
     {
+        id: "the-overlap",
         tag: "T+3 — ภาพซ้อนทับ",
         key: true,
         unlocks: ["KARVOS"],
@@ -112,26 +147,42 @@ const JOURNEY_CLOSE_BODY_HTML = `
 `;
 
 /* --- ตัวควบคุมการเล่น (VN stepper) พร้อม progression / checkpoint timeline ---
-   บันทึกความคืบหน้าไว้ใน localStorage (คีย์เดียวต่อ origin — ไม่ผูกกับ IP
-   เครื่อง ทนต่อการ refresh/ปิดเปิดเบราว์เซอร์ใหม่ ตราบใดที่เป็นเบราว์เซอร์/
-   โปรไฟล์เดิมและไม่ได้ล้าง site data)
-     journeyFurthest = index ไกลสุดที่เคยปลดล็อก (0..JOURNEY_STEPS.length,
-                       ค่า JOURNEY_STEPS.length หมายถึงปลดล็อกจุดจบแล้ว)
-     journeyIndex    = สเต็ปที่กำลังแสดงอยู่ตอนนี้ (0..JOURNEY_STEPS.length-1)
-     journeyState    = 'step' | 'warning' | 'close'
+   บันทึกความคืบหน้าไว้ใน localStorage โดยอ้างอิงด้วย "id" แบบ string
+   ของแต่ละ step (ดู field `id` ใน JOURNEY_STEPS) แทนตำแหน่ง index ในอาเรย์
+   — จงใจทำแบบนี้เพื่อไม่ให้เซฟเก่าของผู้อ่านพังเมื่อในอนาคตมีการแทรก
+   step ใหม่ตรงกลางเนื้อเรื่อง (ถ้าอ้างด้วย index ตัวเลข การแทรกจะทำให้
+   step ทุกอันหลังจุดแทรกเลื่อนตำแหน่ง เซฟเก่าจะชี้ผิดจุดทันที) กฎเดียว
+   ที่ต้องรักษา: ห้ามเปลี่ยนหรือเอา id เดิมไปใช้ซ้ำกับ step อื่นเด็ดขาด
+   จะเพิ่ม step ใหม่กี่จุดก็ได้ ตราบใดที่ตั้ง id ใหม่ไม่ซ้ำของเดิม
+
+     journeyUnlockedIds = Set<string> ของทุก id (รวม JOURNEY_END_ID) ที่
+                          เคยปลดล็อกแล้ว — คือ "ประวัติ" ทั้งหมด ไม่ใช่แค่
+                          จุดปัจจุบัน จึงใช้กำหนดได้ว่า checkpoint ไหนคลิก
+                          ย้อนกลับไปดูได้บ้าง
+     journeyIndex       = ตำแหน่ง (in-memory เท่านั้น ไม่ persist ตรงๆ)
+                          ของ step ที่กำลังแสดงอยู่ในอาเรย์ JOURNEY_STEPS
+     journeyState        = 'step' | 'warning' | 'close'
    คลิก checkpoint ย้อนกลับไปจุดที่ปลดล็อกแล้วได้เสมอ แต่ข้ามไปจุดที่ยัง
    ไม่ปลดล็อกไม่ได้ (ปุ่มจะไม่มี onclick เลยสำหรับจุดที่ล็อกอยู่) --- */
-const JOURNEY_STORAGE_KEY = 'ithra_journey_progress_v1';
+const JOURNEY_STORAGE_KEY = 'ithra_journey_progress_v2';
+const JOURNEY_END_ID = '__end__';
 
 let journeyIndex = 0;
-let journeyFurthest = 0;
+let journeyUnlockedIds = new Set();
 let journeyState = 'step'; // 'step' | 'warning' | 'close'
 let journeyPendingWarning = '';
 
+function journeyIdToIndex(id) {
+    return JOURNEY_STEPS.findIndex(s => s.id === id);
+}
+
 function journeySaveProgress() {
     try {
-        const current = journeyState === 'close' ? JOURNEY_STEPS.length : journeyIndex;
-        localStorage.setItem(JOURNEY_STORAGE_KEY, JSON.stringify({ current, furthest: journeyFurthest }));
+        const currentId = journeyState === 'close' ? JOURNEY_END_ID : JOURNEY_STEPS[journeyIndex].id;
+        localStorage.setItem(JOURNEY_STORAGE_KEY, JSON.stringify({
+            currentId,
+            unlockedIds: [...journeyUnlockedIds]
+        }));
     } catch (e) { /* localStorage อาจถูกปิดใน private mode — ข้ามไปเงียบๆ */ }
 }
 
@@ -146,24 +197,43 @@ function journeyLoadProgress() {
 
 function journeyReset() {
     const saved = journeyLoadProgress();
-    const maxIndex = JOURNEY_STEPS.length;
-    if (saved && typeof saved.furthest === 'number') {
-        journeyFurthest = Math.min(Math.max(saved.furthest, 0), maxIndex);
-        const resumeAt = Math.min(Math.max(saved.current || 0, 0), maxIndex);
-        if (resumeAt >= maxIndex) {
+    const firstId = JOURNEY_STEPS[0].id;
+
+    if (saved && Array.isArray(saved.unlockedIds)) {
+        journeyUnlockedIds = new Set(saved.unlockedIds);
+        journeyUnlockedIds.add(firstId); // step แรกปลดล็อกเสมอ กันเซฟเสีย
+
+        if (saved.currentId === JOURNEY_END_ID && journeyUnlockedIds.has(JOURNEY_END_ID)) {
             journeyState = 'close';
-            journeyIndex = maxIndex - 1;
+            journeyIndex = JOURNEY_STEPS.length - 1;
         } else {
-            journeyState = 'step';
-            journeyIndex = resumeAt;
+            const idx = journeyIdToIndex(saved.currentId);
+            if (idx >= 0 && journeyUnlockedIds.has(saved.currentId)) {
+                journeyState = 'step';
+                journeyIndex = idx;
+            } else {
+                // id เดิมหาไม่เจอ (เช่นถูกลบ/เปลี่ยนไปแล้ว) — ถอยไปจุดไกลสุด
+                // เท่าที่ยังปลดล็อกอยู่จริงแทน ไม่ให้ผู้อ่านหลุดจากเนื้อเรื่อง
+                journeyState = 'step';
+                journeyIndex = journeyFurthestUnlockedIndex();
+            }
         }
     } else {
-        journeyFurthest = 0;
+        journeyUnlockedIds = new Set([firstId]);
         journeyIndex = 0;
         journeyState = 'step';
     }
+
     journeyBackfillUnlocks();
     journeyRender();
+}
+
+function journeyFurthestUnlockedIndex() {
+    let idx = 0;
+    JOURNEY_STEPS.forEach((step, i) => {
+        if (journeyUnlockedIds.has(step.id)) idx = i;
+    });
+    return idx;
 }
 
 /* ปลดล็อก species ของทุก checkpoint ที่เคยไปถึงแล้วแบบเงียบๆ (ไม่ toast ซ้ำ)
@@ -171,34 +241,61 @@ function journeyReset() {
    ทีหลังหลังจากผู้เล่นบางคนเล่นผ่านจุดนั้นไปแล้ว */
 function journeyBackfillUnlocks() {
     if (typeof unlockSpecies !== 'function') return;
-    const maxStepIndex = Math.min(journeyFurthest, JOURNEY_STEPS.length - 1);
-    for (let i = 0; i <= maxStepIndex; i++) {
-        const step = JOURNEY_STEPS[i];
-        if (step.unlocks) unlockSpecies(step.unlocks, { silent: true });
-    }
+    JOURNEY_STEPS.forEach(step => {
+        if (journeyUnlockedIds.has(step.id) && step.unlocks) {
+            unlockSpecies(step.unlocks, { silent: true });
+        }
+    });
 }
 
 function journeyContinue() {
     journeyIndex++;
     journeyState = 'step';
-    const isNewGround = journeyIndex > journeyFurthest;
-    if (isNewGround) journeyFurthest = journeyIndex;
+    const step = JOURNEY_STEPS[journeyIndex];
+    const isNewGround = !journeyUnlockedIds.has(step.id);
+    if (isNewGround) journeyUnlockedIds.add(step.id);
     journeySaveProgress();
 
-    const step = JOURNEY_STEPS[journeyIndex];
-    if (isNewGround && step && step.unlocks && typeof unlockSpecies === 'function') {
+    if (isNewGround && step.unlocks && typeof unlockSpecies === 'function') {
         unlockSpecies(step.unlocks);
     }
 
     journeyRender();
 }
 
+/* ระบบสำรวจ (Exploration) — เฉพาะ step ที่มี field `explore` เท่านั้น
+   กดกี่ครั้งก็ได้ ไม่นับเป็นการเดินเรื่องต่อ (ไม่แตะ journeyIndex/state)
+   แต่ละครั้งสุ่มหยิบ 1 รายการจาก pool มาต่อท้าย log บนกล่องเดิม (ไม่ re-render
+   ทั้ง step กันรีเซ็ต fade-in ของย่อหน้าที่อ่านไปแล้ว) แล้วปลดล็อก species
+   ที่ผูกไว้กับรายการนั้นแบบเดียวกับ checkpoint ปกติ (ซ้ำได้ ไม่ toast ซ้ำ
+   เพราะ unlockSpecies เช็ก known อยู่แล้ว) */
+function journeyExplore() {
+    const step = JOURNEY_STEPS[journeyIndex];
+    if (!step || !step.explore) return;
+
+    const pool = step.explore.pool;
+    const pick = pool[Math.floor(Math.random() * pool.length)];
+
+    if (typeof unlockSpecies === 'function') unlockSpecies([pick.unlockKey]);
+
+    const log = document.getElementById('vn-explore-log');
+    if (!log) return;
+    const entry = document.createElement('p');
+    entry.className = 'vn-explore-entry';
+    entry.innerHTML = pick.text;
+    log.appendChild(entry);
+}
+
+function journeyCompleteChapter() {
+    journeyState = 'close';
+    if (!journeyUnlockedIds.has(JOURNEY_END_ID)) journeyUnlockedIds.add(JOURNEY_END_ID);
+    journeySaveProgress();
+}
+
 function journeyChoice(stepIndex, optionIndex) {
     const opt = JOURNEY_STEPS[stepIndex].choice.options[optionIndex];
     if (opt.correct) {
-        journeyState = 'close';
-        if (JOURNEY_STEPS.length > journeyFurthest) journeyFurthest = JOURNEY_STEPS.length;
-        journeySaveProgress();
+        journeyCompleteChapter();
     } else {
         journeyState = 'warning';
         journeyPendingWarning = opt.warning;
@@ -207,20 +304,20 @@ function journeyChoice(stepIndex, optionIndex) {
 }
 
 function journeyAcknowledgeWarning() {
-    journeyState = 'close';
-    if (JOURNEY_STEPS.length > journeyFurthest) journeyFurthest = JOURNEY_STEPS.length;
-    journeySaveProgress();
+    journeyCompleteChapter();
     journeyRender();
 }
 
-function journeyGoTo(targetIndex) {
-    if (targetIndex > journeyFurthest) return; // ยังไม่ปลดล็อก ข้ามไปไม่ได้
-    if (targetIndex >= JOURNEY_STEPS.length) {
+function journeyGoTo(targetId) {
+    if (!journeyUnlockedIds.has(targetId)) return; // ยังไม่ปลดล็อก ข้ามไปไม่ได้
+    if (targetId === JOURNEY_END_ID) {
         journeyState = 'close';
         journeyIndex = JOURNEY_STEPS.length - 1;
     } else {
+        const idx = journeyIdToIndex(targetId);
+        if (idx < 0) return;
         journeyState = 'step';
-        journeyIndex = targetIndex;
+        journeyIndex = idx;
     }
     journeySaveProgress();
     journeyRender();
@@ -231,17 +328,19 @@ function journeyBuildTimelineHTML() {
     let html = '<div class="vn-timeline">';
     for (let i = 0; i <= total; i++) {
         const isEnd = i === total;
-        const unlocked = i <= journeyFurthest;
+        const id = isEnd ? JOURNEY_END_ID : JOURNEY_STEPS[i].id;
+        const unlocked = journeyUnlockedIds.has(id);
         const isCurrent = isEnd ? (journeyState === 'close') : (journeyState !== 'close' && journeyIndex === i);
         const label = isEnd ? 'จุดจบฉากเกริ่นนำ' : JOURNEY_STEPS[i].tag;
         const cls = ['vn-tp'];
         if (unlocked) cls.push('unlocked');
         if (isCurrent) cls.push('current');
         if (isEnd) cls.push('end');
-        const clickAttr = unlocked ? ` onclick="journeyGoTo(${i})"` : '';
+        const clickAttr = unlocked ? ` onclick="journeyGoTo('${id}')"` : '';
         html += `<span class="${cls.join(' ')}" title="${label}"${clickAttr}></span>`;
         if (i < total) {
-            html += `<span class="vn-tp-line${i < journeyFurthest ? ' unlocked' : ''}"></span>`;
+            const nextId = (i + 1 === total) ? JOURNEY_END_ID : JOURNEY_STEPS[i + 1].id;
+            html += `<span class="vn-tp-line${journeyUnlockedIds.has(nextId) ? ' unlocked' : ''}"></span>`;
         }
     }
     html += '</div>';
@@ -271,6 +370,13 @@ function journeyRender() {
     if (step.sysnote) {
         const delay = (step.paragraphs.length * 0.09 + 0.1).toFixed(2);
         html += `<div class="scene-sysnote" style="animation-delay:${delay}s">${step.sysnote}</div>`;
+    }
+
+    if (step.explore) {
+        html += `<div class="vn-explore-block">
+                    <div id="vn-explore-log" class="vn-explore-log"></div>
+                    <button class="vn-explore-btn" onclick="journeyExplore()">${step.explore.prompt}</button>
+                  </div>`;
     }
 
     if (journeyState === 'warning') {
