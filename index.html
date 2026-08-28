@@ -45,7 +45,7 @@
         .view-section.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        #landing-view .main-layout { display: flex; gap: 50px; align-items: center; }
+        #landing-view .main-layout { display: flex; gap: 50px; align-items: flex-start; }
         #landing-view .left-col { flex: 0 0 520px; display: flex; flex-direction: column; }
         #landing-view .right-col { flex: 1; display: flex; align-items: center; }
 
@@ -102,12 +102,12 @@
         .planet-panel { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
         .planet-scan-label { display: flex; align-items: center; gap: 9px; font-family: 'Rajdhani', sans-serif; font-size: 0.78rem; letter-spacing: 3px; color: var(--accent-default); text-transform: uppercase; z-index: 10; }
         
-        #planet-3d-container { 
-            width: 100%; 
-            max-width: 500px; 
-            height: 450px; 
-            position: relative; 
-            cursor: grab; 
+        #planet-3d-container {
+            width: 100%;
+            max-width: 500px;
+            aspect-ratio: 1 / 1;
+            position: relative;
+            cursor: grab;
             border-radius: 50%;
             background: radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.05) 0%, transparent 60%);
         }
@@ -1065,22 +1065,30 @@
             const height = planetContainer.clientHeight;
 
             planetScene = new THREE.Scene();
-            planetCamera = new THREE.PerspectiveCamera(40, width / height, 0.1, 1000);
-            planetCamera.position.z = 3.8;
+            // FOV/ระยะกล้องคำนวณให้ครอบคลุมวงโคจรไกลสุด (Kol รัศมี 1.7 + ตัวมันเอง
+            // 0.07 = 1.77) พร้อมเผื่อขอบ ~5% เป็น half-width เป้าหมาย ~1.86 หน่วย —
+            // แคบกว่ารอบก่อนมาก (ตอนนั้นเผื่อเยอะไปจนดาวเคราะห์ดูเล็ก) ลดรัศมีวงโคจร
+            // ของทั้งคู่ลงคู่กับการดึงกล้องเข้าใกล้ขึ้น ให้ดาวเคราะห์เด่นแต่ Ren/Kol
+            // ยังไม่โดนตัดขอบตอนหมุนไปด้านข้างสุด (ดู moonRen/moonKol.position ด้านล่าง)
+            planetCamera = new THREE.PerspectiveCamera(36, width / height, 0.1, 1000);
+            planetCamera.position.z = 5.7;
 
             planetRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
             planetRenderer.setSize(width, height);
             planetRenderer.setPixelRatio(window.devicePixelRatio);
             planetContainer.insertBefore(planetRenderer.domElement, planetContainer.firstChild);
 
-            const ambientLight = new THREE.AmbientLight(0x404450, 1.2); 
+            // แสงแอมเบียนต์ลดลงจากเดิมมาก + rimLight ลดลง เพื่อให้ด้านที่ไม่โดนแดด
+            // (sunLight) มืดกว่าด้านที่โดนแดดอย่างเห็นได้ชัด เกิดเป็น day/night terminator
+            // ที่มองเห็นได้ขณะดาวหมุนรอบตัวเอง (ดู animate3DPlanet ด้านล่าง)
+            const ambientLight = new THREE.AmbientLight(0x404450, 0.35);
             planetScene.add(ambientLight);
 
-            const sunLight = new THREE.DirectionalLight(0xfff0dd, 2.5); 
+            const sunLight = new THREE.DirectionalLight(0xfff0dd, 2.5);
             sunLight.position.set(5, 3, 5);
             planetScene.add(sunLight);
 
-            const rimLight = new THREE.DirectionalLight(0x38bdf8, 1.5); 
+            const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.55);
             rimLight.position.set(-5, -2, -5);
             planetScene.add(rimLight);
 
@@ -1089,7 +1097,11 @@
                 color: 0x1e293b,
                 wireframe: true,
                 roughness: 0.7,
-                metalness: 0.1
+                metalness: 0.1,
+                // แสงเรืองจางๆ ฝั่งกลางคืนแทนสีดำสนิท — สื่อถึงป่าหมอกเรืองแสงชีวภาพ
+                // (Glimmerwing และสิ่งมีชีวิตเรืองแสงอื่นๆ ในทวีป Verath)
+                emissive: 0x0c2b33,
+                emissiveIntensity: 0.22
             });
             earthMesh = new THREE.Mesh(planetGeometry, planetMaterial);
             planetScene.add(earthMesh);
@@ -1247,14 +1259,14 @@
                 }
 
                 if (moonRen) {
-                    moonRen.position.x = Math.cos(pTime * 3) * 1.6;
-                    moonRen.position.z = Math.sin(pTime * 3) * 1.6;
-                    moonRen.position.y = Math.sin(pTime * 1) * 0.3;
+                    moonRen.position.x = Math.cos(pTime * 3) * 1.2;
+                    moonRen.position.z = Math.sin(pTime * 3) * 1.2;
+                    moonRen.position.y = Math.sin(pTime * 1) * 0.23;
                 }
                 if (moonKol) {
-                    moonKol.position.x = Math.cos(pTime * 1.2 + 2) * 2.2;
-                    moonKol.position.z = Math.sin(pTime * 1.2 + 2) * 2.2;
-                    moonKol.position.y = Math.cos(pTime * 0.5) * 0.5;
+                    moonKol.position.x = Math.cos(pTime * 1.2 + 2) * 1.7;
+                    moonKol.position.z = Math.sin(pTime * 1.2 + 2) * 1.7;
+                    moonKol.position.y = Math.cos(pTime * 0.5) * 0.38;
                 }
 
                 planetRenderer.render(planetScene, planetCamera);
