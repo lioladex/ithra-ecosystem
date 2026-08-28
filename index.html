@@ -318,6 +318,7 @@
         .vn-explore-entry { font-family: 'Sarabun', sans-serif; font-size: 0.92rem; line-height: 1.8; color: #b8c4d4; background: rgba(167,139,250,0.06); border-left: 2px solid #a78bfa; padding: 10px 14px; border-radius: 4px; margin: 0; opacity: 0; animation: vn-fade-in 0.4s ease forwards; }
         .vn-explore-btn { background: rgba(167,139,250,0.08); border: 1px solid #a78bfa; color: #c4b5fd; padding: 9px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1.5px; font-size: 0.82rem; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 7px; }
         .vn-explore-btn:hover { background: rgba(167,139,250,0.18); border-color: #c4b5fd; transform: translateY(-1px); }
+        .vn-explore-done { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; }
 
         .scene-close { margin-top: 8px; padding: 28px; border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 8px; background: rgba(0,0,0,0.3); text-align: center; }
         .scene-close .scene-close-tag { font-family: 'Rajdhani', sans-serif; letter-spacing: 4px; color: #94a3b8; font-size: 0.78rem; text-transform: uppercase; margin-bottom: 10px; }
@@ -612,7 +613,10 @@
                     <h1 style="color: var(--accent-default); text-shadow: 0 0 15px rgba(56,189,248,0.5);">JOURNEY OF CONFLUENCE</h1>
                     <p style="color:#64748b;margin:5px 0 0;font-size:0.85rem;letter-spacing:2px;">SIMULATION PROTOCOL // AWAKENING SEQUENCE</p>
                 </div>
-                <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
+                <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                    <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
+                    <button class="dev-toggle-btn" onclick="journeyResetProgression()" title="สำหรับพัฒนา/ทดสอบเท่านั้น">🔄 RESET PROGRESSION</button>
+                </div>
             </div>
 
             <!-- เนื้อหา VN stepper คุมโดย data/journey.js (JOURNEY_STEPS + journeyRender()) -->
@@ -690,6 +694,11 @@
         }
         function saveKnownSpecies() {
             try { localStorage.setItem(KNOWN_SPECIES_KEY, JSON.stringify([...knownSpeciesSet])); } catch (e) {}
+        }
+        function resetKnownSpecies() {
+            knownSpeciesSet = new Set();
+            try { localStorage.removeItem(KNOWN_SPECIES_KEY); } catch (e) {}
+            renderSpeciesGrid();
         }
         function loadDevMode() {
             try { return localStorage.getItem(DEV_MODE_KEY) === '1'; } catch (e) { return false; }

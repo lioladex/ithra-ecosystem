@@ -165,15 +165,30 @@ const JOURNEY_CLOSE_BODY_HTML = `
    คลิก checkpoint ย้อนกลับไปจุดที่ปลดล็อกแล้วได้เสมอ แต่ข้ามไปจุดที่ยัง
    ไม่ปลดล็อกไม่ได้ (ปุ่มจะไม่มี onclick เลยสำหรับจุดที่ล็อกอยู่) --- */
 const JOURNEY_STORAGE_KEY = 'ithra_journey_progress_v2';
+const JOURNEY_EXPLORE_KEY = 'ithra_journey_explored_v1';
 const JOURNEY_END_ID = '__end__';
 
 let journeyIndex = 0;
 let journeyUnlockedIds = new Set();
 let journeyState = 'step'; // 'step' | 'warning' | 'close'
 let journeyPendingWarning = '';
+let journeyExploredMap = {}; // { [stepId]: { text, unlockKey } } — ผลสำรวจที่ "ใช้ไปแล้ว" ต่อ step, กดซ้ำไม่ได้แม้ refresh
 
 function journeyIdToIndex(id) {
     return JOURNEY_STEPS.findIndex(s => s.id === id);
+}
+
+function journeySaveExplored() {
+    try { localStorage.setItem(JOURNEY_EXPLORE_KEY, JSON.stringify(journeyExploredMap)); } catch (e) {}
+}
+
+function journeyLoadExplored() {
+    try {
+        const raw = localStorage.getItem(JOURNEY_EXPLORE_KEY);
+        return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+        return {};
+    }
 }
 
 function journeySaveProgress() {
@@ -198,6 +213,7 @@ function journeyLoadProgress() {
 function journeyReset() {
     const saved = journeyLoadProgress();
     const firstId = JOURNEY_STEPS[0].id;
+    journeyExploredMap = journeyLoadExplored();
 
     if (saved && Array.isArray(saved.unlockedIds)) {
         journeyUnlockedIds = new Set(saved.unlockedIds);
@@ -226,6 +242,20 @@ function journeyReset() {
 
     journeyBackfillUnlocks();
     journeyRender();
+}
+
+/* ปุ่ม DEV เท่านั้น — ล้าง progress ของ Journey ทั้งหมด (checkpoint,
+   ผลสำรวจที่ใช้ไปแล้ว, และ species ที่ปลดล็อกจากเนื้อเรื่อง/การสำรวจ)
+   แล้วเริ่มใหม่จาก step แรก ไว้ไล่เช็กทีละจุดตอนพัฒนา */
+function journeyResetProgression() {
+    if (!confirm('รีเซ็ต Journey progression ทั้งหมด (รวมถึง species ที่ปลดล็อกจากเนื้อเรื่อง/การสำรวจ) กลับไปเริ่มต้นใหม่?')) return;
+    try {
+        localStorage.removeItem(JOURNEY_STORAGE_KEY);
+        localStorage.removeItem(JOURNEY_EXPLORE_KEY);
+    } catch (e) {}
+    journeyExploredMap = {};
+    if (typeof resetKnownSpecies === 'function') resetKnownSpecies();
+    journeyReset();
 }
 
 function journeyFurthestUnlockedIndex() {
@@ -272,18 +302,38 @@ function journeyContinue() {
 function journeyExplore() {
     const step = JOURNEY_STEPS[journeyIndex];
     if (!step || !step.explore) return;
+    if (journeyExploredMap[step.id]) return; // ใช้ไปแล้ว กดซ้ำไม่ได้ (กันสแปม/exploit)
 
     const pool = step.explore.pool;
     const pick = pool[Math.floor(Math.random() * pool.length)];
 
+    journeyExploredMap[step.id] = { text: pick.text, unlockKey: pick.unlockKey };
+    journeySaveExplored();
+
     if (typeof unlockSpecies === 'function') unlockSpecies([pick.unlockKey]);
 
-    const log = document.getElementById('vn-explore-log');
-    if (!log) return;
-    const entry = document.createElement('p');
-    entry.className = 'vn-explore-entry';
-    entry.innerHTML = pick.text;
-    log.appendChild(entry);
+    journeyRenderExploreBlock(step);
+}
+
+/* วาดใหม่แค่ส่วนสำรวจ (log + ปุ่ม) ของ step ปัจจุบัน โดยไม่แตะย่อหน้าเนื้อเรื่อง
+   หลักด้านบน — เรียกทั้งตอนกดสำรวจสำเร็จ และตอน render step ครั้งแรกถ้าเคย
+   สำรวจไปแล้วจาก session ก่อน (มาจาก localStorage) */
+function journeyRenderExploreBlock(step) {
+    const block = document.getElementById('vn-explore-block');
+    if (!block) return;
+    const result = journeyExploredMap[step.id];
+
+    if (result) {
+        block.innerHTML = `
+            <div class="vn-explore-log"><p class="vn-explore-entry">${result.text}</p></div>
+            <div class="vn-explore-done">// สำรวจพื้นที่นี้แล้ว</div>
+        `;
+    } else {
+        block.innerHTML = `
+            <div class="vn-explore-log"></div>
+            <button class="vn-explore-btn" onclick="journeyExplore()">${step.explore.prompt}</button>
+        `;
+    }
 }
 
 function journeyCompleteChapter() {
@@ -373,10 +423,7 @@ function journeyRender() {
     }
 
     if (step.explore) {
-        html += `<div class="vn-explore-block">
-                    <div id="vn-explore-log" class="vn-explore-log"></div>
-                    <button class="vn-explore-btn" onclick="journeyExplore()">${step.explore.prompt}</button>
-                  </div>`;
+        html += `<div id="vn-explore-block" class="vn-explore-block"></div>`;
     }
 
     if (journeyState === 'warning') {
@@ -394,4 +441,6 @@ function journeyRender() {
 
     html += '</div></div>';
     container.innerHTML = html;
+
+    if (step.explore) journeyRenderExploreBlock(step);
 }
