@@ -1,7 +1,7 @@
 /* ITH-204-560 — Mistcrawler (ALIVE) */
 creaturesData.push({
         id: "ITH-204-560", name: "Mistcrawler", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#d4e8e8",
+        imageKey: "MISTCRAWLER", color: "#d4e8e8",
         category: "สัตว์ขาปล้องล่าแมลงแบบทอใย (Arthropod web-trap insectivore)",
         habitat: "ป่าหมอกชั้นกลางต่อเนื่องพื้นดิน (Verath, Mist Layer)",
         foodChain: "ผู้บริโภคทุติยภูมิขนาดเล็ก — ล่า Glimmerwing และแมลงอื่น เป็นเหยื่อของสัตว์ปีกขนาดเล็กและ Karvos วัยอ่อน",

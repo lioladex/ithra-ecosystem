@@ -1,7 +1,7 @@
 /* ITH-206-410 — Threndle (ALIVE) */
 creaturesData.push({
         id: "ITH-206-410", name: "Threndle", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#4ce0c0",
+        imageKey: "THRENDLE", color: "#4ce0c0",
         category: "ผู้ล่าสูงสุดแห่งสายน้ำ (Aquatic apex predator, tidal ambusher)",
         habitat: "แหล่งน้ำ/พื้นที่ชุ่มน้ำ (กระแสน้ำขึ้นลงจากดวงจันทร์ Ren และ Kol) — The Great Tidal Flats",
         foodChain: "ยอดสุดของห่วงโซ่อาหารในแหล่งน้ำ/พื้นที่ชุ่มน้ำ — ล่าฝูง Pallowfin เป็นอาหารหลัก",

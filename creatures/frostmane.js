@@ -1,7 +1,7 @@
 /* ITH-209-903 — Frostmane (ALIVE) */
 creaturesData.push({
         id: "ITH-209-903", name: "Frostmane", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#ffc978",
+        imageKey: "FROSTMANE", color: "#ffc978",
         category: "สัตว์กินพืชขนหนาแห่งขั้วดาว (Polar grazer, herd herbivore)",
         habitat: "ทวีป Kessara (เขตหนาวเย็น) — The Frost Tundra & Pine Barrens",
         foodChain: "ผู้บริโภคปฐมภูมิหลักของทวีป Kessara — เหยื่อของนักล่าขั้วดาวที่ยังไม่บันทึก",

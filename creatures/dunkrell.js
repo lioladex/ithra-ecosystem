@@ -1,7 +1,7 @@
 /* ITH-208-640 — Dunkrell (ALIVE) */
 creaturesData.push({
         id: "ITH-208-640", name: "Dunkrell", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#c8e05a",
+        imageKey: "DUNKRELL", color: "#c8e05a",
         category: "ผู้ย่อยสลายซากขนาดใหญ่ (Large detritivore/scavenger)",
         habitat: "พื้นป่าหมอก/หนองบึง (Verath, Forest Floor — The Dark Mire)",
         foodChain: "ผู้ย่อยสลาย — เก็บกินซากที่เหลือจาก Karvos, Skyther และนักล่าอื่น",

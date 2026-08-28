@@ -20,4 +20,13 @@ const IMAGE_LIBRARY = {
     KARVOS: `${ITHRA_CDN_BASE}/creatures/karvos.jpg`,
     THESSEK: `${ITHRA_CDN_BASE}/creatures/thessek.jpg`,
     SKYTHER: `${ITHRA_CDN_BASE}/creatures/skyther.jpg`,
+    VASHLI: `${ITHRA_CDN_BASE}/creatures/vashli.jpg`,
+    GLIMMERWING: `${ITHRA_CDN_BASE}/creatures/glimmerwing.jpg`,
+    MISTCRAWLER: `${ITHRA_CDN_BASE}/creatures/mistcrawler.jpg`,
+    KORRUNE: `${ITHRA_CDN_BASE}/creatures/korrune.jpg`,
+    THRENDLE: `${ITHRA_CDN_BASE}/creatures/threndle.jpg`,
+    PALLOWFIN: `${ITHRA_CDN_BASE}/creatures/pallowfin.jpg`,
+    DUNKRELL: `${ITHRA_CDN_BASE}/creatures/dunkrell.jpg`,
+    FROSTMANE: `${ITHRA_CDN_BASE}/creatures/frostmane.jpg`,
+    CINDERGRUB: `${ITHRA_CDN_BASE}/creatures/cindergrub.jpg`,
 };

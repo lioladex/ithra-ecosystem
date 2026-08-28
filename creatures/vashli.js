@@ -1,7 +1,7 @@
 /* ITH-202-115 — Vashli (ALIVE) */
 creaturesData.push({
         id: "ITH-202-115", name: "Vashli", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#38bdf8",
+        imageKey: "VASHLI", color: "#38bdf8",
         category: "สัตว์กินพืชปีนป่ายชั้นเรือนยอด (Canopy browser)",
         habitat: "ป่าหมอกชั้นเรือนยอด (Verath, The Inner Canopy)",
         foodChain: "ผู้บริโภคปฐมภูมิของชั้นเรือนยอด — เหยื่อหลักของ Skyther และนักล่าอื่นๆ",

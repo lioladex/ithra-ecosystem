@@ -1,7 +1,7 @@
 /* ITH-210-077 — Cindergrub (ALIVE) */
 creaturesData.push({
         id: "ITH-210-077", name: "Cindergrub", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
-        imageKey: null, color: "#ff6a2e",
+        imageKey: "CINDERGRUB", color: "#ff6a2e",
         category: "แมลงทนความร้อนแห่งภูเขาไฟ (Thermotolerant insect, chemosynthetic grazer)",
         habitat: "หมู่เกาะ Dothen (เขตภูเขาไฟ) — The Basalt Calderas",
         foodChain: "ผู้บริโภคปฐมภูมิ/ผู้ย่อยสลายของหมู่เกาะ Dothen — อาหารหลักของสัตว์เฉพาะถิ่นบนเกาะ",
