@@ -156,6 +156,9 @@
         .dev-toggle-btn { background: rgba(255,255,255,0.05); border: 1px solid #475569; color: #94a3b8; padding: 6px 12px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.72rem; letter-spacing: 1.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease; }
         .dev-toggle-btn:hover { border-color: var(--accent-default); color: var(--accent-default); }
         .dev-toggle-btn.active { background: rgba(255,184,74,0.12); border-color: #ffb84a; color: #ffb84a; }
+        .journey-dev-tools { display: inline-flex; align-items: center; gap: 8px; }
+        .dev-scene-select { background: #0a0f14; border: 1px solid #475569; color: #94a3b8; padding: 6px 8px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.74rem; letter-spacing: 1px; max-width: 260px; cursor: pointer; }
+        .dev-scene-select:focus { outline: none; border-color: var(--accent-default); color: var(--accent-default); }
         .species-card.locked { cursor: default; border-style: dashed; border-color: rgba(255,255,255,0.1); background: rgba(10,14,18,0.5); }
         .species-card.locked:hover { transform: none; box-shadow: none; border-color: rgba(255,255,255,0.18); }
         .species-card.locked .card-content { align-items: center; justify-content: center; text-align: center; gap: 8px; }
@@ -331,7 +334,8 @@
         }
         .vn-chapter-close .scene-close { opacity: 0; animation: vnCloseReveal 0.9s ease forwards; }
         @keyframes vnCloseReveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .vn-chapter-close.skipped .vn-reflect-seq { display: none; }
+        .vn-chapter-close.skipped .vn-reflect-seq { max-height: 0; min-height: 0; opacity: 0; padding: 0; overflow: hidden; }
+        .vn-reflect-seq { max-height: 260px; transition: max-height 0.45s ease, opacity 0.3s ease, padding 0.45s ease; }
         .vn-chapter-close.skipped .scene-close { opacity: 1; animation: none; }
 
         /* สรุปได้มา/เสียไปในการ์ดปิดบท — อ่านย้อนได้หลัง animation จบหรือหลังกดข้าม */
@@ -744,6 +748,12 @@
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                     <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
                     <button class="dev-toggle-btn" onclick="journeyResetProgression()" title="สำหรับพัฒนา/ทดสอบเท่านั้น">🔄 RESET PROGRESSION</button>
+                    <!-- เครื่องมือไล่ตรวจฉาก (โผล่เฉพาะตอน DEV MODE เปิด) — เลือกฉากแล้ว
+                         รีเซ็ตความคืบหน้าตั้งแต่ฉากนั้นถึงท้ายสุด ดู journeyResetFromStep() -->
+                    <span id="journey-dev-tools" class="journey-dev-tools" style="display:none;">
+                        <select id="dev-scene-select" class="dev-scene-select" title="เลือกฉากที่จะรีเซ็ตตั้งแต่จุดนั้นเป็นต้นไป"></select>
+                        <button class="dev-toggle-btn" onclick="journeyDevResetScene()" title="รีเซ็ตความคืบหน้าตั้งแต่ฉากที่เลือกจนจบ">⏪ RESET จากฉากนี้</button>
+                    </span>
                 </div>
             </div>
 
@@ -812,7 +822,7 @@
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
             window.scrollTo(0, 0);
-            if (viewId === 'story-view') { journeyReset(); }
+            if (viewId === 'story-view') { journeyReset(); journeyDevRenderSceneTools(); }
         }
 
         /* --- Unknown Species lock system + Lore Tier reveal ---
@@ -888,11 +898,49 @@
             updateDevModeButtonLabel();
         }
 
+        /* เติมรายการฉากลง dropdown ของเครื่องมือ DEV (จัดกลุ่มตามบท) และซ่อน/แสดง
+           ทั้งแถบตามสถานะ DEV MODE — เรียกทุกครั้งที่สลับโหมดและตอนเข้าหน้าเนื้อเรื่อง */
+        function journeyDevRenderSceneTools() {
+            const wrap = document.getElementById('journey-dev-tools');
+            const select = document.getElementById('dev-scene-select');
+            if (!wrap || !select) return;
+            wrap.style.display = devModeOn ? 'inline-flex' : 'none';
+            if (!devModeOn) return;
+
+            const current = select.value;
+            let html = '';
+            JOURNEY_CHAPTERS.forEach((ch, i) => {
+                const start = journeyChapterStartIndex(i);
+                const last = journeyChapterLastIndex(i);
+                html += `<optgroup label="บทที่ ${ch.num} — ${ch.title}">`;
+                for (let n = start; n <= last; n++) {
+                    const step = JOURNEY_STEPS[n];
+                    const reached = journeyUnlockedIds.has(step.id);
+                    html += `<option value="${step.id}">${n - start + 1}. ${step.tag}${reached ? '' : ' (ยังไม่ถึง)'}</option>`;
+                }
+                html += '</optgroup>';
+            });
+            select.innerHTML = html;
+            const fallback = (journeyState === 'close') ? '' : JOURNEY_STEPS[journeyIndex].id;
+            select.value = current || fallback;
+            if (!select.value) select.value = JOURNEY_STEPS[journeyIndex].id;
+        }
+
+        function journeyDevResetScene() {
+            const select = document.getElementById('dev-scene-select');
+            if (!select || !select.value) return;
+            const label = select.options[select.selectedIndex].text;
+            if (!confirm(`รีเซ็ตความคืบหน้าตั้งแต่ฉาก "${label}" จนถึงฉากสุดท้าย?\n(ฉากก่อนหน้ายังอยู่ครบ — action, ทักษะ, ร่าง, AP และ tier จะถูกคำนวณใหม่จากฉากที่เหลือ)`)) return;
+            journeyResetFromStep(select.value);
+            journeyDevRenderSceneTools();
+        }
+
         function updateDevModeButtonLabel() {
             const btn = document.getElementById('dev-mode-toggle');
             if (!btn) return;
             btn.classList.toggle('active', devModeOn);
             btn.textContent = devModeOn ? '🔓 DEV MODE: ON' : '🔒 DEV MODE: OFF';
+            journeyDevRenderSceneTools();
         }
 
         function showSpeciesToast(name, tier, isFirstDiscovery) {

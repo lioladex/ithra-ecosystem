@@ -53,6 +53,8 @@ Every chapter ends with a processing sequence: one-sentence, first-person lines 
 - Keep the sentence naming what was gained/lost, not how it felt in the moment — the scene already did the feeling. "ฉันได้รู้จักความเจ็บปวด" not "ฉันเจ็บจนแทบขาดใจ".
 - Aim for a mix that ends on the chapter's real cost. A chapter of pure gains reads as a checklist.
 - Every new chapter must ship a `reflections` array; the close screen plays it automatically and builds the ledger from it.
+- Confluence has no moral or abstract vocabulary this early: no guilt, no cruelty, no "belief" it can lose. Killing is `ล่า`, not `ฆ่า`; a lost assumption is a lost answer, a lost boundary, or a lost habit — never a lost belief.
+- It never lost the four-legged body: the body was regenerated into a new one, not taken from it. Losses must be things that genuinely stopped being available (the herd, the light-fed feeding, effortless walking).
 
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).

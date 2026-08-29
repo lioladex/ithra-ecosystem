@@ -871,15 +871,15 @@ const JOURNEY_CHAPTERS = [
            ใช้สรรพนาม "ฉัน" ได้เฉพาะที่นี่เท่านั้น — เป็นเสียงประมวลความคิด
            ของตัวเอง ไม่ใช่การบรรยายฉาก (ดู .claude/skills/ithra-narrative-style) */
         reflections: [
-            { kind: "gain", text: "ฉันได้รู้ว่ามีบางอย่างอยู่ตรงนี้ และบางอย่างนั้นคือฉัน" },
+            { kind: "gain", text: "ฉันได้รู้ถึงการคงอยู่" },
             { kind: "gain", text: "ฉันได้รู้จักความอุ่น ความอิ่ม และความปลอดภัย" },
             { kind: "loss", text: "ฉันเสียฝูงที่เคยยืนอยู่ตรงกลางของมัน" },
             { kind: "gain", text: "ฉันได้รู้จักความเจ็บปวด" },
-            { kind: "loss", text: "ฉันเสียร่างที่ยืนบนพื้นได้ด้วยขาทั้งสี่" },
             { kind: "gain", text: "ฉันได้ปีก และท้องฟ้าที่ไม่เคยเป็นของฉัน" },
+            { kind: "loss", text: "ฉันเสียแสงที่เคยกลายเป็นความอิ่มได้" },
+            { kind: "loss", text: "ฉันเสียการเดินที่เคยไม่ต้องคิดถึงมันเลย" },
             { kind: "gain", text: "ฉันได้รู้จักความหิวที่แสงช่วยอะไรไม่ได้" },
-            { kind: "gain", text: "ฉันได้ฆ่าเป็นครั้งแรก และไม่รู้สึกผิดเลย" },
-            { kind: "loss", text: "ฉันเสียความเชื่อว่าสิ่งที่ล่าฉันคือความโหดร้าย" }
+            { kind: "gain", text: "ฉันได้ล่าเป็นครั้งแรก" }
         ]
     },
     {
@@ -897,7 +897,7 @@ const JOURNEY_CHAPTERS = [
             { kind: "gain", text: "ฉันได้ทิ้งตัวลงจากที่สูงเพราะอยากรู้ ไม่ใช่เพราะต้องรอด" },
             { kind: "gain", text: "ฉันได้เฝ้ามองสิ่งที่เคยล่าฉัน โดยไม่มีอะไรสั่งให้ฉันวิ่ง" },
             { kind: "gain", text: "ฉันได้สบตากับสิ่งที่ทำให้ฉันหยุดหายใจโดยไม่ต้องขู่สักครั้ง" },
-            { kind: "loss", text: "ฉันเสียความเชื่อว่าผู้ล่ากับเหยื่อเป็นคนละสิ่งกัน" },
+            { kind: "loss", text: "ฉันเสียเส้นแบ่งระหว่างผู้ล่ากับเหยื่อ" },
             { kind: "loss", text: "ฉันเสียคำตอบว่าเสียงที่สั่งให้ฉันยืนหยัดเป็นเสียงของอะไร" }
         ]
     }
@@ -1181,6 +1181,73 @@ function journeyReset() {
 /* ปุ่ม DEV เท่านั้น — ล้าง progress ของ Journey ทั้งหมด (checkpoint,
    ผลสำรวจที่ใช้ไปแล้ว, และ species ที่ปลดล็อกจากเนื้อเรื่อง/การสำรวจ)
    แล้วเริ่มใหม่จาก step แรก ไว้ไล่เช็กทีละจุดตอนพัฒนา */
+/* DEV เท่านั้น — รีเซ็ตความคืบหน้า "ตั้งแต่ฉากที่เลือกเป็นต้นไป" (ฉากก่อนหน้า
+   ยังอยู่ครบ) ไว้ไล่ตรวจฉากใดฉากหนึ่งซ้ำโดยไม่ต้องเล่นใหม่ทั้งบท ทุกอย่างที่
+   สะสมมาถูกคำนวณใหม่จาก "ฉากที่ยังเหลืออยู่" เท่านั้น: action log, ทักษะ,
+   ร่างปัจจุบัน, AP และ tier ของสิ่งมีชีวิต — จึงได้สถานะเหมือนเพิ่งเดินมาถึง
+   ฉากนั้นพอดี ไม่ใช่แค่ย้อน checkpoint เฉยๆ */
+function journeyResetFromStep(targetId) {
+    const idx = journeyIdToIndex(targetId);
+    if (idx < 0) return;
+
+    // 1) ล็อกฉากตั้งแต่จุดนี้เป็นต้นไป + จุดจบของบทนี้และบทถัดๆ ไป
+    for (let i = idx; i < JOURNEY_STEPS.length; i++) journeyUnlockedIds.delete(JOURNEY_STEPS[i].id);
+    const chIdx = journeyChapterIdxOfStepIndex(idx);
+    JOURNEY_CHAPTERS.forEach((ch, i) => { if (i >= chIdx) journeyUnlockedIds.delete(ch.endId); });
+
+    // 2) ทิ้ง action ที่เคยกดไว้ในฉากเหล่านั้น
+    for (let i = idx; i < JOURNEY_STEPS.length; i++) delete journeyExploredMap[JOURNEY_STEPS[i].id];
+    journeySaveExplored();
+
+    // 3) คิดทักษะใหม่จาก action ที่ยังเหลืออยู่จริงเท่านั้น (ไม่ขึ้น toast ซ้ำ)
+    skillsLearned = {};
+    for (let i = 0; i < idx; i++) {
+        const step = JOURNEY_STEPS[i];
+        const used = journeyExploredMap[step.id];
+        if (!step.actions || !used) continue;
+        step.actions.forEach(a => {
+            if (!a.teachesSkill || !used[a.id]) return;
+            const def = SKILL_DEFINITIONS[a.teachesSkill];
+            if (!def) return;
+            const entry = skillsLearned[a.teachesSkill] || { count: 0, learned: false };
+            entry.count++;
+            entry.learned = entry.count >= def.obsNeeded;
+            skillsLearned[a.teachesSkill] = entry;
+        });
+    }
+    skillsSave();
+
+    // 4) ร่างปัจจุบัน = switchHost ตัวสุดท้ายก่อนถึงฉากนี้ แล้วเติม AP ให้เต็ม
+    let host = 'LUVENN';
+    for (let i = 0; i < idx; i++) if (JOURNEY_STEPS[i].switchHost) host = JOURNEY_STEPS[i].switchHost;
+    journeyHostKey = host;
+    apMax = CREATURE_PROFILES[host].apMax;
+    apCurrent = apMax;
+    apSaveState();
+
+    // 5) tier ของสิ่งมีชีวิต: ล้างแล้วปลดใหม่จาก checkpoint ที่ยังเหลือ
+    //    บวกกับ unlockKey ของ action ที่ยังไม่ถูกล้าง (ทั้งหมดเงียบ ไม่มี toast)
+    if (typeof resetKnownSpecies === 'function') resetKnownSpecies();
+    journeyBackfillUnlocks();
+    if (typeof unlockSpeciesTier === 'function') {
+        Object.keys(journeyExploredMap).forEach(stepId => {
+            Object.values(journeyExploredMap[stepId]).forEach(entry => {
+                if (entry && entry.unlockKey) unlockSpeciesTier([entry.unlockKey], 0, { silent: true });
+            });
+        });
+    }
+
+    // 6) ยืนอยู่ที่ฉากนั้นแบบ "เพิ่งมาถึง" — ปลดล็อกใหม่แล้วยิงผลข้างเคียงของฉากซ้ำ
+    journeyUnlockedIds.add(JOURNEY_STEPS[idx].id);
+    journeyChapterIdx = chIdx;
+    journeyState = 'step';
+    journeyIndex = idx;
+    journeyEnterStepSideEffects(JOURNEY_STEPS[idx]);
+    journeyReflectionSeen.clear(); // ฉากสรุปปิดบทต้องเล่นใหม่ตอนเล่นมาถึงอีกครั้ง
+    journeySaveProgress();
+    journeyRender();
+}
+
 function journeyResetProgression() {
     if (!confirm('รีเซ็ต Journey progression ทั้งหมด (รวมถึง species ที่ปลดล็อกจากเนื้อเรื่อง/การสำรวจ) กลับไปเริ่มต้นใหม่?')) return;
     try {
@@ -1649,8 +1716,15 @@ function journeyRender() {
         const card = container.querySelector('.vn-chapter-close .scene-close');
         const chNow = JOURNEY_CHAPTERS[journeyChapterIdx];
         if (card && chNow) {
-            card.addEventListener('animationend', () => journeyReflectionSeen.add(chNow.endId), { once: true });
+            card.addEventListener('animationend', () => {
+                journeyReflectionSeen.add(chNow.endId);
+                // ยุบกล่องประโยคที่เล่นจบแล้วทิ้ง (CSS ทำ transition ให้) — ถ้าปล่อยไว้
+                // กล่องเปล่าสูง 230px จะดันการ์ดปิดบทให้ค้างอยู่ต่ำกว่าตำแหน่งที่ควรอยู่
+                const wrap = document.getElementById('vn-chapter-close');
+                if (wrap) wrap.classList.add('skipped');
+            }, { once: true });
         }
+        if (typeof journeyDevRenderSceneTools === 'function') journeyDevRenderSceneTools();
         return;
     }
 
@@ -1694,4 +1768,8 @@ function journeyRender() {
     container.innerHTML = html;
 
     if (step.actions) journeyRenderActionsBlock(step);
+
+    // เครื่องมือ DEV (dropdown เลือกฉาก) อ่านสถานะปลดล็อกจาก journeyUnlockedIds
+    // จึงต้องวาดใหม่ทุกครั้งที่เนื้อเรื่องขยับ ไม่ใช่แค่ตอนสลับ DEV MODE
+    if (typeof journeyDevRenderSceneTools === 'function') journeyDevRenderSceneTools();
 }
