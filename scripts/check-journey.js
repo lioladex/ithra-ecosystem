@@ -72,10 +72,12 @@ CHAPTERS.forEach((ch, i) => {
     else if (seenEndIds.has(ch.endId)) errors.push(`endId ซ้ำ: "${ch.endId}"`);
     else seenEndIds.add(ch.endId);
 
-    if (!Array.isArray(ch.reflections) || !ch.reflections.length) {
+    // reflections เป็นอาเรย์หรือฟังก์ชันก็ได้ (บทที่จบได้หลายร่างใช้ฟังก์ชัน)
+    const reflections = typeof ch.reflections === "function" ? ch.reflections() : ch.reflections;
+    if (!Array.isArray(reflections) || !reflections.length) {
         errors.push(`บทที่ ${ch.num}: ไม่มี reflections — หน้าจอปิดบทจะว่างเปล่า`);
     } else {
-        ch.reflections.forEach((r, n) => {
+        reflections.forEach((r, n) => {
             if (r.kind !== "gain" && r.kind !== "loss") errors.push(`บทที่ ${ch.num} reflection #${n}: kind ต้องเป็น gain หรือ loss (เจอ "${r.kind}")`);
             if (!r.text) errors.push(`บทที่ ${ch.num} reflection #${n}: ไม่มี text`);
         });
@@ -210,7 +212,7 @@ CHAPTERS.forEach((ch, i) => {
     const nextStart = CHAPTERS[i + 1] ? seenIds.get(CHAPTERS[i + 1].startId) : STEPS.length;
     const steps = STEPS.slice(start, nextStart);
     const actions = steps.reduce((n, s) => n + (s.actions || []).length, 0);
-    const lines = (ch.reflections || []).length;
+    const lines = ((typeof ch.reflections === "function" ? ch.reflections() : ch.reflections) || []).length;
     console.log(`  บทที่ ${ch.num} "${ch.title}": ${steps.length} step · ${actions} action · ${lines} ประโยคปิดบท`);
 });
 Object.entries(SKILLS).forEach(([id, def]) => {
