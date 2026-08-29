@@ -1571,8 +1571,12 @@ function journeyBuildChapterCloseHTML() {
     const ch = JOURNEY_CHAPTERS[journeyChapterIdx];
     const next = JOURNEY_CHAPTERS[journeyChapterIdx + 1];
     const lines = ch.reflections || [];
+    // "เคยดูจบแล้ว" ต้องหมายถึงดูจนจบจริงๆ เท่านั้น (ดู journeyRender ที่รอ
+    // animationend ของการ์ดปิดบท) — เดิมทำเครื่องหมายไว้ตั้งแต่ตอน build HTML
+    // ซึ่งพังเวลาโหลดหน้าเว็บมาแล้วเซฟค้างอยู่ที่หน้าจอปิดบท เพราะ init เรียก
+    // journeyReset() ตั้งแต่ story-view ยังไม่ถูกแสดง ฉากเลยถูกนับว่าดูจบไป
+    // แล้วทั้งที่ผู้อ่านยังไม่เห็นอะไรเลยสักประโยค
     const seen = journeyReflectionSeen.has(ch.endId) || lines.length === 0;
-    journeyReflectionSeen.add(ch.endId);
 
     let buttons = '';
     if (next) {
@@ -1626,6 +1630,8 @@ function journeyBuildChapterCloseHTML() {
 function journeySkipReflection() {
     const wrap = document.getElementById('vn-chapter-close');
     if (wrap) wrap.classList.add('skipped');
+    const ch = JOURNEY_CHAPTERS[journeyChapterIdx];
+    if (ch) journeyReflectionSeen.add(ch.endId); // กดข้ามเอง = ไม่ต้องเล่นให้ดูอีกใน session นี้
 }
 
 function journeyRender() {
@@ -1637,6 +1643,14 @@ function journeyRender() {
     if (journeyState === 'close') {
         html += journeyBuildChapterCloseHTML() + '</div>';
         container.innerHTML = html;
+        // การ์ดปิดบทจางขึ้นมาหลังประโยคสุดท้ายจบ = ฉากประมวลความคิดเล่นจบแล้ว
+        // จังหวะนี้เท่านั้นถึงนับว่า "ดูจบ" (animation ไม่เดินตอน view ยังซ่อนอยู่
+        // event จึงไม่ยิง และฉากจะไปเล่นตอนเปิด story-view จริงๆ ตามที่ควรเป็น)
+        const card = container.querySelector('.vn-chapter-close .scene-close');
+        const chNow = JOURNEY_CHAPTERS[journeyChapterIdx];
+        if (card && chNow) {
+            card.addEventListener('animationend', () => journeyReflectionSeen.add(chNow.endId), { once: true });
+        }
         return;
     }
 
