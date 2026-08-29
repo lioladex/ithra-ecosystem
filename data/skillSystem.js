@@ -137,5 +137,12 @@ const SKILL_DEFINITIONS = {
         requiresOrgan: "ปีก",
         obsNeeded: 6, // Skyther สอน — Alien Intensity Tier II (base 3) ×2 ตามที่ปรับความยากขึ้น
         learnedLabel: "เรียนรู้การบิน"
+    },
+    PACK_HUNT: {
+        name: "การล่าเป็นฝูง (Pack Hunt)", // Karvos สอน — ต้องสังเกตซ้ำหลายครั้งระหว่างบินตามฝูงใน Ch.2
+        progressLabel: "พยายามทำความเข้าใจจังหวะการประสานงานบางอย่างระหว่างพวกมัน",
+        requiresOrgan: "ขาสี่ข้างสำหรับวิ่งไล่ระยะไกล", // ร่าง Skyther (2 ขา+ปีก+แขน) ไม่มีอวัยวะนี้ — เก็บความเข้าใจไว้ก่อน ใช้ไม่ได้จนกว่าจะสวมร่างที่มีขาแบบนี้
+        obsNeeded: 5, // Karvos เป็น Alien Intensity Tier III (ล่าฝูงประสานงาน ไม่ใช่แค่ไล่เดี่ยว)
+        learnedLabel: "เข้าใจการล่าเป็นฝูง"
     }
 };

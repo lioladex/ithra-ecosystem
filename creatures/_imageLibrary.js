@@ -29,4 +29,9 @@ const IMAGE_LIBRARY = {
     DUNKRELL: `${ITHRA_CDN_BASE}/creatures/dunkrell.jpg`,
     FROSTMANE: `${ITHRA_CDN_BASE}/creatures/frostmane.jpg`,
     CINDERGRUB: `${ITHRA_CDN_BASE}/creatures/cindergrub.jpg`,
+    VELLITH: `${ITHRA_CDN_BASE}/creatures/Vellith.jpg`,
+    OZGRUN: `${ITHRA_CDN_BASE}/creatures/Ozgrun.jpg`,
+    LUMENVEIL: `${ITHRA_CDN_BASE}/creatures/Lumenveil.jpg`,
+    SEVRIN: `${ITHRA_CDN_BASE}/creatures/Sevrin.jpg`,
+    PALEGRIM: `${ITHRA_CDN_BASE}/creatures/Palegrim.jpg`,
 };
