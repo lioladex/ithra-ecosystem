@@ -1149,7 +1149,10 @@
                         <div class="card-desc" style="margin-top:auto; padding-top:12px; border-top:1px dashed var(--border-color);">${creature.category}</div>
                     </div>
                 `;
-                card.onclick = () => showCreatureDetail(index);
+                // index ที่วนอยู่นี้คือลำดับใน ordered (เรียงตามชื่อ) ไม่ใช่ลำดับใน
+                // creaturesData ที่ showCreatureDetail() ใช้ ต้องหาตำแหน่งจริงก่อนเสมอ
+                const dataIndex = creaturesData.indexOf(creature);
+                card.onclick = () => showCreatureDetail(dataIndex);
                 container.appendChild(card);
             });
 
