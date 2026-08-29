@@ -156,6 +156,17 @@
         .dev-toggle-btn { background: rgba(255,255,255,0.05); border: 1px solid #475569; color: #94a3b8; padding: 6px 12px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.72rem; letter-spacing: 1.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease; }
         .dev-toggle-btn:hover { border-color: var(--accent-default); color: var(--accent-default); }
         .dev-toggle-btn.active { background: rgba(255,184,74,0.12); border-color: #ffb84a; color: #ffb84a; }
+
+        /* แถบเซ็นเซอร์ชื่อสิ่งมีชีวิตที่ Confluence ยังไม่รู้จัก (ดู applySpoilerRedaction)
+           ถมทับแทนการลบทิ้ง เพื่อให้เห็นว่า "มีบางอย่างอยู่ตรงนี้" โดยไม่สปอยล์ว่าคืออะไร */
+        .redacted { display: inline-block; vertical-align: baseline; background: #1e293b; color: transparent; border-radius: 2px; padding: 0 2px; user-select: none; cursor: help; position: relative; box-shadow: inset 0 0 0 1px rgba(255,255,255,0.06); }
+        .redacted::after { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(90deg, rgba(255,255,255,0.05) 0 3px, transparent 3px 6px); border-radius: 2px; }
+        .redacted:hover { background: #243449; }
+        /* action ที่ปลดด้วยทักษะ (requiresSkill) — ทองเหมือน key step เพื่อบอกว่า
+           นี่คือของที่ได้มาเพราะเคยยอมแลก AP ไปกับการสังเกต ไม่ใช่ปุ่มปกติ */
+        .vn-explore-btn.vn-skill-btn { border-color: rgba(255,184,74,0.5); color: #ffd79a; background: rgba(255,184,74,0.07); }
+        .vn-explore-btn.vn-skill-btn:hover { background: rgba(255,184,74,0.16); border-color: #ffb84a; }
+        .vn-explore-entry.vn-skill-entry { border-left: 2px solid rgba(255,184,74,0.55); padding-left: 12px; color: #e8d5b0; }
         .journey-dev-tools { display: inline-flex; align-items: center; gap: 8px; }
         .dev-scene-select { background: #0a0f14; border: 1px solid #475569; color: #94a3b8; padding: 6px 8px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.74rem; letter-spacing: 1px; max-width: 260px; cursor: pointer; }
         .dev-scene-select:focus { outline: none; border-color: var(--accent-default); color: var(--accent-default); }
@@ -810,6 +821,9 @@
             document.getElementById('world-view-content').innerHTML = ECOSYSTEM_HTML;
             document.getElementById('memory-view-content').innerHTML = MEMORY_MECHANICS_HTML;
             document.getElementById('design-view-content').innerHTML = RULEBOOK_HTML;
+            // เอกสารพวกนี้อ้างชื่อสิ่งมีชีวิตข้ามกันไปมา ต้องถมแถบทับชื่อที่ยังไม่ปลดล็อก
+            ['world-view-content', 'memory-view-content', 'design-view-content']
+                .forEach(id => applySpoilerRedaction(document.getElementById(id)));
         }
 
         function statusClassFor(status) {
@@ -863,6 +877,51 @@
             try { localStorage.setItem(DEV_MODE_KEY, devModeOn ? '1' : '0'); } catch (e) {}
         }
 
+/* --- ระบบเซ็นเซอร์ชื่อที่สปอยล์เนื้อเรื่อง ---
+   เอกสารในฐานข้อมูล (lore ของสิ่งมีชีวิต, MEMORY MECHANICS, DESIGN RULEBOOK,
+   ECOSYSTEM) เขียนไว้ครบตั้งแต่แรกและอ้างชื่อสิ่งมีชีวิตข้ามกันไปมา ซึ่งบางชื่อ
+   เฉลยเนื้อเรื่องที่ Confluence ยังไปไม่ถึง แทนที่จะลบข้อความออก เราถมแถบทับ
+   เฉพาะ "ชื่อ" ของตัวที่ยังไม่รู้จัก — ผู้อ่านเห็นว่ามีบางอย่างถูกปิดไว้ตรงนั้น
+   และแถบจะคลายเองเมื่อ Confluence รู้จักตัวนั้นในเนื้อเรื่อง (knownTiers)
+   DEV MODE เห็นทุกอย่างตามปกติ เพราะ isSpeciesKnown() คืน true ทั้งหมด */
+        function applySpoilerRedaction(root) {
+            if (!root || typeof creaturesData === 'undefined') return;
+            const hidden = creaturesData.filter(c => c.name && !isSpeciesKnown(c.imageKey)).map(c => c.name);
+            if (!hidden.length) return;
+            // ชื่อยาวก่อน กันกรณีชื่อหนึ่งเป็นส่วนหนึ่งของอีกชื่อ
+            hidden.sort((a, b) => b.length - a.length);
+            const pattern = new RegExp('(' + hidden.map(n => n.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).join('|') + ')', 'g');
+
+            const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+                acceptNode(node) {
+                    if (!node.nodeValue || !node.nodeValue.trim()) return NodeFilter.FILTER_REJECT;
+                    const parent = node.parentElement;
+                    if (!parent) return NodeFilter.FILTER_REJECT;
+                    if (parent.closest('.redacted, script, style, textarea')) return NodeFilter.FILTER_REJECT;
+                    return pattern.test(node.nodeValue) ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+                }
+            });
+            const targets = [];
+            while (walker.nextNode()) targets.push(walker.currentNode);
+
+            targets.forEach(node => {
+                const frag = document.createDocumentFragment();
+                let last = 0;
+                node.nodeValue.replace(pattern, (match, _g, offset) => {
+                    if (offset > last) frag.appendChild(document.createTextNode(node.nodeValue.slice(last, offset)));
+                    const bar = document.createElement('span');
+                    bar.className = 'redacted';
+                    bar.title = 'ข้อมูลถูกปิดไว้ — Confluence ยังไม่รู้จักสิ่งมีชีวิตนี้';
+                    bar.textContent = '█'.repeat(Math.max(3, Math.round(match.length * 0.7)));
+                    frag.appendChild(bar);
+                    last = offset + match.length;
+                    return match;
+                });
+                if (last < node.nodeValue.length) frag.appendChild(document.createTextNode(node.nodeValue.slice(last)));
+                node.parentNode.replaceChild(frag, node);
+            });
+        }
+
         function isSpeciesKnown(imageKey) {
             return devModeOn || knownTiers[imageKey] !== undefined;
         }
@@ -889,6 +948,9 @@
             });
             saveKnownSpecies();
             renderSpeciesGrid();
+            // เอกสาร lore ถูกถมแถบเซ็นเซอร์ไว้ตั้งแต่ตอน render ครั้งแรก — พอปลดล็อกตัวใหม่
+            // ต้อง render ใหม่ทั้งชุด แถบของตัวนั้นถึงจะคลายออก (ดู applySpoilerRedaction)
+            initContentSections();
         }
 
         function toggleDevMode() {
@@ -1039,7 +1101,16 @@
 
             let knownCount = 0;
 
-            creaturesData.forEach((creature, index) => {
+            /* เรียงตามชื่อ A-Z แต่ตัวที่ยังไม่รู้จักไปอยู่ท้ายสุดเสมอ — การ์ดเงา
+                จะได้ไม่แทรกกลางรายการจนอ่านลำดับตัวที่ปลดแล้วไม่รู้เรื่อง */
+            const ordered = creaturesData.slice().sort((a, b) => {
+                const ka = isSpeciesKnown(a.imageKey) ? 0 : 1;
+                const kb = isSpeciesKnown(b.imageKey) ? 0 : 1;
+                if (ka !== kb) return ka - kb;
+                return (a.name || '').localeCompare(b.name || '');
+            });
+
+            ordered.forEach((creature, index) => {
                 const known = isSpeciesKnown(creature.imageKey);
                 if (known) knownCount++;
 
@@ -1190,6 +1261,7 @@
 
             renderExtendedSections(data, tier);
             loadCreatureImage(data.imageKey);
+            applySpoilerRedaction(document.getElementById('detail-view'));
             switchView('detail-view');
         }
 

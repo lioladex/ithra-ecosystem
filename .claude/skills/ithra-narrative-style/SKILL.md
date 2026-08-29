@@ -56,6 +56,21 @@ Every chapter ends with a processing sequence: one-sentence, first-person lines 
 - Confluence has no moral or abstract vocabulary this early: no guilt, no cruelty, no "belief" it can lose. Killing is `ล่า`, not `ฆ่า`; a lost assumption is a lost answer, a lost boundary, or a lost habit — never a lost belief.
 - It never lost the four-legged body: the body was regenerated into a new one, not taken from it. Losses must be things that genuinely stopped being available (the herd, the light-fed feeding, effortless walking).
 
+## 10. Chapter shape (distilled from Chapter 2, which the owner approved as the target rhythm)
+A chapter runs in three acts, and the act boundaries should be visible in the step tags:
+1. **Learn the body (slice of life).** Two carried-over behaviours fail before anything succeeds — the old posture that no longer has an organ behind it, the old food that this gut cannot process. Close the act on the one thing only this body can do, done for curiosity rather than survival.
+2. **Observe instead of react.** The protagonist follows something it used to flee, from a distance that removes the threat. Watching, not fighting, is the beat. Act 2 ends with a single encounter that is over before any choice exists.
+3. **Aftermath and departure.** One short act that converts the encounter into a question and points at the next destination.
+
+## 11. Observation must escalate, not repeat
+Repeated observe actions on one subject each expose a different layer — composition and roles, then the logic of its route, then the timing of the strike — and the last one should reframe what the earlier ones meant (the pack ignoring the decoy is knowledge older than any individual in it). If a new observe action could be swapped with an earlier one without loss, it is not a new action.
+
+## 12. End on a sharper question
+A chapter closes by replacing an old confusion with a better-formed question, never with an answer. Chapter 1 ended understanding the hunter; Chapter 2 ended unable to say whose voice ordered it to stand firm. Answers belong to whichever later chapter earns them.
+
+## 13. Density beats length
+Chapter 1 is 17 steps with 17 actions; Chapter 2 is 9 steps with 22. The second reads better. Prefer fewer, longer steps carrying two or three optional actions over a long chain of thin steps. Every step holding three AP-costing actions needs an AP source in that step or in the one immediately before it, or the actions are unreachable — check this before writing, not after.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.

@@ -1244,6 +1244,9 @@ function journeyResetFromStep(targetId) {
     journeyIndex = idx;
     journeyEnterStepSideEffects(JOURNEY_STEPS[idx]);
     journeyReflectionSeen.clear(); // ฉากสรุปปิดบทต้องเล่นใหม่ตอนเล่นมาถึงอีกครั้ง
+    // log ฝั่งขวาเป็นบันทึกสะสมของทั้งการเดินทาง ถ้าไม่ล้างจะเหลือบรรทัดของฉาก
+    // ที่เพิ่งถูกรีเซ็ตทิ้งไปค้างอยู่ ทำให้ไล่ตรวจแล้วสับสนว่าอะไรเกิดขึ้นแล้วบ้าง
+    if (typeof journeyClearLog === 'function') journeyClearLog();
     journeySaveProgress();
     journeyRender();
 }
@@ -1373,6 +1376,9 @@ function journeyDoAction(actionId) {
         if (action.requires && !used[action.requires]) return; // ยังไม่ปลดล็อกลำดับ
         if (action.visibleIf && !action.visibleIf()) return; // เงื่อนไขเนื้อเรื่อง (เช่น ต้องเตะ Skyther มาก่อน) ยังไม่ตรง
         if (action.teachesSkill && skillsLearned[action.teachesSkill] && skillsLearned[action.teachesSkill].learned) return; // เรียนจบไปแล้ว ไม่มีอะไรให้เรียนเพิ่ม
+        // action ที่ต้องใช้ทักษะ (requiresSkill) กดได้เฉพาะคนที่เรียนทักษะนั้นจบแล้ว
+        // เท่านั้น — เป็นรางวัลของการยอมแลก AP ไปกับการสังเกตในบทก่อนๆ
+        if (action.requiresSkill && !(skillsLearned[action.requiresSkill] && skillsLearned[action.requiresSkill].learned)) return;
 
         // action พักผ่อน (มี `restores`) กับ action อื่นที่ใช้ AP ในสเต็ปเดียวกัน
         // กันคนละทาง — เลือกได้อย่างใดอย่างหนึ่งต่อการมาเยือน 1 ครั้งเท่านั้น
@@ -1431,7 +1437,13 @@ function journeyRenderActionsBlock(step) {
     // log เรียงตามลำดับที่ "กดจริง" (ลำดับ insertion ของ object key ซึ่ง JS
     // การันตีคงลำดับไว้ให้สำหรับ string key) ไม่ใช่ลำดับที่นิยาม action ไว้ใน
     // step.actions — กันบั๊กที่ผลลัพธ์แทรกผิดตำแหน่งเมื่อกด action ไม่เรียงลำดับนิยาม
-    const logHtml = Object.keys(used).map(id => `<p class="vn-explore-entry">${used[id].text}</p>`).join('');
+    // ผลของ action ที่ปลดด้วยทักษะแสดงคนละสไตล์ — ให้รู้สึกว่าเป็นข้อมูลที่ได้มา
+    // เพราะเลือกลงทุนสังเกตไว้ก่อนหน้า ไม่ใช่ข้อความที่ใครก็เห็น
+    const logHtml = Object.keys(used).map(id => {
+        const def = (step.actions || []).find(a => a.id === id);
+        const cls = def && def.requiresSkill ? 'vn-explore-entry vn-skill-entry' : 'vn-explore-entry';
+        return `<p class="${cls}">${used[id].text}</p>`;
+    }).join('');
 
     // action พักผ่อน (restores) กับ action อื่นๆ ในสเต็ปเดียวกัน กันคนละทาง —
     // ทำอย่างใดอย่างหนึ่งไปแล้ว อีกฝั่งหายไปจากตัวเลือกทันที (ดูเหตุผลเดียวกัน
@@ -1458,12 +1470,15 @@ function journeyRenderActionsBlock(step) {
             return;
         }
         if (restUsed) return; // พักไปแล้ว ออกแรงทำอย่างอื่นไม่ได้อีก
+        // ยังไม่มีทักษะที่ action นี้ต้องใช้ — ไม่แสดงปุ่มเลย ไม่ใช่แสดงแบบกดไม่ได้
+        // (ผู้อ่านที่ไม่ได้เรียนทักษะนั้นไม่ควรรู้ด้วยซ้ำว่าพลาดอะไรไป)
+        if (action.requiresSkill && !(skillsLearned[action.requiresSkill] && skillsLearned[action.requiresSkill].learned)) return;
 
         const cost = action.apCost || 1;
         if (action.requires && !used[action.requires]) {
             return; // ยังไม่ถึงลำดับ ไม่แสดงปุ่มเลย
         } else if (apCurrent >= cost) {
-            buttonsHtml += `<button class="vn-explore-btn" onclick="journeyDoAction('${action.id}')">${action.prompt} (${cost} AP)</button>`;
+            buttonsHtml += `<button class="vn-explore-btn${action.requiresSkill ? ' vn-skill-btn' : ''}" onclick="journeyDoAction('${action.id}')">${action.prompt} (${cost} AP)</button>`;
         } else {
             buttonsHtml += `<button class="vn-explore-btn" disabled title="AP ไม่พอ">${action.prompt} (${cost} AP)</button>`;
         }
@@ -1628,6 +1643,8 @@ function journeyBuildTimelineHTML() {
 const journeyReflectionSeen = new Set();
 
 const REFLECT_LINE_DURATION = 4.8;  // วินาทีต่อหนึ่งประโยค (ลอยขึ้น-ค้าง-จางหาย)
+const REFLECT_TOTAL_CAP = 30;       // เพดานความยาวทั้งชุด (วินาที) — บทที่มีประโยคเยอะ
+                                    // จะบีบจังหวะเหลื่อมให้สั้นลงเองแทนที่จะยาวขึ้นเรื่อยๆ
 const REFLECT_LINE_STAGGER = 3.0;   // ประโยคถัดไปเริ่มลอยขึ้นหลังจากประโยคก่อนเท่าไหร่ (สั้นกว่า DURATION = ประโยคเก่ายังจางค้างอยู่ตอนประโยคใหม่ขึ้นมา จงใจให้เหลื่อมกันเล็กน้อย แต่ระยะเลื่อนขึ้นในคีย์เฟรมกว้างพอที่ตัวอักษรสองประโยคจะไม่ทับกัน)
 
 /* ฉากประมวลความคิดปิดบท — ประโยคมุมมองบุคคลที่หนึ่งลอยขึ้นมาทีละประโยคแล้ว
@@ -1658,9 +1675,13 @@ function journeyBuildChapterCloseHTML() {
     let seqHtml = '';
     let closeDelay = 0;
     if (lines.length) {
-        closeDelay = (lines.length - 1) * REFLECT_LINE_STAGGER + REFLECT_LINE_DURATION;
+        // เหลื่อมตามค่าปกติก่อน แล้วบีบลงถ้าชุดยาวเกินเพดาน (ไม่ลดเวลาค้างของแต่ละ
+        // ประโยค เพราะนั่นคือเวลาที่ผู้อ่านใช้อ่าน — บีบเฉพาะช่องว่างระหว่างประโยค)
+        const gaps = Math.max(1, lines.length - 1);
+        const stagger = Math.min(REFLECT_LINE_STAGGER, Math.max(1.2, (REFLECT_TOTAL_CAP - REFLECT_LINE_DURATION) / gaps));
+        closeDelay = gaps * stagger + REFLECT_LINE_DURATION;
         const linesHtml = lines.map((r, i) => {
-            const delay = (i * REFLECT_LINE_STAGGER).toFixed(2);
+            const delay = (i * stagger).toFixed(2);
             return `<span class="vn-reflect-line ${r.kind}" style="animation-delay:${delay}s;animation-duration:${REFLECT_LINE_DURATION}s">${r.text}</span>`;
         }).join('');
         seqHtml = `<div class="vn-reflect-seq">${linesHtml}`
@@ -1710,6 +1731,7 @@ function journeyRender() {
     if (journeyState === 'close') {
         html += journeyBuildChapterCloseHTML() + '</div>';
         container.innerHTML = html;
+        if (typeof applySpoilerRedaction === 'function') applySpoilerRedaction(container);
         // การ์ดปิดบทจางขึ้นมาหลังประโยคสุดท้ายจบ = ฉากประมวลความคิดเล่นจบแล้ว
         // จังหวะนี้เท่านั้นถึงนับว่า "ดูจบ" (animation ไม่เดินตอน view ยังซ่อนอยู่
         // event จึงไม่ยิง และฉากจะไปเล่นตอนเปิด story-view จริงๆ ตามที่ควรเป็น)
@@ -1766,6 +1788,9 @@ function journeyRender() {
 
     html += '</div></div>';
     container.innerHTML = html;
+    // sysnote อ้างชื่อสายพันธุ์จริง (KARVOS, SKYTHER, ...) ตัวไหนที่ยังไม่ปลดล็อก
+    // ต้องถูกถมแถบไว้เหมือนในฐานข้อมูล — ดู applySpoilerRedaction ใน index.html
+    if (typeof applySpoilerRedaction === 'function') applySpoilerRedaction(container);
 
     if (step.actions) journeyRenderActionsBlock(step);
 
