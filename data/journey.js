@@ -942,6 +942,14 @@ let journeyHostKey = 'LUVENN';
 
 let journeyIndex = 0;
 let journeyChapterIdx = 0; // ตำแหน่งในอาเรย์ JOURNEY_CHAPTERS ของบทที่กำลังอ่านอยู่ (สำคัญตอน journeyState === 'close' เพราะตอนนั้นไม่มี step ให้อ้างอิงบท)
+/* --- เส้นทาง (lane) ---
+   บางช่วงของเนื้อเรื่องแตกเป็นสองเส้นที่ผู้อ่านเลือกเอง แล้วกลับมาบรรจบกัน
+   step ที่มี field `lane` เป็นของเส้นนั้นเส้นเดียว — ผู้อ่านที่เลือกอีกเส้น
+   จะไม่เห็นทั้งใน timeline และเดินผ่านไม่ได้ ส่วน step ที่ไม่มี lane คือทาง
+   ร่วมที่ทุกคนผ่านเหมือนกัน จุดบรรจบทำด้วย `nextId` บน step สุดท้ายของเลน
+   journeyLane = ชื่อเลนปัจจุบัน (null = อยู่บนทางร่วม) persist ไปกับ progress
+   เพราะร่างและสิ่งที่ผู้อ่านเห็นต่อจากนี้ขึ้นกับมัน */
+let journeyLane = null;
 let journeyUnlockedIds = new Set();
 let journeyState = 'step'; // 'step' | 'warning' | 'close'
 let journeyPendingWarning = '';
@@ -1067,6 +1075,23 @@ function skillObserve(skillId) {
 /* --- ตัวช่วยเรื่องบท ---
    ทุกฟังก์ชันคิดจากลำดับ index ใน JOURNEY_STEPS ตรงๆ ไม่เก็บ state ซ้ำ
    ยกเว้น journeyChapterIdx ที่จำเป็นตอนอยู่หน้าจอปิดบท */
+/* step นี้อยู่บนเส้นทางที่ผู้อ่านเลือกไว้หรือเปล่า — ไม่มี lane = ทางร่วม เห็นเสมอ */
+function journeyStepOnLane(step) {
+    return !step.lane || step.lane === journeyLane;
+}
+
+/* ทักษะที่เรียนจบแล้วยังใช้จริงไม่ได้ ถ้าร่างปัจจุบันไม่มีอวัยวะที่ต้องใช้
+   (ดู requiresOrgan ใน SKILL_DEFINITIONS กับ organs ใน CREATURE_PROFILES)
+   ความเข้าใจส่งข้ามร่างได้ แต่ร่างกายส่งไม่ได้ — กฎเดียวกับ data/memoryMechanics.js */
+function skillUsable(skillId) {
+    const def = SKILL_DEFINITIONS[skillId];
+    const entry = skillsLearned[skillId];
+    if (!def || !entry || !entry.learned) return false;
+    if (!def.requiresOrgan) return true;
+    const profile = CREATURE_PROFILES[journeyHostKey];
+    return !!(profile && profile.organs && profile.organs.indexOf(def.requiresOrgan) >= 0);
+}
+
 function journeyChapterStartIndex(chIdx) {
     const ch = JOURNEY_CHAPTERS[chIdx];
     return ch ? journeyIdToIndex(ch.startId) : -1;
@@ -1103,7 +1128,7 @@ function journeyFurthestUnlockedIndexInChapter(chIdx) {
     const last = journeyChapterLastIndex(chIdx);
     let idx = start;
     for (let i = start; i <= last; i++) {
-        if (journeyUnlockedIds.has(JOURNEY_STEPS[i].id)) idx = i;
+        if (journeyUnlockedIds.has(JOURNEY_STEPS[i].id) && journeyStepOnLane(JOURNEY_STEPS[i])) idx = i;
     }
     return idx;
 }
@@ -1115,6 +1140,7 @@ function journeySaveProgress() {
             : JOURNEY_STEPS[journeyIndex].id;
         localStorage.setItem(JOURNEY_STORAGE_KEY, JSON.stringify({
             currentId,
+            lane: journeyLane,
             unlockedIds: [...journeyUnlockedIds]
         }));
     } catch (e) { /* localStorage อาจถูกปิดใน private mode — ข้ามไปเงียบๆ */ }
@@ -1138,6 +1164,7 @@ function journeyReset() {
 
     if (saved && Array.isArray(saved.unlockedIds)) {
         journeyUnlockedIds = new Set(saved.unlockedIds);
+        journeyLane = saved.lane || null;
         journeyUnlockedIds.add(firstId); // step แรกปลดล็อกเสมอ กันเซฟเสีย
 
         // เซฟเก่าจากสมัยยังไม่มีระบบบท: จุดจบเดียว '__end__' = จบบทที่ 1
@@ -1170,6 +1197,7 @@ function journeyReset() {
         journeyUnlockedIds = new Set([firstId]);
         journeyIndex = 0;
         journeyChapterIdx = 0;
+        journeyLane = null;
         journeyState = 'step';
     }
 
@@ -1322,7 +1350,18 @@ function journeyContinue() {
         return;
     }
 
-    journeyIndex++;
+    // `nextId` = ข้ามไป step ที่ระบุแทนตัวถัดไปในอาเรย์ (ใช้ทำจุดบรรจบของเลน)
+    // ถ้าไม่มี ก็เดินหน้าทีละหนึ่ง โดยข้าม step ที่เป็นของเลนอื่นไปเงียบๆ
+    const here = JOURNEY_STEPS[journeyIndex];
+    if (here && here.nextId) {
+        const target = journeyIdToIndex(here.nextId);
+        if (target >= 0) journeyIndex = target;
+        else journeyIndex++;
+    } else {
+        journeyIndex++;
+        while (journeyIndex < JOURNEY_STEPS.length && !journeyStepOnLane(JOURNEY_STEPS[journeyIndex])) journeyIndex++;
+        if (journeyIndex >= JOURNEY_STEPS.length) journeyIndex = JOURNEY_STEPS.length - 1;
+    }
     journeyState = 'step';
     const step = JOURNEY_STEPS[journeyIndex];
     const isNewGround = !journeyUnlockedIds.has(step.id);
@@ -1378,7 +1417,7 @@ function journeyDoAction(actionId) {
         if (action.teachesSkill && skillsLearned[action.teachesSkill] && skillsLearned[action.teachesSkill].learned) return; // เรียนจบไปแล้ว ไม่มีอะไรให้เรียนเพิ่ม
         // action ที่ต้องใช้ทักษะ (requiresSkill) กดได้เฉพาะคนที่เรียนทักษะนั้นจบแล้ว
         // เท่านั้น — เป็นรางวัลของการยอมแลก AP ไปกับการสังเกตในบทก่อนๆ
-        if (action.requiresSkill && !(skillsLearned[action.requiresSkill] && skillsLearned[action.requiresSkill].learned)) return;
+        if (action.requiresSkill && !skillUsable(action.requiresSkill)) return;
 
         // action พักผ่อน (มี `restores`) กับ action อื่นที่ใช้ AP ในสเต็ปเดียวกัน
         // กันคนละทาง — เลือกได้อย่างใดอย่างหนึ่งต่อการมาเยือน 1 ครั้งเท่านั้น
@@ -1472,7 +1511,7 @@ function journeyRenderActionsBlock(step) {
         if (restUsed) return; // พักไปแล้ว ออกแรงทำอย่างอื่นไม่ได้อีก
         // ยังไม่มีทักษะที่ action นี้ต้องใช้ — ไม่แสดงปุ่มเลย ไม่ใช่แสดงแบบกดไม่ได้
         // (ผู้อ่านที่ไม่ได้เรียนทักษะนั้นไม่ควรรู้ด้วยซ้ำว่าพลาดอะไรไป)
-        if (action.requiresSkill && !(skillsLearned[action.requiresSkill] && skillsLearned[action.requiresSkill].learned)) return;
+        if (action.requiresSkill && !skillUsable(action.requiresSkill)) return;
 
         const cost = action.apCost || 1;
         if (action.requires && !used[action.requires]) {
@@ -1545,6 +1584,23 @@ function journeySelectChapter(chIdx) {
 
 function journeyChoice(stepIndex, optionIndex) {
     const opt = JOURNEY_STEPS[stepIndex].choice.options[optionIndex];
+    /* ตัวเลือกที่มี branchTo = ทางแยกจริง ไม่ใช่ทางที่ถูก/ผิด — พาไป step แรก
+       ของเลนนั้นแล้วจำเลนไว้ ทุก step ที่เหลือของเลนอื่นจะหายไปจากสายตา
+       ผู้อ่านคนนี้ทันที (ดู journeyStepOnLane) จนกว่าจะถึงจุดบรรจบ */
+    if (opt.branchTo) {
+        const target = journeyIdToIndex(opt.branchTo);
+        if (target < 0) return;
+        journeyLane = opt.lane || null;
+        journeyIndex = target;
+        journeyState = 'step';
+        const step = JOURNEY_STEPS[target];
+        const isNewGround = !journeyUnlockedIds.has(step.id);
+        if (isNewGround) journeyUnlockedIds.add(step.id);
+        journeySaveProgress();
+        if (isNewGround) journeyEnterStepSideEffects(step);
+        journeyRender();
+        return;
+    }
     if (opt.correct) {
         journeyContinue(); // ตัวเลือกที่ถูกต้อง = เดินเรื่องต่อปกติเหมือนกด continueLabel (journeyContinue เรียก journeyRender() ให้เองแล้ว)
         return;
@@ -1617,6 +1673,8 @@ function journeyBuildTimelineHTML() {
     let html = '<div class="vn-timeline">';
     for (let n = 0; n <= total; n++) {
         const isEnd = n === total;
+        // step ของเลนที่ผู้อ่านไม่ได้เลือก ไม่ต้องมีจุดใน timeline เลย
+        if (!isEnd && !journeyStepOnLane(JOURNEY_STEPS[start + n])) continue;
         const id = isEnd ? ch.endId : JOURNEY_STEPS[start + n].id;
         const unlocked = journeyUnlockedIds.has(id);
         const isCurrent = isEnd ? (journeyState === 'close') : (journeyState !== 'close' && journeyIndex === start + n);
@@ -1654,7 +1712,9 @@ const REFLECT_LINE_STAGGER = 3.0;   // ประโยคถัดไปเร�
 function journeyBuildChapterCloseHTML() {
     const ch = JOURNEY_CHAPTERS[journeyChapterIdx];
     const next = JOURNEY_CHAPTERS[journeyChapterIdx + 1];
-    const lines = ch.reflections || [];
+    // reflections เป็นอาเรย์ตรงๆ หรือฟังก์ชันก็ได้ — บทที่แตกเป็นสองเลนใช้
+    // ฟังก์ชันเพื่อสลับบางประโยคตามร่าง/เลนที่ผู้อ่านเลือก
+    const lines = (typeof ch.reflections === 'function' ? ch.reflections() : ch.reflections) || [];
     // "เคยดูจบแล้ว" ต้องหมายถึงดูจนจบจริงๆ เท่านั้น (ดู journeyRender ที่รอ
     // animationend ของการ์ดปิดบท) — เดิมทำเครื่องหมายไว้ตั้งแต่ตอน build HTML
     // ซึ่งพังเวลาโหลดหน้าเว็บมาแล้วเซฟค้างอยู่ที่หน้าจอปิดบท เพราะ init เรียก

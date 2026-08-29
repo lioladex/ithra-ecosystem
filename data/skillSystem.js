@@ -16,12 +16,18 @@
    ในอนาคต (ยังไม่มี action ไหนใช้จริงตอนนี้ — เก็บไว้เป็น profile ให้
    ระบบทักษะต่อไปดึงไปใช้ได้ทันทีโดยไม่ต้องนิยามใหม่)
 
+   `organs` คือรายการอวัยวะที่ร่างนั้นมีจริง ใช้คู่กับ `requiresOrgan` ของ
+   SKILL_DEFINITIONS — ทักษะที่ "เข้าใจแล้ว" ยังใช้จริงไม่ได้ถ้าร่างปัจจุบันไม่มี
+   อวัยวะที่ทักษะนั้นต้องใช้ (ดู skillUsable() ใน data/journey.js) ชื่ออวัยวะต้อง
+   สะกดตรงกับ requiresOrgan เป๊ะๆ เพราะเทียบกันด้วย string ตรงๆ
+
    `recoveryAction` คือวิธีฟื้นฟู AP ตามพฤติกรรมจริงของแต่ละสายพันธุ์
    (in-fiction) แทนการฟื้นตามเวลา — apRestored: 0 = ไม่มีการฟื้นฟูปกติ
 ================================================================== */
 
 const CREATURE_PROFILES = {
     LUVENN: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 5, frame: 'light', apMax: 4,
         recoveryAction: {
             label: "กางแผงคอรับแสง", apRestored: 4,
@@ -29,6 +35,7 @@ const CREATURE_PROFILES = {
         }
     },
     KARVOS: {
+        organs: ["ขาสี่ข้าง", "ขาสี่ข้างสำหรับวิ่งไล่ระยะไกล"],
         sizeTier: 4, frame: 'normal', apMax: 3,
         recoveryAction: {
             label: "ซุ่มนิ่งสะสมแรง", apRestored: 2,
@@ -36,6 +43,7 @@ const CREATURE_PROFILES = {
         }
     },
     VORTHAK: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 6, frame: 'heavy', apMax: 5,
         recoveryAction: {
             label: "กินซากเหยื่อ", apRestored: 5,
@@ -43,6 +51,7 @@ const CREATURE_PROFILES = {
         }
     },
     SKYTHER: {
+        organs: ["ปีก"],
         sizeTier: 5, frame: 'light', apMax: 4,
         recoveryAction: {
             label: "ร่อนลมร้อน", apRestored: 2,
@@ -50,6 +59,7 @@ const CREATURE_PROFILES = {
         }
     },
     FROSTMANE: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 5, frame: 'heavy', apMax: 4,
         recoveryAction: {
             label: "รวมฝูงหนีหนาว", apRestored: 2,
@@ -57,6 +67,7 @@ const CREATURE_PROFILES = {
         }
     },
     THRENDLE: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 6, frame: 'normal', apMax: 5,
         recoveryAction: {
             label: "ฝังตัวรอน้ำลง", apRestored: 5,
@@ -64,6 +75,7 @@ const CREATURE_PROFILES = {
         }
     },
     PALLOWFIN: {
+        organs: ["ครีบ"],
         sizeTier: 3, frame: 'light', apMax: 3,
         recoveryAction: {
             label: "ว่ายรวมฝูง", apRestored: 1,
@@ -71,6 +83,7 @@ const CREATURE_PROFILES = {
         }
     },
     DUNKRELL: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 4, frame: 'heavy', apMax: 3,
         recoveryAction: {
             label: "พรางนิ่งกินซาก", apRestored: 1,
@@ -78,6 +91,7 @@ const CREATURE_PROFILES = {
         }
     },
     MISTCRAWLER: {
+        organs: ["ขาปล้อง"],
         sizeTier: 2, frame: 'light', apMax: 2,
         recoveryAction: {
             label: "พักในใย", apRestored: 2,
@@ -85,6 +99,7 @@ const CREATURE_PROFILES = {
         }
     },
     GLIMMERWING: {
+        organs: ["ปีก"],
         sizeTier: 1, frame: 'light', apMax: 2,
         recoveryAction: {
             label: "ซิงค์แสงกับฝูง", apRestored: 1,
@@ -92,6 +107,7 @@ const CREATURE_PROFILES = {
         }
     },
     KORRUNE: {
+        organs: ["ขาสี่ข้าง"],
         sizeTier: 6, frame: 'normal', apMax: 5,
         recoveryAction: {
             label: "หายเข้าไปในหมอก", apRestored: 0,
@@ -99,6 +115,7 @@ const CREATURE_PROFILES = {
         }
     },
     CINDERGRUB: {
+        organs: ["ขาปล้อง"],
         sizeTier: 1, frame: 'normal', apMax: 2,
         recoveryAction: {
             label: "ดูดแร่ธาตุจากปล่อง", apRestored: 2,
@@ -106,13 +123,55 @@ const CREATURE_PROFILES = {
         }
     },
     THESSEK: {
+        organs: ["ขาสี่ข้าง", "กรงเล็บขุด"],
         sizeTier: 4, frame: 'normal', apMax: 3,
         recoveryAction: {
             label: "ขุดโพรงพัก", apRestored: 2,
             flavor: "ขุดโพรงตื้นซุ่มพักตัว รอจนแรงขาที่ใช้ขุดกลับมาเต็มที่"
         }
     },
+    VELLITH: {
+        organs: [],
+        sizeTier: 2, frame: 'light', apMax: 2,
+        recoveryAction: {
+            label: "ลอยนิ่งตามลม", apRestored: 1,
+            flavor: "ปล่อยให้ถุงแก๊สพยุงไว้เฉยๆ ไม่ต้านลม ไม่บังคับทิศ จนแรงกลับมาทีละน้อย"
+        }
+    },
+    OZGRUN: {
+        organs: ["ขาสี่ข้าง", "กรงเล็บขุด"],
+        sizeTier: 4, frame: 'heavy', apMax: 3,
+        recoveryAction: {
+            label: "ขุดรากไม้กิน", apRestored: 2,
+            flavor: "ใช้กรงเล็บขุดรากอวบน้ำใต้โคนไม้ใหญ่ กินไปเรื่อยๆ โดยไม่ต้องระวังอะไรมากนักเพราะมีเกราะคุ้มอยู่แล้ว"
+        }
+    },
+    LUMENVEIL: {
+        organs: [],
+        sizeTier: 2, frame: 'light', apMax: 2,
+        recoveryAction: {
+            label: "อาบแสงจนถุงเต่ง", apRestored: 2,
+            flavor: "แผ่ผืนเยื่อรับแสงที่ลอดผ่านหมอกลงมาจนถุงใต้ผิวนูนเต็มทุกถุง"
+        }
+    },
+    SEVRIN: {
+        organs: ["แผ่นหนังร่อน"],
+        sizeTier: 1, frame: 'light', apMax: 2,
+        recoveryAction: {
+            label: "หลบในโพรงไม้", apRestored: 1,
+            flavor: "มุดเข้าโพรงไม้แคบๆ ที่ตัวใหญ่กว่านี้เข้าไม่ได้ แล้วนิ่งรอจนฟ้ามืดอีกครั้ง"
+        }
+    },
+    PALEGRIM: {
+        organs: ["ขาสี่ข้าง"],
+        sizeTier: 2, frame: 'light', apMax: 2,
+        recoveryAction: {
+            label: "แทะซากที่เหลือ", apRestored: 2,
+            flavor: "รอจนแน่ใจว่าเจ้าของซากไปไกลจริงแล้ว ค่อยเข้าไปแทะส่วนที่เหลือติดกระดูก"
+        }
+    },
     VASHLI: {
+        organs: ["ขาปีนป่าย"],
         sizeTier: 3, frame: 'light', apMax: 3,
         recoveryAction: {
             label: "ห้อยหัวพักใต้กิ่ง", apRestored: 1,

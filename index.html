@@ -764,6 +764,7 @@
                     <span id="journey-dev-tools" class="journey-dev-tools" style="display:none;">
                         <select id="dev-scene-select" class="dev-scene-select" title="เลือกฉากที่จะรีเซ็ตตั้งแต่จุดนั้นเป็นต้นไป"></select>
                         <button class="dev-toggle-btn" onclick="journeyDevResetScene()" title="รีเซ็ตความคืบหน้าตั้งแต่ฉากที่เลือกจนจบ">⏪ RESET จากฉากนี้</button>
+                        <select id="dev-host-select" class="dev-scene-select" title="สลับร่างปัจจุบัน (ไล่ตรวจเลนที่แตกตามร่างโดยไม่ต้องเล่นซ้ำ)" onchange="journeyDevSwitchHost(this.value)"></select>
                     </span>
                 </div>
             </div>
@@ -986,6 +987,23 @@
             const fallback = (journeyState === 'close') ? '' : JOURNEY_STEPS[journeyIndex].id;
             select.value = current || fallback;
             if (!select.value) select.value = JOURNEY_STEPS[journeyIndex].id;
+
+            const hostSelect = document.getElementById('dev-host-select');
+            if (hostSelect) {
+                hostSelect.innerHTML = Object.keys(CREATURE_PROFILES).sort()
+                    .map(k => `<option value="${k}">ร่าง: ${k}</option>`).join('');
+                hostSelect.value = journeyHostKey;
+            }
+        }
+
+        /* DEV — สลับร่างตรงๆ ไว้ไล่ตรวจเลนที่แตกตามร่าง (บทที่ 3 เป็นต้นไป)
+           โดยไม่ต้องเล่นถึงจุดเปลี่ยนร่างใหม่ทุกครั้ง เปลี่ยนแล้ว AP เต็มตามร่างนั้น */
+        function journeyDevSwitchHost(hostKey) {
+            if (!hostKey || typeof journeySwitchHost !== 'function') return;
+            journeySwitchHost(hostKey);
+            apCurrent = apMax;
+            apSaveState();
+            journeyRender();
         }
 
         function journeyDevResetScene() {

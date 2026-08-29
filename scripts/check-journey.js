@@ -136,31 +136,68 @@ Object.entries(SKILLS).forEach(([id, def]) => {
     else if (n === def.obsNeeded) warns.push(`skill ${id}: โอกาส ${n} ครั้งเท่ากับที่ต้องการพอดี ไม่มี margin เผื่อผู้อ่านข้ามปุ่ม`);
 });
 
-/* ---------- งบ AP ต่อฉาก (รายงานเฉยๆ) ----------
-   เดินเรื่องแบบ "กดทุก action ที่กดได้" เพื่อดูว่าแต่ละฉากต้องแลกกี่ AP
-   จาก AP ที่มีจริงตอนนั้น — ตั้งใจให้ไม่พอ ผู้อ่านต้องเลือกเอง จึงเป็น WARN */
-let host = "LUVENN";
-let apMax = PROFILES[host].apMax;
-let ap = apMax;
-const budget = [];
+/* ---------- เดินทุกเส้นทาง (lane) ----------
+   เนื้อเรื่องแตกเป็นสองเลนได้ผ่าน choice.options[].branchTo + step.lane แล้ว
+   กลับมาบรรจบด้วย step.nextId — ตัวตรวจต้องเดินทุกเลน ไม่ใช่แค่เรียงตาม index
+   ไม่งั้นเลนที่สองไม่เคยถูกตรวจเลย รายงาน AP ต่อฉากคิดแยกตามเลนด้วย
+   (AP ไม่พอกดครบทุกปุ่มคือดีไซน์ ไม่ใช่ error — ดูหัวไฟล์) */
+function walkPath(startIdx, lane, visited, pathName) {
+    let host = 'LUVENN';
+    let apMax = PROFILES[host].apMax;
+    let ap = apMax;
+    let i = startIdx;
+    let guard = 0;
+    while (i >= 0 && i < STEPS.length && guard++ < STEPS.length * 2) {
+        const step = STEPS[i];
+        visited.add(step.id);
+        if (step.switchHost) {
+            if (!PROFILES[step.switchHost]) break;
+            host = step.switchHost;
+            apMax = PROFILES[host].apMax;
+            ap = Math.min(ap, apMax);
+        }
+        if (step.recoversAP) {
+            const amount = typeof step.recoversAP === 'object' ? step.recoversAP.amount : PROFILES[host].recoveryAction.apRestored;
+            ap = Math.min(apMax, ap + amount);
+        }
+        const acts = (step.actions || []).filter(a => !a.restores);
+        if (acts.length) {
+            const cost = acts.reduce((sum, a) => sum + (a.apCost || 1), 0);
+            if (cost > ap) warns.push(`[${pathName}] "${step.id}": action ใช้ ${cost} AP แต่มี ${ap}/${apMax} — ต้องเลือกไม่กด ${Math.max(0, acts.length - ap)} ปุ่ม`);
+            ap = Math.max(0, ap - cost);
+        }
+
+        // ทางแยกจริง: เดินต่อทีละเลนแบบ recursive แล้วจบเส้นนี้
+        const branches = (step.choice && step.choice.options || []).filter(o => o.branchTo);
+        if (branches.length) {
+            branches.forEach(opt => {
+                const target = seenIds.get(opt.branchTo);
+                if (target === undefined) errors.push(`"${step.id}" choice: branchTo "${opt.branchTo}" ไม่ตรงกับ step ไหนเลย`);
+                else walkPath(target, opt.lane || null, visited, opt.lane || pathName);
+            });
+            return;
+        }
+
+        if (step.nextId) {
+            const target = seenIds.get(step.nextId);
+            if (target === undefined) { errors.push(`"${step.id}": nextId "${step.nextId}" ไม่ตรงกับ step ไหนเลย`); return; }
+            i = target;
+            continue;
+        }
+        i++;
+        while (i < STEPS.length && STEPS[i].lane && STEPS[i].lane !== lane) i++;
+    }
+}
+const visited = new Set();
+walkPath(0, null, visited, 'เส้นหลัก');
 STEPS.forEach(step => {
-    if (step.switchHost) {
-        host = step.switchHost;
-        apMax = PROFILES[host].apMax;
-        ap = Math.min(ap, apMax);
-    }
-    if (step.recoversAP) {
-        const amount = typeof step.recoversAP === "object" ? step.recoversAP.amount : PROFILES[host].recoveryAction.apRestored;
-        ap = Math.min(apMax, ap + amount);
-    }
-    const acts = (step.actions || []).filter(a => !a.restores);
-    if (!acts.length) return;
-    const cost = acts.reduce((sum, a) => sum + (a.apCost || 1), 0);
-    budget.push({ id: step.id, host, cost, ap, actions: acts.length });
-    if (cost > ap) warns.push(`"${step.id}": action ทั้งหมดใช้ ${cost} AP แต่มี ${ap}/${apMax} — ผู้อ่านต้องเลือก ${Math.max(0, acts.length - ap)} ปุ่มที่จะไม่ได้กด`);
-    ap = Math.max(0, ap - cost);
+    if (!visited.has(step.id)) errors.push(`"${step.id}": เดินไปถึงไม่ได้จากเส้นทางไหนเลย (ตรวจ lane / nextId / branchTo)`);
 });
 
+/* creature ที่ยังไม่มีโปรไฟล์ AP — สวมเป็นร่างไม่ได้จนกว่าจะเพิ่ม */
+Object.keys(IMAGES).forEach(key => {
+    if (!PROFILES[key]) warns.push(`${key}: ไม่มีใน CREATURE_PROFILES — ใช้เป็นร่างของ Confluence ไม่ได้`);
+});
 /* ---------- รายงาน ---------- */
 console.log(`ตรวจ ${STEPS.length} step · ${CHAPTERS.length} บท · ${Object.keys(SKILLS).length} skill`);
 CHAPTERS.forEach((ch, i) => {
