@@ -292,6 +292,64 @@
 
         /* --- Journey of Confluence — visual-novel style stepper --- */
         .scene-container { max-width: 720px; margin: 0 auto; }
+
+        /* เมนูเลือกบท — การ์ดหนึ่งใบต่อหนึ่งบท (ดู journeyBuildChapterBarHTML
+           ใน data/journey.js) กว้างเท่ากันทุกใบด้วย grid auto-fit จึงเพิ่มบทที่
+           3, 4 ต่อไปได้โดยไม่ต้องแก้ layout — จอแคบจะไหลลงเป็นแถวเดียวเอง */
+        .vn-chapter-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 18px; }
+        .vn-chapter-card { display: flex; flex-direction: column; gap: 3px; text-align: left; padding: 12px 14px; border: 1px solid rgba(56,189,248,0.22); border-left: 3px solid rgba(56,189,248,0.35); border-radius: 5px; background: rgba(10,14,18,0.55); color: #94a3b8; font-family: inherit; cursor: pointer; transition: all 0.22s ease; }
+        .vn-chapter-card:hover:not(.locked) { background: rgba(56,189,248,0.08); border-color: var(--accent-default); transform: translateY(-2px); }
+        .vn-chapter-card.current { background: rgba(56,189,248,0.12); border-color: var(--accent-default); border-left-color: var(--accent-default); box-shadow: 0 0 14px rgba(56,189,248,0.15); }
+        .vn-chapter-card.done:not(.current) { border-left-color: #ffb84a; }
+        .vn-chapter-card.locked { cursor: not-allowed; opacity: 0.45; border-style: dashed; border-left-color: rgba(255,255,255,0.15); }
+        .vn-chapter-num { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; }
+        .vn-chapter-card.current .vn-chapter-num { color: var(--accent-default); }
+        .vn-chapter-title { color: #e2e8f0; font-size: 0.98rem; font-weight: 600; }
+        .vn-chapter-card.locked .vn-chapter-title { color: #64748b; font-style: italic; }
+        .vn-chapter-range { font-family: 'Rajdhani', sans-serif; font-size: 0.74rem; letter-spacing: 1.5px; color: #64748b; }
+        .vn-chapter-status { font-size: 0.72rem; letter-spacing: 1px; color: #475569; margin-top: 2px; }
+        .vn-chapter-card.current .vn-chapter-status { color: #94a3b8; }
+        .vn-chapter-card.done .vn-chapter-status { color: #ffb84a; }
+
+        /* --- ฉากประมวลความคิดปิดบท (ดู journeyBuildChapterCloseHTML ใน
+           data/journey.js) ประโยคมุมมองบุคคลที่หนึ่งลอยขึ้นทีละประโยคแล้วจาง
+           หายไป จบชุดแล้วการ์ดปิดบทค่อยจางขึ้นมาแทน จังหวะทั้งหมดคุมด้วย
+           animation-delay ที่ JS คำนวณใส่มาให้ ไม่มี setTimeout ฝั่ง JS เลย
+           คลาส .skipped บนตัวครอบ = กดข้าม (หรือเคยดูจบไปแล้วใน session นี้) */
+        .vn-chapter-close { position: relative; }
+        .vn-reflect-seq { position: relative; min-height: 230px; display: flex; align-items: center; justify-content: center; padding: 10px 12px 46px; }
+        .vn-reflect-line { position: absolute; left: 0; right: 0; text-align: center; opacity: 0; padding: 0 10px; font-size: 1.05rem; line-height: 1.9; color: #cbd5e1; animation-name: vnReflectFloat; animation-timing-function: cubic-bezier(0.22, 0.61, 0.36, 1); animation-fill-mode: both; }
+        .vn-reflect-line.gain { color: #7dd3fc; text-shadow: 0 0 18px rgba(56,189,248,0.35); }
+        .vn-reflect-line.loss { color: #cbb18a; text-shadow: 0 0 18px rgba(255,184,74,0.22); }
+        .vn-reflect-skip { position: absolute; bottom: 6px; left: 50%; transform: translateX(-50%); background: none; border: none; color: #475569; font-family: 'Rajdhani', sans-serif; letter-spacing: 2px; font-size: 0.72rem; text-transform: uppercase; cursor: pointer; transition: color 0.2s ease; }
+        .vn-reflect-skip:hover { color: var(--accent-default); }
+        @keyframes vnReflectFloat {
+            0%   { opacity: 0; transform: translateY(38px); filter: blur(4px); }
+            22%  { opacity: 1; transform: translateY(10px); filter: blur(0); }
+            60%  { opacity: 1; transform: translateY(-6px); filter: blur(0); }
+            100% { opacity: 0; transform: translateY(-42px); filter: blur(4px); }
+        }
+        .vn-chapter-close .scene-close { opacity: 0; animation: vnCloseReveal 0.9s ease forwards; }
+        @keyframes vnCloseReveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .vn-chapter-close.skipped .vn-reflect-seq { display: none; }
+        .vn-chapter-close.skipped .scene-close { opacity: 1; animation: none; }
+
+        /* สรุปได้มา/เสียไปในการ์ดปิดบท — อ่านย้อนได้หลัง animation จบหรือหลังกดข้าม */
+        .vn-ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 16px; text-align: left; margin: 4px auto 22px; max-width: 620px; }
+        .vn-ledger-col { border: 1px solid rgba(255,255,255,0.08); border-radius: 5px; padding: 12px 14px; background: rgba(0,0,0,0.25); }
+        .vn-ledger-col.gain { border-left: 3px solid var(--accent-default); }
+        .vn-ledger-col.loss { border-left: 3px solid #ffb84a; }
+        .vn-ledger-head { font-family: 'Rajdhani', sans-serif; letter-spacing: 3px; font-size: 0.72rem; text-transform: uppercase; margin-bottom: 8px; }
+        .vn-ledger-col.gain .vn-ledger-head { color: var(--accent-default); }
+        .vn-ledger-col.loss .vn-ledger-head { color: #ffb84a; }
+        .vn-ledger ul { list-style: none; margin: 0; padding: 0; }
+        .vn-ledger li { color: #94a3b8; font-size: 0.84rem; line-height: 1.75; padding-left: 14px; position: relative; margin-bottom: 5px; }
+        .vn-ledger li::before { content: "—"; position: absolute; left: 0; color: #475569; }
+
+        /* ปุ่มเริ่มบทถัดไปบนหน้าจอปิดบท — เน้นกว่าลิงก์ออกจากเนื้อเรื่องที่อยู่ข้างกัน */
+        .scene-close-links .vn-next-chapter-btn { background: linear-gradient(135deg, rgba(56,189,248,0.18), rgba(56,189,248,0.45)); border-color: var(--accent-default); color: #e2e8f0; font-weight: 600; }
+        .scene-close-links .vn-next-chapter-btn:hover { background: linear-gradient(135deg, rgba(56,189,248,0.28), rgba(56,189,248,0.65)); }
+        .scene-close-links .vn-next-chapter-btn .arrow { margin-left: 4px; }
         .vn-timeline { display: flex; align-items: center; gap: 5px; margin-bottom: 20px; overflow-x: auto; overflow-y: hidden; padding: 6px 2px; }
         .vn-tp { width: 11px; height: 11px; border-radius: 50%; border: 2px solid #334155; background: #0a0f14; flex-shrink: 0; cursor: not-allowed; transition: all 0.2s ease; }
         .vn-tp.unlocked { border-color: var(--accent-default); cursor: pointer; }

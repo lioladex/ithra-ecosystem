@@ -45,6 +45,15 @@ Any narrative event with mechanical side-effects that don't match a creature's `
 ## 8. Branch text must feel authored, not bolted on
 When `paragraphs`/`text` is a function branching on prior choices (e.g. kicked vs. not-kicked at T+8/T+9), both branches must read as equally deliberate prose — no branch should feel like a shorter afterthought bolted onto the "real" path.
 
+## 9. Chapter-close reflection lines (`reflections` in JOURNEY_CHAPTERS)
+Every chapter ends with a processing sequence: one-sentence, first-person lines that float in and fade out, then a gain/loss ledger. Rules specific to these lines:
+- This is the only place Confluence says "ฉัน" — it is inner processing, not scene narration. Never let this pronoun leak into step `paragraphs`.
+- One line per *significant* beat, in the order the beats happened in that chapter. No line for something the reader did not see on the page.
+- `kind: "gain"` = something acquired (a sensation, an ability, an understanding). `kind: "loss"` = something taken away (a body, a herd, a belief that turned out to be false). Beliefs count: losing a wrong assumption is a loss line, not a gain line.
+- Keep the sentence naming what was gained/lost, not how it felt in the moment — the scene already did the feeling. "ฉันได้รู้จักความเจ็บปวด" not "ฉันเจ็บจนแทบขาดใจ".
+- Aim for a mix that ends on the chapter's real cost. A chapter of pure gains reads as a checklist.
+- Every new chapter must ship a `reflections` array; the close screen plays it automatically and builds the ledger from it.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
