@@ -9,7 +9,9 @@
   - unlockKey / unlocksTier ชี้ไป imageKey ที่ไม่มีใน IMAGE_LIBRARY
   - tier นอกช่วง 0-4
   - action id ซ้ำกันภายใน step เดียวกัน หรือ requires ชี้ไป action ที่ไม่มีใน step นั้น
-  - teachesSkill / requiresSkill ชี้ไป skill ที่ไม่มีใน SKILL_DEFINITIONS
+  - teachesSkill / requiresSkill / requiresSkillKnown ชี้ไป skill ที่ไม่มีใน SKILL_DEFINITIONS
+  - action ที่ใส่ทั้ง requiresSkill (ลงมือทำจริง ต้องมีอวัยวะ) และ requiresSkillKnown
+    (ใช้ความเข้าใจอย่างเดียว) พร้อมกัน
   - skill ที่มีโอกาสสังเกตน้อยกว่า obsNeeded (เรียนให้ครบไม่ได้เลยแม้จะกดทุกปุ่ม)
   - step ที่ไม่มี paragraphs หรือไม่มีทั้ง continueLabel และ choice
 
@@ -117,6 +119,9 @@ STEPS.forEach(step => {
         if (a.apCost !== undefined && (!Number.isInteger(a.apCost) || a.apCost < 1)) errors.push(`"${step.id}"/${a.id}: apCost ต้องเป็นจำนวนเต็ม >= 1`);
         if (a.teachesSkill && !SKILLS[a.teachesSkill]) errors.push(`"${step.id}"/${a.id}: teachesSkill "${a.teachesSkill}" ไม่มีใน SKILL_DEFINITIONS`);
         if (a.requiresSkill && !SKILLS[a.requiresSkill]) errors.push(`"${step.id}"/${a.id}: requiresSkill "${a.requiresSkill}" ไม่มีใน SKILL_DEFINITIONS`);
+        if (a.requiresSkillKnown && !SKILLS[a.requiresSkillKnown]) errors.push(`"${step.id}"/${a.id}: requiresSkillKnown "${a.requiresSkillKnown}" ไม่มีใน SKILL_DEFINITIONS`);
+        if (a.requiresSkill && a.requiresSkillKnown) errors.push(`"${step.id}"/${a.id}: ใส่ทั้ง requiresSkill และ requiresSkillKnown — เลือกอย่างเดียว (ลงมือทำจริง vs ใช้ความเข้าใจ)`);
+        if (a.requiresSkill && SKILLS[a.requiresSkill] && !SKILLS[a.requiresSkill].requiresOrgan) warns.push(`"${step.id}"/${a.id}: requiresSkill "${a.requiresSkill}" ไม่มี requiresOrgan จึงมีค่าเท่ากับ requiresSkillKnown`);
     });
     step.actions.forEach(a => {
         if (a.requires && !ids.has(a.requires)) errors.push(`"${step.id}"/${a.id}: requires "${a.requires}" ไม่มีอยู่ใน step เดียวกัน`);

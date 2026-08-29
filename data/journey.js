@@ -1418,6 +1418,9 @@ function journeyDoAction(actionId) {
         // action ที่ต้องใช้ทักษะ (requiresSkill) กดได้เฉพาะคนที่เรียนทักษะนั้นจบแล้ว
         // เท่านั้น — เป็นรางวัลของการยอมแลก AP ไปกับการสังเกตในบทก่อนๆ
         if (action.requiresSkill && !skillUsable(action.requiresSkill)) return;
+        // requiresSkillKnown = ใช้แค่ "ความเข้าใจ" ไม่ต้องมีอวัยวะ (อ่านสถานการณ์,
+        // ตีความสิ่งที่เห็น) ต่างจาก requiresSkill ที่ต้องลงมือทำจริงด้วยร่างกาย
+        if (action.requiresSkillKnown && !(skillsLearned[action.requiresSkillKnown] && skillsLearned[action.requiresSkillKnown].learned)) return;
 
         // action พักผ่อน (มี `restores`) กับ action อื่นที่ใช้ AP ในสเต็ปเดียวกัน
         // กันคนละทาง — เลือกได้อย่างใดอย่างหนึ่งต่อการมาเยือน 1 ครั้งเท่านั้น
@@ -1480,7 +1483,7 @@ function journeyRenderActionsBlock(step) {
     // เพราะเลือกลงทุนสังเกตไว้ก่อนหน้า ไม่ใช่ข้อความที่ใครก็เห็น
     const logHtml = Object.keys(used).map(id => {
         const def = (step.actions || []).find(a => a.id === id);
-        const cls = def && def.requiresSkill ? 'vn-explore-entry vn-skill-entry' : 'vn-explore-entry';
+        const cls = def && (def.requiresSkill || def.requiresSkillKnown) ? 'vn-explore-entry vn-skill-entry' : 'vn-explore-entry';
         return `<p class="${cls}">${used[id].text}</p>`;
     }).join('');
 
@@ -1512,12 +1515,13 @@ function journeyRenderActionsBlock(step) {
         // ยังไม่มีทักษะที่ action นี้ต้องใช้ — ไม่แสดงปุ่มเลย ไม่ใช่แสดงแบบกดไม่ได้
         // (ผู้อ่านที่ไม่ได้เรียนทักษะนั้นไม่ควรรู้ด้วยซ้ำว่าพลาดอะไรไป)
         if (action.requiresSkill && !skillUsable(action.requiresSkill)) return;
+        if (action.requiresSkillKnown && !(skillsLearned[action.requiresSkillKnown] && skillsLearned[action.requiresSkillKnown].learned)) return;
 
         const cost = action.apCost || 1;
         if (action.requires && !used[action.requires]) {
             return; // ยังไม่ถึงลำดับ ไม่แสดงปุ่มเลย
         } else if (apCurrent >= cost) {
-            buttonsHtml += `<button class="vn-explore-btn${action.requiresSkill ? ' vn-skill-btn' : ''}" onclick="journeyDoAction('${action.id}')">${action.prompt} (${cost} AP)</button>`;
+            buttonsHtml += `<button class="vn-explore-btn${(action.requiresSkill || action.requiresSkillKnown) ? ' vn-skill-btn' : ''}" onclick="journeyDoAction('${action.id}')">${action.prompt} (${cost} AP)</button>`;
         } else {
             buttonsHtml += `<button class="vn-explore-btn" disabled title="AP ไม่พอ">${action.prompt} (${cost} AP)</button>`;
         }

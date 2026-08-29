@@ -185,7 +185,9 @@
         .journey-layout { display: flex; gap: 24px; align-items: flex-start; }
         .journey-main { flex: 1 1 auto; min-width: 0; }
         #vn-log-panel {
-            position: sticky; top: 20px; flex: 0 0 260px; width: 260px; max-height: calc(100vh - 40px);
+            position: sticky; top: 20px; flex: 0 0 260px; width: 260px;
+            /* ความสูงคงที่ ไม่ยืดตามจำนวนบันทึก — บันทึกใหม่ดันของเก่าขึ้นไปแทน */
+            height: min(460px, calc(100vh - 40px));
             background: rgba(10,14,20,0.92); border: 1px solid var(--border-color); border-radius: 8px;
             backdrop-filter: blur(6px); display: flex; flex-direction: column;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
@@ -202,8 +204,19 @@
         .vn-log-header .arrow { transition: transform 0.2s ease; }
         #vn-log-panel.collapsed .vn-log-header .arrow { transform: rotate(-90deg); }
         #vn-log-panel.collapsed .vn-log-list { display: none; }
-        .vn-log-list { list-style: none; margin: 0; padding: 10px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; }
-        .vn-log-entry { font-size: 0.78rem; line-height: 1.6; color: #94a3b8; border-left: 2px solid var(--border-color); padding-left: 8px; opacity: 0; animation: vn-fade-in 0.4s ease forwards; }
+        .vn-log-list { list-style: none; margin: 0; padding: 10px 14px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; flex: 1 1 auto; min-height: 0; }
+
+        /* scrollbar ให้เข้าธีม HUD — รางจาง หัวเลื่อนสีแอคเซนต์มีแสงเรืองอ่อนๆ */
+        .vn-log-list { scrollbar-width: thin; scrollbar-color: rgba(56,189,248,0.45) transparent; }
+        .vn-log-list::-webkit-scrollbar { width: 6px; }
+        .vn-log-list::-webkit-scrollbar-track { background: rgba(255,255,255,0.03); border-radius: 3px; }
+        .vn-log-list::-webkit-scrollbar-thumb { background: linear-gradient(180deg, rgba(56,189,248,0.55), rgba(56,189,248,0.25)); border-radius: 3px; box-shadow: 0 0 6px rgba(56,189,248,0.25); }
+        .vn-log-list::-webkit-scrollbar-thumb:hover { background: linear-gradient(180deg, rgba(56,189,248,0.85), rgba(56,189,248,0.45)); }
+        .vn-log-entry { font-size: 0.78rem; line-height: 1.6; color: #94a3b8; border-left: 2px solid var(--border-color); padding-left: 8px; flex-shrink: 0; }
+        /* เฉพาะบรรทัดล่าสุดเท่านั้นที่เล่น animation ตอนโผล่ — บรรทัดเก่าถูกดันขึ้นไป
+           เฉยๆ ไม่ต้องกะพริบใหม่ทุกครั้งที่มีบันทึกเข้ามา */
+        .vn-log-entry.newest { animation: vn-log-rise 0.45s cubic-bezier(0.22,0.61,0.36,1) both; }
+        @keyframes vn-log-rise { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         .vn-log-entry .log-eyebrow { display: block; font-family: 'Rajdhani', sans-serif; font-size: 0.6rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2px; }
         .vn-log-entry.kind-species { border-left-color: var(--accent-default); }
         .vn-log-entry.kind-species .log-eyebrow { color: var(--accent-default); }
@@ -1107,10 +1120,13 @@
                 list.innerHTML = '<li class="vn-log-empty">// ยังไม่มีบันทึก</li>';
                 return;
             }
-            list.innerHTML = journeyLogEntries.map(e =>
-                `<li class="vn-log-entry kind-${e.kind}"><span class="log-eyebrow">${e.eyebrow}</span>${e.text}</li>`
+            // ถ้าผู้อ่านเลื่อนขึ้นไปอ่านบันทึกเก่าอยู่ อย่ากระชากลงล่างตอนมีบรรทัดใหม่
+            const atBottom = list.scrollHeight - list.scrollTop - list.clientHeight < 24;
+            const lastIdx = journeyLogEntries.length - 1;
+            list.innerHTML = journeyLogEntries.map((e, i) =>
+                `<li class="vn-log-entry kind-${e.kind}${i === lastIdx ? ' newest' : ''}"><span class="log-eyebrow">${e.eyebrow}</span>${e.text}</li>`
             ).join('');
-            list.scrollTop = list.scrollHeight;
+            if (atBottom) list.scrollTop = list.scrollHeight;
         }
 
         function renderSpeciesGrid() {
