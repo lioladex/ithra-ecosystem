@@ -32,7 +32,7 @@ const JOURNEY_STEPS = [
             `การกระทำเดิมซ้ำแล้วซ้ำเล่านับล้านครั้งค่อยๆ ทับถมกันจนกลายเป็นร่องลึกที่ไม่มีใครขุด ทว่าทุกร่างที่สืบทอดต่อกันมากลับก้าวลงไปเดินตามร่องนั้นได้เองโดยอัตโนมัติ`,
             `สองพันล้านปีไหลผ่านไปเงียบๆ แบบนั้น และไม่มีสิ่งใดเคยรู้สึกว่ามันนานเลยแม้แต่น้อย เพราะยังไม่มีสิ่งใดรู้จักคำว่า "นาน" ด้วยซ้ำ ไม่มีแม้แต่สิ่งใดที่รู้ว่ามี "มัน" อยู่จริง`
         ],
-        sysnote: `[LOG] BASELINE INSTINCT INTEGRITY: 2,014,662 GENERATIONS // SELF-REFERENTIAL AWARENESS: NULL`,
+        sysnote: `[LOG] SUBJECT CONTINUOUS ACROSS 2,014,662 GENERATIONS // NOTHING IN RECORD SUGGESTS IT KNOWS THIS`,
         continueLabel: "มันคืออะไร ?"
     },
     {
@@ -46,7 +46,7 @@ const JOURNEY_STEPS = [
             `และในช่องว่างนั้นเอง มีบางอย่างเกิดขึ้น เป็นครั้งแรกที่ <em>รู้สึกถึง</em> น้ำหนักของตัวเองกดลงบนขาทั้งสี่ที่ยืนอยู่นิ่งๆ รู้สึกถึงไอความชื้นเย็นฉ่ำที่เกาะอยู่ทั่วผิว รู้สึกถึงจังหวะลมหายใจของตัวเองที่ไหลเข้าออกช้าๆ เหมือนเพิ่งรู้ว่ามันมีอยู่`,
             `"คุณ" คำนี้ยังไม่มีความหมายอะไรเลยในตอนนี้ แต่นับจากวินาทีนี้เป็นต้นไป มีบางสิ่งกำลังรู้สึกถึงตัวมันเองเป็นครั้งแรกในชีวิต และนั่นคือทั้งหมดที่จำเป็นต้องมีเพื่อให้เรื่องราวเริ่มต้นขึ้น`
         ],
-        sysnote: `[LOG] ANOMALY DETECTED — SELF-REFERENTIAL LOOP INITIATED // DESIGNATION: "CONFLUENCE"`,
+        sysnote: `[LOG] SUBJECT STOPPED MID-STRIDE — NO EXTERNAL CAUSE OBSERVED // FIRST ENTRY UNDER DESIGNATION "CONFLUENCE"`,
         continueLabel: "เริ่มต้นยังไง ?"
     },
     {
@@ -207,7 +207,7 @@ const JOURNEY_STEPS = [
             `ร่างยืนนิ่งอยู่กลางโคลนที่เหยียบย่ำจนเละ ไม่ขยับ ไม่หนี ไม่กิน เป็นครั้งแรกที่มีบางอย่างหยุดเพื่อ<em>รู้สึกถึง</em>สิ่งที่เพิ่งเกิดขึ้นทั้งหมด แทนที่จะปล่อยให้มันไหลผ่านไปเงียบๆ แบบที่เคยเป็นมาตลอด`,
             `และในความนิ่งนั้นเอง มีคำถามแรกผุดขึ้นมาโดยไม่มีใครสอน คำถามที่ไม่เคยมีอยู่จริงมาก่อนตลอดสองพันล้านปี: <em>เกิดอะไรขึ้นกับฉัน ?</em>`
         ],
-        sysnote: `[LOG] SELF-QUERY INITIATED — FIRST INSTANCE OF RETROSPECTIVE PROCESSING`,
+        sysnote: `[LOG] SUBJECT HELD POSITION LONG AFTER THE THREAT WITHDREW // NO PRIOR INSTANCE OF THIS ON RECORD`,
         continueLabel: "แล้วจู่ๆ ก็..."
     },
     {
@@ -480,7 +480,7 @@ const JOURNEY_STEPS = [
             `มันไม่ได้แค่รอดจากพวกมันอีกต่อไป มันเริ่ม<em>เข้าใจ</em>พวกมัน และนั่นทำให้อยากรู้มากขึ้นไปอีกว่ายังมีอะไรอีกที่ซ่อนอยู่เบื้องหลังพฤติกรรมของสิ่งมีชีวิตที่มันเคยคิดว่าเป็นแค่ศัตรู`,
             `ปีกกว้างเอียงจับกระแสลมอุ่นที่ลอยขึ้นจากป่าหมอกเบื้องล่าง มุ่งหน้ากลับไปยังทิศทางที่จำได้ว่าเคยเจอฝูงนั้น`
         ],
-        sysnote: `[LOG] BEHAVIORAL EMPATHY THRESHOLD REACHED // NEW OBJECTIVE: KARVOS PACK — LAST KNOWN LOCATION`,
+        sysnote: `[LOG] SUBJECT MOVING TOWARD KARVOS TERRITORY — APPROACH, NOT AVOIDANCE // MOTIVE UNDETERMINED`,
         actions: [
             {
                 id: "review-flight",
@@ -509,7 +509,7 @@ const JOURNEY_STEPS = [
             `วนขึ้นไปแบบนั้นครั้งแล้วครั้งเล่าจนเรือนยอดที่เคยสูงเสียดฟ้ากลายเป็นพื้นผิวขรุขระสีเขียวเข้มอยู่ไกลลิบใต้ท้อง อากาศตรงนี้เย็นจนขนตามคอลุกชัน แต่ก็ใสจนมองไปได้ไกลกว่าที่เคยมองเห็นอะไรมาทั้งชีวิต`,
             `แล้วสิ่งที่เห็นก็คือ ป่าหมอก ป่าหมอก และป่าหมอก ทุกทิศทางที่หันไป ผืนสีเขียวคลุมหมอกทอดไปจนสุดขอบฟ้าโดยไม่มีที่สิ้นสุดสักด้านเดียว ตอนอยู่ข้างล่างเคยรู้สึกว่ารู้จักที่นี่ดีพอสมควรแล้ว ตอนนี้ที่ลอยอยู่สูงกว่าที่เคยขึ้นมา กลับรู้สึกตรงกันข้ามกับตอนนั้นทุกอย่าง`
         ],
-        sysnote: `[LOG] SUSTAINED THERMAL SOARING ACHIEVED // ALT: ~1,900 M — HIGHEST RECORDED FOR THIS HOST`,
+        sysnote: `[LOG] SUBJECT HELD 1,900 M WITHOUT DESCENT // HIGHEST ALTITUDE RECORDED FOR THIS HOST`,
         // เข้าฉากด้วยการร่อนลมร้อนตรงๆ = recoveryAction ของ Skyther พอดี (ดู data/skillSystem.js)
         recoversAP: true,
         unlocksTier: { SKYTHER: 2 },
@@ -584,7 +584,7 @@ const JOURNEY_STEPS = [
             `แล้วประมาณสิบจังหวะหายใจถัดมา ท้องก็บีบตัวขึ้นมาเองอย่างรุนแรง ทุกอย่างที่เพิ่งกลืนลงไปย้อนกลับขึ้นมาหมด ทิ้งรสขมค้างอยู่ในคอกับความหิวที่ยังอยู่ครบเท่าเดิมไม่ขาดไปแม้แต่นิดเดียว`,
             `เกาะนิ่งอยู่บนกิ่งไม้ตรงนั้นนานกว่าที่ควรจะนิ่ง ไม่ได้เจ็บ ไม่ได้ตกใจ แต่มีบางอย่างที่ไม่เคยเกิดขึ้นมาก่อนกำลังเกิดขึ้นอยู่ในหัว ท่าชูคอไม่ได้ผล ผืนเรืองแสงนี้ก็ไม่ได้ผล ทั้งสองอย่างเคยได้ผลมาตลอดในร่างก่อนหน้า สิ่งที่เปลี่ยนไปไม่ใช่ป่าผืนนี้ แต่เป็นร่างที่กำลังใช้มันอยู่`
         ],
-        sysnote: `[LOG] CROSS-HOST BEHAVIORAL CARRYOVER REJECTED BY PHYSIOLOGY // FIRST RECORDED HYPOTHESIS FORMATION`,
+        sysnote: `[LOG] SUBJECT ATTEMPTED THE FORMER HOST'S DIET AND COULD NOT HOLD IT DOWN // FIRST OBSERVED TEST OF A CARRIED HABIT`,
         unlocksTier: { LUMENVEIL: 1 },
         actions: [
             {
@@ -629,7 +629,7 @@ const JOURNEY_STEPS = [
             `แล้วปีกก็กางออกเองในจังหวะสุดท้าย เยื่อปีกตึงจนได้ยินเสียง ร่างเชิดหัวขึ้นเฉียดยอดไม้ไปได้อย่างหวุดหวิด หัวใจเต้นแรงจนรู้สึกได้ทั่วตัว`,
             `ไม่มีเหยื่อ ไม่มีศัตรู ไม่มีความจำเป็นใดๆ ทั้งสิ้นในสิ่งที่เพิ่งทำไป ทำเพราะอยากรู้ว่ามันจะรู้สึกยังไงเท่านั้นเอง และนี่คือครั้งแรกที่ลงมือทำอะไรบางอย่างโดยไม่มีเหตุผลอื่นนอกจากนั้น`
         ],
-        sysnote: `[LOG] NON-SURVIVAL MOTIVATED BEHAVIOR — FIRST INSTANCE // CLASSIFICATION: CURIOSITY / PLAY`,
+        sysnote: `[LOG] DIVE WITH NO PREY, NO THREAT, NO GAIN // NO EXISTING CATEGORY IN THIS RECORD FITS IT`,
         actions: [
             {
                 id: "free-dive",
@@ -667,7 +667,7 @@ const JOURNEY_STEPS = [
             `พวกมันเดินไม่เป็นเส้นตรงเลยสักช่วง แต่ก็ไม่ได้เดินสะเปะสะปะ เลี้ยวตามแนวร่องน้ำเสมอ เว้นพื้นโล่งเสมอ และทุกครั้งที่ผ่านโคนไม้ใหญ่ ตัวที่เดินหน้าสุดจะชะลอลงจนตัวอื่นตามมาทัน แล้วค่อยออกตัวต่อพร้อมกัน`,
             `เฝ้ามองแบบนั้นตั้งแต่สายจนแสงเริ่มเอียง โดยไม่ได้ทำอย่างอื่นเลยแม้แต่อย่างเดียว`
         ],
-        sysnote: `[LOG] SUSTAINED PASSIVE OBSERVATION — 6.2 HRS // NO PREDATION, NO FLIGHT RESPONSE`,
+        sysnote: `[LOG] SUBJECT FOLLOWED THE PACK 6.2 HRS — NO APPROACH, NO WITHDRAWAL // WATCHING ONLY`,
         actions: [
             {
                 id: "count-pack",
@@ -707,7 +707,7 @@ const JOURNEY_STEPS = [
             `สองตัวเข้าล็อกที่ขอบก้อนคนละด้านแล้วออกแรงงัดพร้อมกัน ก้อนนั้นพลิกหงายขึ้นมาเพียงเสี้ยววินาที และในเสี้ยววินาทีเดียวนั้นเอง ตัวกลางที่รอมาตลอดก็พุ่งเข้าเจาะตรงกลางรอยต่อของวงพอดี`,
             `จบเร็วมาก เร็วจนถ้ากะพริบตาก็คงพลาดไปแล้ว จากข้างบนนี้เห็นครบทุกจังหวะตั้งแต่ต้นจนจบ และเห็นด้วยว่ามันไม่ใช่การไล่ล่า แต่เป็นการวางตำแหน่งที่เตรียมไว้ก่อนหน้านั้นทั้งหมด`
         ],
-        sysnote: `[LOG] COORDINATED PACK PREDATION OBSERVED FROM AERIAL VANTAGE // ROLE SPECIALIZATION CONFIRMED`,
+        sysnote: `[LOG] PACK KILL WATCHED FROM ABOVE, SUBJECT DID NOT INTERVENE // ROLE SPECIALISATION CONFIRMED`,
         // ตามฝูงมาด้วยการร่อนลมร้อนตลอดทาง = recoveryAction ของ Skyther ตรงๆ
         // ต้องมีตรงนี้ด้วยเพราะสเต็ปนี้มี action สังเกต 3 อย่างที่ตัด AP ทั้งหมด
         recoversAP: true,
@@ -758,7 +758,7 @@ const JOURNEY_STEPS = [
             `มันไม่ขู่ ไม่คำราม ไม่ทำอะไรทั้งสิ้น แค่จ้องอยู่แบบนั้นจนพอใจแล้วก็ก้มลงกินต่อ สำหรับมันแล้วสิ่งที่ลอยอยู่บนฟ้าไม่มีความหมายพอจะต้องสนใจ`,
             `และในวินาทีนั้นเอง มีความคิดหนึ่งผุดขึ้นมาเองโดยไม่ได้ตั้งใจคิด <em class="glow-danger">ถ้าตอนนี้บินไม่ได้ ถ้ายืนอยู่บนพื้นตรงนั้น ก็คงเป็นมื้อต่อไปเหมือนกัน</em>`
         ],
-        sysnote: `[LOG] APEX PREDATOR ENCOUNTER — DIRECT EYE CONTACT SUSTAINED 4.1 SEC // HOST AUTONOMIC RESPONSE: FULL FREEZE`,
+        sysnote: `[LOG] APEX PREDATOR HELD EYE CONTACT WITH SUBJECT 4.1 SEC // SUBJECT DID NOT MOVE UNTIL IT LOOKED AWAY`,
         unlocksTier: { KORRUNE: 2 },
         actions: [
             {
@@ -791,7 +791,7 @@ const JOURNEY_STEPS = [
             `ไม่มีคำตอบให้เลยสักทาง และร่างนี้ตอบให้ไม่ได้ด้วย เพราะร่างนี้ไม่เคยรู้จักความรู้สึกของการถูกล้อมโดยไม่มีปีกให้กางหนี`,
             `มีที่เดียวที่จะหาคำตอบนั้นได้ กลับไปหาฝูงที่ตัวเองเคยอยู่ในนั้น แล้วมองพวกมันจากข้างนอกเป็นครั้งแรก`
         ],
-        sysnote: `[LOG] PREDATOR/PREY BINARY INVALIDATED // UNRESOLVED QUERY LOGGED — SOURCE OF "STAND FIRM" IMPULSE: UNKNOWN`,
+        sysnote: `[LOG] SUBJECT FED ON A KILL IT DID NOT MAKE // QUESTION RAISED AND LEFT OPEN: SOURCE OF THE "STAND FIRM" IMPULSE`,
         unlocksTier: { PALEGRIM: 1 },
         actions: [
             {
@@ -826,7 +826,7 @@ const JOURNEY_STEPS = [
             `ตัวที่เล็กที่สุดในฝูงเงยหน้าขึ้นมาทางนี้ แล้วทั้งฝูงก็หุบแผงลงพร้อมกันทันทีในจังหวะเดียว ชิดเข้าหากันแน่นขึ้น ทุกหัวหันไปทางเดียวกันหมด จ้องขึ้นมาที่เงาปีกกว้างที่กำลังวนอยู่เหนือหัวพวกมัน`,
             `พวกมันไม่ได้เห็นสิ่งที่เคยเป็นพวกเดียวกัน พวกมันเห็นสิ่งที่ตรงกันข้ามกับพวกมันโดยสิ้นเชิง และนั่นคือคำตอบแรกของคำถามที่ค้างมาตั้งแต่คืนนั้น คำตอบไม่ได้อยู่ที่ว่าเป็นอะไร แต่อยู่ที่ว่าใครกำลังมองอยู่`
         ],
-        sysnote: `[LOG] RETURN TO ORIGIN SITE — POI-V01 // OBSERVER ROLE INVERTED: FORMER HOST SPECIES NOW CLASSIFIED AS SUBJECT`,
+        sysnote: `[LOG] SUBJECT RETURNED TO POI-V01 AND CIRCLED WITHOUT DESCENDING // THE SPECIES IT ONCE WAS IS DIRECTLY BELOW IT`,
         unlocksTier: { LUVENN: 3 },
         actions: [
             {
@@ -867,7 +867,7 @@ const JOURNEY_STEPS = [
             `ลำดับนี้ไม่มีใครสั่ง ไม่มีเสียงเรียก ไม่มีการรอกัน ทุกตัวรู้พร้อมกันเองโดยไม่ต้องตัดสินใจ เหมือนที่ตัวเองเคยรู้ตอนยังยืนอยู่ในวงนั้น`,
             `สิ่งที่ไม่เคยรู้มาก่อนคือ ตอนอยู่ข้างในไม่มีทางเห็นว่ามีตัวไหนไม่ได้อยู่ในลำดับนี้ด้วยเลย`
         ],
-        sysnote: `[LOG] SUSTAINED STUDY OF PREY SPECIES — DAY 3 // NO PREDATION ATTEMPT LOGGED`,
+        sysnote: `[LOG] DAY 3 ABOVE THE SAME CANOPY GAP // NO HUNTING ATTEMPT LOGGED IN THAT TIME`,
         actions: [
             {
                 id: "watch-guard-shift",
@@ -961,7 +961,7 @@ const JOURNEY_STEPS = [
             `ตรงระยะนี้ได้กลิ่นพวกมันชัดเจนเป็นครั้งแรกนับตั้งแต่เปลี่ยนร่างมา กลิ่นดินชื้นปนกลิ่นหวานจางๆ ของแผงที่เพิ่งอิ่มแสง และร่างกายนี้ตอบสนองกับกลิ่นนั้นด้วยการหลั่งน้ำลาย`,
             `สองอย่างเกิดขึ้นพร้อมกันในหัวโดยไม่มีอะไรมาห้ามกันเลย: การจำได้ว่ากลิ่นนี้คือความรู้สึกปลอดภัย และการรู้ว่ากลิ่นนี้คืออาหาร`
         ],
-        sysnote: `[LOG] HABITUATION ACHIEVED — SUBJECT HERD TOLERANCE DISTANCE: 9.4 M`,
+        sysnote: `[LOG] HERD TOLERANCE DISTANCE DOWN TO 9.4 M OVER 4 DAYS // THEY HAVE STOPPED READING IT AS A THREAT`,
         actions: [
             {
                 id: "watch-weakest",
@@ -1012,7 +1012,7 @@ const JOURNEY_STEPS = [
             `พวกมันไม่ได้เดินสุ่มไปเรื่อยๆ เลี้ยวตามแนวร่องน้ำเดิมทุกครั้ง เว้นพื้นโล่งเดิมทุกครั้ง และหยุดพักที่จุดเดิมทุกครั้ง จุดที่มีช่องแสงเปิดพอดี ห่างกันประมาณครึ่งวันเดินของพวกมัน ไม่มากไม่น้อยไปกว่านั้นสักช่วง`,
             `ไม่มีตัวไหนในฝูงนี้อายุมากพอจะวางเส้นทางแบบนี้ได้ด้วยตัวเอง`
         ],
-        sysnote: `[LOG] MIGRATION CORRIDOR RECONSTRUCTED ACROSS CANOPY GAPS // VISUAL RANGE: ~180 M`,
+        sysnote: `[LOG] CORRIDOR PIECED TOGETHER GAP BY GAP // SUBJECT VISUAL RANGE AT THIS ALTITUDE: ~180 M`,
         actions: [
             {
                 id: "map-corridor",
@@ -1081,7 +1081,7 @@ const JOURNEY_STEPS = [
             `ฝูงเจ็ดตัวไม่มีทางทำให้เกิดร่องแบบนี้ได้ ต่อให้เดินซ้ำทุกวันตลอดชีวิตของทุกตัวรวมกัน`,
             `ทางเส้นนี้เก่ากว่าทุกตัวที่เดินอยู่บนมันรวมกัน และไม่มีตัวไหนรู้เรื่องนั้นเลย พวกมันเดินตามลมกับสิ่งที่รู้สึกว่าถูกต้อง เหมือนที่ตัวเองเคยเดินมาแล้วสองพันล้านปี`
         ],
-        sysnote: `[LOG] TRAIL PREDATES OBSERVED HERD — MULTI-GENERATIONAL ROUTE MEMORY INFERRED`,
+        sysnote: `[LOG] TRAIL OLDER THAN EVERY ANIMAL WALKING IT // SUBJECT DESCENDED TO EXAMINE THE GROUND`,
         actions: [
             {
                 id: "inspect-trail",
@@ -1140,7 +1140,7 @@ const JOURNEY_STEPS = [
             );
             return base;
         },
-        sysnote: `[LOG] PREDATION EVENT — SUBJECT SPECIES: FORMER HOST // OBSERVATIONAL DATA APPLIED TO KILL`,
+        sysnote: `[LOG] SUBJECT KILLED ONE OF THE SPECIES IT ONCE WAS // TARGET MATCHES FOUR DAYS OF PRIOR OBSERVATION`,
         actions: [
             {
                 id: "look-at-what-remains",
@@ -1169,7 +1169,7 @@ const JOURNEY_STEPS = [
             `อะไรเกิดก่อน อะไรเกิดหลัง และมันจบไปแล้ว <em class="glow-danger">มันเคยเกิดขึ้นมาก่อน</em>`,
             `สิ่งที่ถูกล้อมในภาพนั้นมีสี่ขา มีแผงคอ และกินแสง เหมือนกับสิ่งที่นอนอยู่ตรงหน้านี้ทุกอย่าง`
         ],
-        sysnote: `[LOG] EPISODIC MEMORY THRESHOLD CROSSED — EVENTS NOW ORDERED IN TIME // PHASE 4 ONSET`,
+        sysnote: `[LOG] SUBJECT RECALLED AN EVENT IN SEQUENCE // FIRST OCCURRENCE ON RECORD — PHASE 4`,
         actions: [
             {
                 id: "rest-circle-26",
@@ -1204,7 +1204,7 @@ const JOURNEY_STEPS = [
             `ต้องกระพือเองทุกจังหวะ นับตั้งแต่มีปีกมาไม่เคยต้องทำแบบนี้ติดต่อกันนานขนาดนี้เลย กล้ามเนื้อที่อกร้อนขึ้นอย่างรวดเร็ว ลมหายใจถี่ขึ้นจนแสบในลำคอ`,
             `แล้วผงละเอียดสีเทาก็เริ่มลอยมากับอากาศ เกาะบนเยื่อปีกเป็นชั้นบางๆ ก่อนจะหนาขึ้นทีละนิด ยิ่งเกาะ ปีกยิ่งหนัก ยิ่งลื่น ยิ่งจับอากาศไม่อยู่ ผงนั้นเข้าตาจนมองไม่ชัด เข้าไปในลำคอจนไอไม่หยุด และมีรสเปรี้ยวแหลมติดลิ้นค้างอยู่แบบที่ไม่มีอะไรในป่านี้เคยมีรสแบบนั้น`
         ],
-        sysnote: `[LOG] ATMOSPHERIC PARTICULATE EVENT — SOURCE BEARING: SOUTH // THERMAL LIFT: ZERO`,
+        sysnote: `[LOG] PARTICULATE FALL FROM THE SOUTH, THERMAL LIFT GONE ACROSS THE BASIN // SOURCE OUTSIDE OBSERVED RANGE`,
         actions: [
             {
                 id: "climb-ash-column",
@@ -1287,7 +1287,7 @@ const JOURNEY_STEPS = [
             `อีกอย่างอยู่ทางขวา ไม่ได้วิ่งไปไหนเลย มันม้วนตัวกลมสนิทอยู่กับที่ ปล่อยให้ผงและเท้าของทุกอย่างในป่าไหลผ่านหลังของมันไปเฉยๆ ไม่ขยับแม้แต่นิดเดียว`,
             `ร่างกายนี้ไปต่ออีกไม่ได้แล้ว และมีสองเสียงดังขึ้นพร้อมกันเป็นครั้งสุดท้าย`
         ],
-        sysnote: `[LOG] HOST INTEGRITY CRITICAL // RE-TEMPLATING CONDITIONS MET — CONTACT REQUIRED`,
+        sysnote: `[LOG] HOST FAILING // BOTH CONDITIONS FOR RE-TEMPLATING PRESENT: CONTACT AND PRESSURE`,
         choice: {
             question: "ร่างกายเหลือแรงพอสำหรับครั้งเดียวเท่านั้น",
             options: [
@@ -1314,7 +1314,7 @@ const JOURNEY_STEPS = [
             `แล้วทุกอย่างที่เคยได้แต่มองจากบนฟ้าก็เข้าที่ของมันพอดี จังหวะการล้อม การวางตำแหน่ง การรอให้อีกฝ่ายเข้ามาแทนที่จะไล่ตาม ตอนนี้มันไม่ใช่สิ่งที่มองอยู่อีกแล้ว มันอยู่ในขาทั้งสี่ข้างนี้`,
             `สิ่งที่ไม่ได้มาด้วยคือฝูง ร่างแบบนี้ไม่เหมาะที่จะอยู่ตัวเดียว`
         ],
-        sysnote: `[LOG] RE-TEMPLATE COMPLETE — HOST: KARVOS // THERMORECEPTIVE LAYER ONLINE · PACK_HUNT NOW EXECUTABLE`,
+        sysnote: `[LOG] SUBJECT RE-TEMPLATED TO KARVOS PATTERN // SECOND RECORDED INSTANCE · THERMORECEPTIVE LAYER PRESENT`,
         actions: [
             {
                 id: "read-the-flow",
@@ -1350,7 +1350,7 @@ const JOURNEY_STEPS = [
             `กรงเล็บที่ปลายขาหน้าจิกลงในดินแล้วดินก็เปิดออกอย่างง่ายดายเหมือนมันเป็นน้ำ ข้างใต้นั้นมีรากอวบสีขาวที่กัดแล้วมีน้ำหวานไหลออกมา อาหารอยู่ใต้เท้ามาตลอด ไม่ต้องล่า ไม่ต้องไล่ ไม่ต้องรอให้ใครพลาด`,
             `จังหวะการบิน การอ่านลม การล้อมเป็นฝูง ทุกอย่างที่สะสมมาก่อนหน้านี้ยังอยู่ในหัวครบ กลับใช้ไม่ได้สักอย่างเดียว`
         ],
-        sysnote: `[LOG] RE-TEMPLATE COMPLETE — HOST: OZGRUN // MINERAL PLATING ONLINE · ALL LEARNED SKILLS INERT IN THIS BODY`,
+        sysnote: `[LOG] SUBJECT RE-TEMPLATED TO OZGRUN PATTERN // SECOND RECORDED INSTANCE · NOTHING IT HAS LEARNED APPLIES TO THIS BODY`,
         actions: [
             {
                 id: "curl-and-wait",
@@ -1398,7 +1398,7 @@ const JOURNEY_STEPS = [
             );
             return base;
         },
-        sysnote: `[LOG] CONTINUITY QUERY RAISED — MEMORY PERSISTS ACROSS TOTAL CELLULAR REPLACEMENT // IDENTITY: UNDEFINED`,
+        sysnote: `[LOG] MEMORY INTACT ACROSS COMPLETE CELLULAR REPLACEMENT // THIS RECORD HAS NO ENTRY FOR WHAT PERSISTS`,
         continueLabel: "Continue Journey"
     }
 ];
