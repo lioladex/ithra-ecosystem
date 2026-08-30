@@ -97,6 +97,21 @@ The script counts the tics this project actually repeats and prints the worst-cl
 
 This checklist came from reviewing the `stop-slop` skill (github.com/hardikpandya/stop-slop). Its filler, formulaic-structure, concreteness, and trust-the-reader rules transfer; its "every sentence needs a human subject", "address the reader as you", and "delete quotable lines" rules do NOT — this project drops subjects on purpose, has no reader-facing pronoun outside the awakening and the chapter-close lines, and wants exactly one quotable line per scene marked with `glow-danger`.
 
+## 16. Name the relation between clauses
+Cutting a dash leaves two clauses sitting next to each other with the logic between them unstated. Thai carries that logic in a word, so put it back rather than leaving the reader to guess:
+
+| ความสัมพันธ์ | คำที่ใช้ | ตัวอย่างในเรื่อง |
+|---|---|---|
+| พลิกความคาดหมาย ประธานเดิมแต่ผลตรงข้าม | **กลับ** (วางหน้ากริยา) | "ทุกอย่างที่สะสมมาก่อนหน้านี้ยังอยู่ในหัวครบ **กลับ**ใช้ไม่ได้สักอย่างเดียว" |
+| ขัดแย้งระหว่างสองข้อความ | **แต่** | "เหมือนที่เคยทำมานับพันปี **แต่**ตอนนี้ไม่มีขาสี่ข้างแบบเดิมให้ทิ้งน้ำหนักลง" |
+| สะสมเพิ่ม | **และ** | "ต่างจากกลิ่นดินชื้นที่คุ้นเคยมาตลอด **และ**เป็นครั้งแรกที่กลิ่นมีความหมายมากกว่าแค่กลิ่น" |
+| เหตุนำไปสู่ผล | **จึง** | "พุ่งเข้าใส่ก่อนจะพร้อมจริง **จึง**พลาดเป้าไปเฉียดๆ" |
+| เข้มข้นจนเกิดผล | **จน** | "กางออกเป็นจังหวะที่แม่นยำมาก **จน**เห็นชัดกว่าตอนไหนๆ" |
+
+`กลับ` is the strongest of these and the most specific to this story, because the whole project runs on bodies and instincts that do the opposite of what the situation calls for. Save it for that: the same subject, the outcome inverted. Do not stack it with `แต่` unless both halves genuinely need marking.
+
+Leave two clauses bare only when the second renames the first (apposition) or when the silence between them is the beat. If you cannot name the relation, the sentence probably has one clause too many, which is rule 14.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
