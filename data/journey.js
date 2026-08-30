@@ -1429,13 +1429,10 @@ const JOURNEY_CHAPTERS = [
            ของตัวเอง ไม่ใช่การบรรยายฉาก (ดู .claude/skills/ithra-narrative-style) */
         reflections: [
             { kind: "gain", text: "ฉันได้รู้ถึงการคงอยู่" },
-            { kind: "gain", text: "ฉันได้รู้จักความอุ่น ความอิ่ม และความปลอดภัย" },
             { kind: "loss", text: "ฉันเสียฝูงที่เคยยืนอยู่ตรงกลางของมัน" },
             { kind: "gain", text: "ฉันได้รู้จักความเจ็บปวด" },
             { kind: "gain", text: "ฉันได้ปีก และท้องฟ้าที่ไม่เคยเป็นของฉัน" },
             { kind: "loss", text: "ฉันเสียแสงที่เคยกลายเป็นความอิ่มได้" },
-            { kind: "loss", text: "ฉันเสียการเดินที่เคยไม่ต้องคิดถึงมันเลย" },
-            { kind: "gain", text: "ฉันได้รู้จักความหิวที่แสงช่วยอะไรไม่ได้" },
             { kind: "gain", text: "ฉันได้ล่าเป็นครั้งแรก" }
         ]
     },
@@ -1449,10 +1446,8 @@ const JOURNEY_CHAPTERS = [
         closeText: "คำถามที่ค้างไว้ตั้งแต่คืนที่เห็นผู้ล่าสูงสุดกลายเป็นผู้ถูกล่ายังไม่มีคำตอบ และการเฝ้ามองฝูงร่างเดิมจากข้างนอกเพิ่งเริ่มต้นเท่านั้น บทถัดไปยังอยู่ระหว่างการพัฒนา ดูสรุปเชิงวิเคราะห์ของฉากตื่นรู้ (T-0 → T+7) ฉบับเต็มได้ที่เอกสาร MEMORY MECHANICS",
         reflections: [
             { kind: "loss", text: "ฉันเสียความรู้สึกว่าโลกนี้เล็กพอจะรู้จักได้ทั้งหมด" },
-            { kind: "loss", text: "ฉันเสียท่าทางที่เคยได้ผลมาตลอดหลายพันปี" },
             { kind: "gain", text: "ฉันได้ตั้งคำถามกับตัวเองเป็นครั้งแรก" },
             { kind: "gain", text: "ฉันได้ทิ้งตัวลงจากที่สูงเพราะอยากรู้ ไม่ใช่เพราะต้องรอด" },
-            { kind: "gain", text: "ฉันได้เฝ้ามองสิ่งที่เคยล่าฉัน โดยไม่มีอะไรสั่งให้ฉันวิ่ง" },
             { kind: "gain", text: "ฉันได้สบตากับสิ่งที่ทำให้ฉันหยุดหายใจโดยไม่ต้องขู่สักครั้ง" },
             { kind: "loss", text: "ฉันเสียเส้นแบ่งระหว่างผู้ล่ากับเหยื่อ" },
             { kind: "loss", text: "ฉันเสียคำตอบว่าเสียงที่สั่งให้ฉันยืนหยัดเป็นเสียงของอะไร" }
@@ -1471,9 +1466,6 @@ const JOURNEY_CHAPTERS = [
         reflections: function () {
             const asKarvos = journeyHostKey === 'KARVOS';
             return [
-                { kind: "gain", text: "ฉันได้เห็นทางที่ถูกเดินซ้ำจนเป็นร่อง ก่อนที่ฝูงนี้จะเกิด" },
-                { kind: "gain", text: "ฉันได้รู้ว่าฝูงหนึ่งช้าลงเองเพื่อตัวที่ตามไม่ทัน" },
-                { kind: "loss", text: "ฉันเสียระยะที่เคยมองพวกมันได้โดยไม่ต้องคิดถึงความหิว" },
                 { kind: "gain", text: "ฉันได้ล่าสิ่งที่ฉันเคยเป็น" },
                 { kind: "gain", text: "ฉันได้ความทรงจำที่เรียงตามลำดับเป็นครั้งแรก" },
                 { kind: "loss", text: "ฉันเสียท้องฟ้าที่เคยเป็นของฉันทั้งผืน" },
@@ -2291,10 +2283,17 @@ function journeyBuildTimelineHTML() {
    จะข้าม animation ให้เลย ไม่บังคับให้นั่งดูซ้ำทุกครั้งที่คลิก timeline */
 const journeyReflectionSeen = new Set();
 
-const REFLECT_LINE_DURATION = 4.8;  // วินาทีต่อหนึ่งประโยค (ลอยขึ้น-ค้าง-จางหาย)
-const REFLECT_TOTAL_CAP = 30;       // เพดานความยาวทั้งชุด (วินาที) — บทที่มีประโยคเยอะ
-                                    // จะบีบจังหวะเหลื่อมให้สั้นลงเองแทนที่จะยาวขึ้นเรื่อยๆ
-const REFLECT_LINE_STAGGER = 3.0;   // ประโยคถัดไปเริ่มลอยขึ้นหลังจากประโยคก่อนเท่าไหร่ (สั้นกว่า DURATION = ประโยคเก่ายังจางค้างอยู่ตอนประโยคใหม่ขึ้นมา จงใจให้เหลื่อมกันเล็กน้อย แต่ระยะเลื่อนขึ้นในคีย์เฟรมกว้างพอที่ตัวอักษรสองประโยคจะไม่ทับกัน)
+/* จังหวะของฉากปิดบท — เวลาต่อประโยคคิดจากความยาวของประโยคนั้นเอง ไม่ใช่ค่าคงที่
+   ค่าเดียวทั้งชุด ประโยคสั้นอย่าง "ฉันได้รู้ถึงการคงอยู่" ไม่ต้องค้างนานเท่าประโยค
+   ยาว และประโยคยาวก็ไม่ถูกดันหายไปก่อนอ่านจบ (หลักเดียวกับที่ ui-ux-pro-max
+   เรียกว่า interaction timing follows the component, ไม่ใช่ตัวเลขตายตัว) */
+const REFLECT_BASE = 2.6;           // เวลาขั้นต่ำต่อประโยค (วินาที)
+const REFLECT_PER_CHAR = 0.075;     // เวลาที่บวกเพิ่มต่อหนึ่งตัวอักษร
+const REFLECT_MAX_LINE = 6.5;       // เพดานต่อประโยค กันประโยคยาวค้างนานเกินไป
+const REFLECT_OVERLAP = 0.62;       // ประโยคถัดไปเริ่มตอนประโยคก่อนเดินไปได้เท่าไหร่ของตัวเอง
+const REFLECT_TOTAL_CAP = 30;       // เพดานความยาวทั้งชุด (วินาที) — ถ้าเกิน จะบีบ
+                                    // ช่องว่างระหว่างประโยคลง ไม่ลดเวลาอ่านของแต่ละบรรทัด
+/* ประโยคเก่ายังจางค้างอยู่ตอนประโยคใหม่ขึ้นมา จงใจให้เหลื่อมกันเล็กน้อย ระยะเลื่อน
 
 /* ฉากประมวลความคิดปิดบท — ประโยคมุมมองบุคคลที่หนึ่งลอยขึ้นมาทีละประโยคแล้ว
    จางหายไป จบแล้วการ์ดปิดบท (พร้อมสรุปได้/เสียแบบอ่านย้อนได้) ค่อยจางขึ้นมาแทน
@@ -2326,15 +2325,22 @@ function journeyBuildChapterCloseHTML() {
     let seqHtml = '';
     let closeDelay = 0;
     if (lines.length) {
-        // เหลื่อมตามค่าปกติก่อน แล้วบีบลงถ้าชุดยาวเกินเพดาน (ไม่ลดเวลาค้างของแต่ละ
-        // ประโยค เพราะนั่นคือเวลาที่ผู้อ่านใช้อ่าน — บีบเฉพาะช่องว่างระหว่างประโยค)
-        const gaps = Math.max(1, lines.length - 1);
-        const stagger = Math.min(REFLECT_LINE_STAGGER, Math.max(1.2, (REFLECT_TOTAL_CAP - REFLECT_LINE_DURATION) / gaps));
-        closeDelay = gaps * stagger + REFLECT_LINE_DURATION;
-        const linesHtml = lines.map((r, i) => {
-            const delay = (i * stagger).toFixed(2);
-            return `<span class="vn-reflect-line ${r.kind}" style="animation-delay:${delay}s;animation-duration:${REFLECT_LINE_DURATION}s">${r.text}</span>`;
-        }).join('');
+        // 1) เวลาของแต่ละประโยคคิดจากความยาวของมันเอง
+        const durations = lines.map(r => Math.min(REFLECT_MAX_LINE, REFLECT_BASE + r.text.length * REFLECT_PER_CHAR));
+        // 2) ประโยคถัดไปเริ่มตอนประโยคก่อนหน้าเดินไปได้ราว 62% ของตัวเอง
+        let delays = [0];
+        for (let i = 1; i < lines.length; i++) delays.push(delays[i - 1] + durations[i - 1] * REFLECT_OVERLAP);
+        // 3) ถ้าทั้งชุดยาวเกินเพดาน บีบเฉพาะช่องว่างระหว่างประโยค เวลาอ่านของแต่ละ
+        //    บรรทัดไม่ถูกลด (ผู้อ่านต้องอ่านทันเสมอ)
+        const total = delays[delays.length - 1] + durations[durations.length - 1];
+        if (total > REFLECT_TOTAL_CAP) {
+            const squeeze = (REFLECT_TOTAL_CAP - durations[durations.length - 1]) / (total - durations[durations.length - 1]);
+            delays = delays.map(d => d * squeeze);
+        }
+        closeDelay = delays[delays.length - 1] + durations[durations.length - 1];
+        const linesHtml = lines.map((r, i) =>
+            `<span class="vn-reflect-line ${r.kind}" style="animation-delay:${delays[i].toFixed(2)}s;animation-duration:${durations[i].toFixed(2)}s">${r.text}</span>`
+        ).join('');
         seqHtml = `<div class="vn-reflect-seq">${linesHtml}`
             + `<button class="vn-reflect-skip" onclick="journeySkipReflection()">ข้ามบทสรุป ►</button>`
             + '</div>';

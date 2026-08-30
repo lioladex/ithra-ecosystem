@@ -112,6 +112,24 @@ Cutting a dash leaves two clauses sitting next to each other with the logic betw
 
 Leave two clauses bare only when the second renames the first (apposition) or when the silence between them is the beat. If you cannot name the relation, the sentence probably has one clause too many, which is rule 14.
 
+## 17. Chapter-close reflections are core memories, not a summary
+The close sequence is what Confluence keeps from a chapter, not a list of what happened in it. Keep it to **five or six lines**. A line earns its place only if the chapter would mean something different without it: the first awareness of existing, the first pain, the first hunt, the first ordered memory, the thing that was taken. Everything else belongs in the scenes, where it already is.
+
+Sequencing rules that follow from that:
+- The final line is the one the reader should carry into the next chapter. End on the cost or the open question, never on a gain.
+- Each chapter that branches ends with the same shared lines plus two that differ by host, so the reader sees their own path named.
+- The gain/loss ledger in the close card lists exactly these lines. If a beat is worth a ledger row it is worth a floating line, and if it is not, it belongs in neither.
+
+## 18. Motion in the close sequence
+No motion-graphics skill is installed (the registry has none; the GitHub ones target Remotion or GSAP video pipelines, not in-page HTML). These rules come from applying the ui-ux-pro-max anti-patterns — harsh animation, and timing that ignores the component and the user — to this scene:
+
+- **Time each line to its own length.** `REFLECT_BASE + chars × REFLECT_PER_CHAR`, capped at `REFLECT_MAX_LINE`. A four-word line does not need the same six seconds as a clause with a subordinate.
+- **Overlap by fraction, not by a fixed gap.** The next line starts at `REFLECT_OVERLAP` of the current one, so the rhythm keeps its proportions whatever the lines say.
+- **The cap squeezes gaps, never reading time.** When a chapter runs past `REFLECT_TOTAL_CAP`, compress the delays; leave each line on screen as long as it needs.
+- **Move a little, blur a little.** Rise, hold, drift, with a hint of scale. Anything sharper reads as an effect rather than a thought surfacing.
+- **Honour `prefers-reduced-motion`.** The sequence is hidden entirely and the close card with its ledger appears at once. Nobody loses content, only the animation.
+- **Always leave the skip.** Twenty seconds is a long time to hold a reader who has already read it.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
