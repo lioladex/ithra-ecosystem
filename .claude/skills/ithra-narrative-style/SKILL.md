@@ -82,6 +82,21 @@ Load the general skills before a revision pass: `writing-principles` names which
 
 Revise by deleting first. Most stiffness in this project is one clause too many, not a missing one.
 
+## 15. Crutch words (run `node scripts/check-prose.js`)
+The script counts the tics this project actually repeats and prints the worst-clustered scenes. It never blocks a commit: the words are not wrong on their own, the frequency is. Fixes:
+
+| คำ | ทำอะไรกับมัน |
+|---|---|
+| ราวกับ | ตัดทิ้งแล้วบรรยายสิ่งที่เห็นตรงๆ หรือหาภาพเปรียบที่เจาะจงกว่า |
+| เลยแม้แต่นิดเดียว · เลยสักนิด · ทั้งนั้น | ตัดทั้งวลี ความหมายไม่เปลี่ยน |
+| เลยสักครั้ง · แม้แต่ครั้งเดียว | เก็บไว้เฉพาะจุดที่ "ไม่เคยเลย" คือใจความ ที่เหลือตัด |
+| จริงๆ | ตัด ถ้าประโยคต้องยืนยันตัวเองแปลว่ายังไม่หนักแน่นพอ |
+| อย่างชัดเจน · อย่างสิ้นเชิง · อย่างแท้จริง · อย่างประหลาด | ตัด แล้วบอกว่าเห็นอะไรแทน |
+
+**Em dashes** stay under roughly one per eight passages per chapter (the script prints the ceiling). Prefer a full stop, a comma, or splitting the sentence. Keep one only where the interruption is the point.
+
+This checklist came from reviewing the `stop-slop` skill (github.com/hardikpandya/stop-slop). Its filler, formulaic-structure, concreteness, and trust-the-reader rules transfer; its "every sentence needs a human subject", "address the reader as you", and "delete quotable lines" rules do NOT — this project drops subjects on purpose, has no reader-facing pronoun outside the awakening and the chapter-close lines, and wants exactly one quotable line per scene marked with `glow-danger`.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
