@@ -71,6 +71,17 @@ A chapter closes by replacing an old confusion with a better-formed question, ne
 ## 13. Density beats length
 Chapter 1 is 17 steps with 17 actions; Chapter 2 is 9 steps with 22. The second reads better. Prefer fewer, longer steps carrying two or three optional actions over a long chain of thin steps. Every step holding three AP-costing actions needs an AP source in that step or in the one immediately before it, or the actions are unreachable — check this before writing, not after.
 
+## 14. Stiffness checklist (the pass Chapter 3 needed)
+Load the general skills before a revision pass: `writing-principles` names which reader reward channel a flat passage broke, and `creative-writing-craft` (resources/prose-writing.md) carries psychic distance, rhythm, and interiority. The recurring offenders in this project specifically:
+
+- **The explaining sentence after the beat.** "เงาปีกคลุมลงบนพื้นตรงนั้นพอดี" was followed by "จบเร็วมาก เร็วกว่าที่เคยเป็นมาทุกครั้ง เพราะคราวนี้รู้อยู่แล้วว่าต้องทำอะไรตรงไหน." The second sentence tells the reader what the first one already did. Cut it. If a paragraph ends by summarising the paragraph, the summary is the problem.
+- **Lists standing in for one image.** Three parallel "รู้ว่าตัวไหน…" clauses land softer than the single animal whose left panel will not open all the way. Pick the one detail that carries the rest.
+- **Naming the category before the sensation.** "ความหิวไม่ได้มาแบบค่อยเป็นค่อยไป" announces what the body is about to demonstrate. Start with the shaking hind legs; the reader assembles "hunger" themselves. This is rule 1 applied at sentence level.
+- **Labelling a feeling by negation.** "ไม่ใช่ความหิว ไม่ใช่ความกลัว ไม่ใช่ความอุ่น" is still labelling. Replace it with what the body did: it stayed on the branch through a whole day and never went to eat.
+- **Flat rhythm at the peaks.** Emotional peaks and ordinary transitions were arriving in the same medium-length sentence. Peaks want fragments and hard stops; reflection wants the long line. If a scene reads evenly from start to finish, no beat inside it is landing.
+
+Revise by deleting first. Most stiffness in this project is one clause too many, not a missing one.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
