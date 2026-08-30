@@ -7,6 +7,23 @@ description: Prose/narration guideline for the Ithra Field Codex journey (data/j
 
 Distilled from the T-0 → Chapter-1-close prose in `data/journey.js`, written across many editing passes with the project owner. Follow these rules for any new or revised `paragraphs`/action `text` in that file.
 
+## 0. Voice charter
+Set by the project owner in a style interview on 2026-08-30. When a later rule and this section disagree, this section wins, because the rules below are techniques and this is the target they serve.
+
+**Distance: inside the body.** The reader knows what Confluence knows and feels it where Confluence feels it. Never step out to a vantage the character does not have. No survey-narrator explaining the ecosystem over its shoulder.
+
+**Texture: long and flowing by default.** The base sentence is long, clause after clause, carrying the reader on a current. Short fragments are not the house style; they are the exception you spend at a peak. If a whole scene reads in short lines, it has spent everything and nothing lands.
+
+**Detail: only what the body registers.** Anatomy and ecology enter through sensation, pressure, smell, temperature, resistance. What Confluence cannot feel or see stays in the database where the reader can go find it.
+
+**Tone: หม่น เหงา — muted and lonely.** Not cold observation, not despair. The register of something alone in a large place, learning things nobody will ever ask it about. Warmth exists in the story, but always as something noticed from outside it: a herd closing ranks around its slowest, a body that once stood in the middle of that circle and now circles above it.
+
+**sysnote: the voice of something watching.** The [LOG] line is not the machine narrating itself. It reads as a record kept by an observer who has been following this life, noting what changed, in the vocabulary of someone taking measurements. It never addresses Confluence and Confluence never hears it. Numbers are exact here; in the prose the same distances and spans stay vague, measured in body-lengths, days, and how far the eye reaches.
+
+**Emphasis: two or three glow-danger lines per chapter.** They mark the moments the character changes, not the moments the writing gets loud.
+
+**Ending: an unanswerable question.** A chapter closes by handing the reader something the story cannot yet answer, and the close sequence carries it out as a core memory.
+
 ## 1. Sensation before cognition
 Confluence feels a thing before it can name or understand it. Never let narration hand it a label it hasn't earned yet.
 - Bad: `รู้จักคำว่า เจ็บ` (implies it already knew the word)
