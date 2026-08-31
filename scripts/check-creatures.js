@@ -35,6 +35,20 @@ for (const file of creatureFiles) {
         }
     }
 
+    // abilities เป็น field เสริม (ดู creatures/README.md หัวข้อ "FIELD: abilities") แต่ถ้าใส่
+    // มาแล้วแต่ละรายการต้องมี name/type/desc/origin ครบ ไม่งั้น UI จะ render ว่างๆ
+    const abilityBlockMatch = content.match(/abilities:\s*\[([\s\S]*?)\n\s*\],?\n/);
+    if (abilityBlockMatch) {
+        const block = abilityBlockMatch[1];
+        const entryCount = (block.match(/\bname\s*:/g) || []).length;
+        ["name", "type", "desc", "origin"].forEach((field) => {
+            const count = (block.match(new RegExp("\\b" + field + "\\s*:", "g")) || []).length;
+            if (count < entryCount) {
+                errors.push(`${file}: abilities มี ${entryCount} รายการ แต่ field "${field}" มีแค่ ${count} — บางรายการขาด`);
+            }
+        });
+    }
+
     const statusMatch = content.match(/status:\s*"([^"]+)"/);
     const status = statusMatch ? statusMatch[1] : null;
     if (status !== "DRAFT" && !/\bprompt\s*:/.test(content)) {
