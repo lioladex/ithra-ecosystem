@@ -1,6 +1,6 @@
 /* ITH-211-350 — Vellith (ALIVE) */
 creaturesData.push({
-        id: "ITH-211-350", name: "Vellith", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-211-350", name: "Vellith", nickname: "แพลอยฟ้า", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "VELLITH", color: "#c4b5fd",
         category: "สิ่งมีชีวิตลอยฟ้าแบบฝูงอาณานิคม (Colonial gas-drifter, aerial swarm-raft)",
         habitat: "น่านฟ้าเปิดเหนือเรือนยอด (Verath, The Open Sky above The Inner Canopy)",

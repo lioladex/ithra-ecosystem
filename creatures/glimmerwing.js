@@ -1,6 +1,6 @@
 /* ITH-203-882 — Glimmerwing (ALIVE) */
 creaturesData.push({
-        id: "ITH-203-882", name: "Glimmerwing", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-203-882", name: "Glimmerwing", nickname: "ฝูงแสงกะพริบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "GLIMMERWING", color: "#06b6d4",
         category: "แมลงแกนกลางระบบนิเวศ (Keystone Species)", 
         habitat: "ทั่วทั้งทวีป Verath",

@@ -1,6 +1,6 @@
 /* ITH-215-847 — Palegrim (ALIVE) */
 creaturesData.push({
-        id: "ITH-215-847", name: "Palegrim", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-215-847", name: "Palegrim", nickname: "เจ้าเงาสีซีด", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "PALEGRIM", color: "#d4d4d8",
         category: "สัตว์กินซากตามรอย Korrune ระยะปลอดภัย (Long-range trailing scavenger)",
         habitat: "เคลื่อนย้ายตามอาณาเขตของ Korrune ทั่วทวีป Verath ไม่ยึดถิ่นตายตัว",

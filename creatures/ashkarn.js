@@ -1,6 +1,6 @@
 /* ITH-216-330 — Ashkarn (DRAFT) — ทดสอบ ALIEN INTENSITY SCALE Tier IV */
 creaturesData.push({
-        id: "ITH-216-330", name: "Ashkarn", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-216-330", name: "Ashkarn", nickname: "เจ้าหินที่ตื่น", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "ASHKARN", color: "#ff5a2e",
         category: "นักล่าปีกจำศีลตามวัฏจักรภูเขาไฟ (Cyclic dormant volcanic apex predator)",
         habitat: "หมู่เกาะภูเขาไฟ Dothen — Zone 1: The Basalt Calderas",

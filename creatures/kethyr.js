@@ -1,6 +1,6 @@
 /* ITH-217-905 — Kethyr (DRAFT) — ทดสอบ ALIEN INTENSITY SCALE Tier V */
 creaturesData.push({
-        id: "ITH-217-905", name: "Kethyr", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-217-905", name: "Kethyr", nickname: "สิ่งใต้น้ำแข็ง", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KETHYR", color: "#bfe8ff",
         category: "สิ่งมีชีวิตลึกลับยุคโบราณใต้ธารน้ำแข็ง (Ancient cryptid, sub-glacial, cross-era survivor)",
         habitat: "ทวีปน้ำแข็งขั้วดาว Kessara — Zone 1: The Glass Shelf, ลึกลงไปใต้ธารน้ำแข็งโบราณ",

@@ -1,6 +1,6 @@
 /* ITH-204-560 — Mistcrawler (ALIVE) */
 creaturesData.push({
-        id: "ITH-204-560", name: "Mistcrawler", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-204-560", name: "Mistcrawler", nickname: "เจ้าใยระยิบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "MISTCRAWLER", color: "#d4e8e8",
         category: "สัตว์ขาปล้องล่าแมลงแบบทอใย (Arthropod web-trap insectivore)",
         habitat: "ป่าหมอกชั้นกลางต่อเนื่องพื้นดิน (Verath, Mist Layer)",

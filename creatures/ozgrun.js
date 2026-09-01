@@ -1,6 +1,6 @@
 /* ITH-212-118 — Ozgrun (ALIVE) */
 creaturesData.push({
-        id: "ITH-212-118", name: "Ozgrun", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-212-118", name: "Ozgrun", nickname: "เจ้าก้อนหินกลม", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "OZGRUN", color: "#f97316",
         category: "สัตว์หุ้มเกราะแร่ธาตุกินราก (Mineral-plated root-forager, defensive roller)",
         habitat: "พื้นป่าและหนองบึง (Verath, The Dark Mire)",

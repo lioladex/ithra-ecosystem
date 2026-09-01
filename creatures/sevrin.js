@@ -1,6 +1,6 @@
 /* ITH-214-529 — Sevrin (ALIVE) */
 creaturesData.push({
-        id: "ITH-214-529", name: "Sevrin", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-214-529", name: "Sevrin", nickname: "เจ้าแสงลวงตา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "SEVRIN", color: "#f97373",
         category: "สัตว์ขนาดเล็กเลียนแบบสัญญาณเตือนภัย (Bioluminescent mimic, nocturnal glider)",
         habitat: "ชั้นหมอกกลาง (Verath, The Mist Layer)",

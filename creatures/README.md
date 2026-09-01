@@ -31,10 +31,11 @@ creaturesData.push({
 
 ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและหมายเหตุรายตัวได้ในหน้า Design Rulebook (`data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE") สรุปสั้นๆ:
 
-- **Tier I (ปานกลาง)**: Vorthak, Thessek, Karvos, Luvenn, Skyther, Vashli, Frostmane, Dunkrell, Pallowfin, Mistcrawler — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
-- **Tier II (เข้มข้น)**: Threndle, Glimmerwing
-- **Tier III (สุดขั้ว)**: Korrune, Cindergrub — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
-- **Tier IV (หลุดกรอบกายวิภาค)** / **Tier V (เหนือจริง)**: Ashkarn, Kethyr (DRAFT — ทดสอบ Tier ใหม่) — เผื่อไว้สำหรับตัวที่ต้องการความเอเลี่ยนสุดขั้วกว่านี้
+- **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
+- **Tier II (เข้มข้น)**: Thessek, Glimmerwing
+- **Tier III (สุดขั้ว)**: Korrune, Frostmane — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
+- **Tier IV (หลุดกรอบกายวิภาค)**: Vorthak, Cindergrub, Ashkarn (DRAFT)
+- **Tier V (เหนือจริง)**: Threndle, Kethyr (DRAFT)
 
 **ข้อจำกัดบังคับทุก Tier (เพิ่ม 2026-09-01)**: จำนวนแขนขาหลัก (ปีก/ขา/แขน) ต้องเป็นคู่สมมาตรเสมอ ห้ามใช้จำนวนไม่เป็นคู่ (เช่น ปีก 3 ข้าง ขา 3 ข้าง) แม้จะมีเหตุผลเชิงวิวัฒนาการรองรับดีแค่ไหนก็ตาม — เครื่องมือ AI image-gen ที่ใช้จริง render จำนวนแขนขาไม่สมมาตรไม่แม่นยำ มักดริฟท์กลับไปเป็นคู่มาตรฐานเองแบบสุ่มไม่คงที่ (พบปัญหานี้จริงกับดราฟ Ashkarn ที่เคยออกแบบปีก 3 ข้าง/ขา 3 ข้างไว้ ต้องแก้ย้อนกลับ) ความไม่สมมาตรที่ยังใช้ได้ทุก Tier คือขนาด/รูปร่าง/หน้าที่ที่ต่างกันระหว่างข้างซ้าย-ขวาของคู่เดิม (ดู Monster Design Toolkit ข้อ 2 ด้านล่าง)
 

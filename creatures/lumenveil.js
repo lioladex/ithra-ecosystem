@@ -1,6 +1,6 @@
 /* ITH-213-064 — Lumenveil (ALIVE) */
 creaturesData.push({
-        id: "ITH-213-064", name: "Lumenveil", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-213-064", name: "Lumenveil", nickname: "แผ่นเรืองทอง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "LUMENVEIL", color: "#86efac",
         category: "สิ่งมีชีวิตกินแสงเกาะกิ่งไม้กึ่งเคลื่อนที่ (Semi-sessile light-absorbing canopy organism)",
         habitat: "รอยต่อชั้นเรือนยอดกับชั้นหมอกกลาง (Verath, Canopy-Mist Boundary)",

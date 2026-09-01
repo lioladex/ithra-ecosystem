@@ -1,6 +1,6 @@
 /* ITH-208-640 — Dunkrell (ALIVE) */
 creaturesData.push({
-        id: "ITH-208-640", name: "Dunkrell", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-208-640", name: "Dunkrell", nickname: "เจ้าท่อนไม้เดินได้", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "DUNKRELL", color: "#c8e05a",
         category: "ผู้ย่อยสลายซากขนาดใหญ่ (Large detritivore/scavenger)",
         habitat: "พื้นป่าหมอก/หนองบึง (Verath, Forest Floor — The Dark Mire)",

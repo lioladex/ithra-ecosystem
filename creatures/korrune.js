@@ -1,6 +1,6 @@
 /* ITH-205-001 — Korrune (ALIVE) */
 creaturesData.push({
-        id: "ITH-205-001", name: "Korrune", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-205-001", name: "Korrune", nickname: "เจ้าไร้เสียง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KORRUNE", color: "#eef4f8",
         category: "ผู้ล่าสูงสุดแห่งยุคป่าหมอก (Mistwood Apex Predator, ambush-stalker)",
         habitat: "เคลื่อนย้ายข้ามทุกชั้นของทวีป Verath ไม่ยึดอาณาเขตตายตัว",

@@ -1,6 +1,6 @@
 /* ITH-014-772 — Luvenn (ALIVE) */
 creaturesData.push({
-        id: "ITH-014-772", name: "Luvenn", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-014-772", name: "Luvenn", nickname: "ร่างสี่ขา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "LUVENN", color: "#6ef2a0",
         category: "สัตว์กินแสงสี่ขา (Quadrupedal photosynthetic grazer)", habitat: "ป่าหมอกชั้นกลาง (Verath, Mist Layer)",
         foodChain: "ผู้ผลิตและผู้บริโภคปฐมภูมิ — เหยื่อหลักของ Karvos",
