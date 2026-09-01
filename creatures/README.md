@@ -27,6 +27,25 @@ creaturesData.push({
 2. เพิ่ม `<script src="creatures/<slug>.js"></script>` ต่อจากไฟล์ตัวอื่นใน `index.html` (ถ้ายังไม่มี)
 3. ถ้าตัวนั้นมี field `prompt` (AI image-gen) **ต้องเขียนตามกฎด้านล่างเท่านั้น**
 
+## FIELD: `category` — คำนำหน้าหมวดหมู่มาตรฐาน (เพิ่ม 2026-09-01)
+
+ทุก `category` ต้องขึ้นต้นด้วยหมวดตามอาหาร/วิธีดำรงชีวิตจากลิสท์คงที่นี้ คั่นด้วย `" · "` แล้วตามด้วยข้อความ flavor เดิม (ห้ามลบ flavor เดิมทิ้ง):
+
+```js
+category: "สัตว์กินเนื้อ · นักล่าฝูงรับความร้อน (Thermoreceptive pack-hunter)"
+```
+
+**หมวดที่ใช้ได้ (เลือกได้ข้อเดียวต่อตัว):**
+- `ผู้ผลิต (สังเคราะห์แสง)` — สิ่งมีชีวิตที่ดำรงชีวิตด้วยแสงเป็นหลัก (Luvenn, Lumenveil)
+- `สัตว์กินพืช` — Herbivore/nectarivore (Vashli, Frostmane, Ozgrun, Glimmerwing)
+- `สัตว์กินเนื้อ` — Carnivore/predator ทุกขนาด รวมนักล่าที่กินซากเสริมด้วย (Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin)
+- `สัตว์กินซาก/ผู้ย่อยสลาย` — กินเฉพาะซาก ไม่ล่าเองเลย (Dunkrell, Palegrim)
+- `ผู้กรองอาหาร` — Filter feeder ทั้งในน้ำและอากาศ (Pallowfin, Vellith)
+- `สิ่งมีชีวิตสังเคราะห์เคมี` — Chemosynthetic (Cindergrub)
+- `ไม่สามารถจัดประเภทได้` — สำหรับตัวที่คลุมเครือเกินจะจัดหมวดอาหารได้ (Kethyr เท่านั้น)
+
+หมวดนี้จัดตาม**อาหาร/วิธีดำรงชีวิตเท่านั้น** ไม่ผสมกับ habitat (aquatic/aerial ฯลฯ) เพราะมี field `habitat` แยกอยู่แล้ว — ถ้าเพิ่มตัวใหม่แล้วไม่เข้าหมวดไหนเลย ให้ถามเจ้าของโปรเจกต์ก่อนเพิ่มหมวดใหม่ อย่าเพิ่มเองเงียบๆ
+
 ## ALIEN INTENSITY SCALE (Tier I–V)
 
 ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและหมายเหตุรายตัวได้ในหน้า Design Rulebook (`data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE") สรุปสั้นๆ:

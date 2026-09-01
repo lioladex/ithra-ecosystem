@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-216-330", name: "Ashkarn", nickname: "เจ้าหินที่ตื่น", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "ASHKARN", color: "#ff5a2e",
-        category: "นักล่าปีกจำศีลตามวัฏจักรภูเขาไฟ (Cyclic dormant volcanic apex predator)",
+        category: "สัตว์กินเนื้อ · นักล่าปีกจำศีลตามวัฏจักรภูเขาไฟ (Cyclic dormant volcanic apex predator)",
         habitat: "หมู่เกาะภูเขาไฟ Dothen — Zone 1: The Basalt Calderas",
         foodChain: "ผู้ล่าสูงสุดตามฤดูกาลปะทุ — ล่าทุกสิ่งมีชีวิตที่ตื่นตระหนกหนีลาวาในรัศมีปล่องภูเขาไฟที่มันจำศีลอยู่",
         danger: "70% (Highly Lethal) — เฉพาะช่วงตื่น", size: "ระดับ 7 — ยักษ์ (เท่าวาฬ)", height: "6.2 ม. ที่มวลลำตัวเมื่อคลี่ตัวเต็มที่ (ไม่รวมปีก) · ปีก 1 คู่ ขนาดต่างกันสุดขั้ว ปีกซ้าย 32 ม. ปีกขวา 10 ม. รวมกางเต็มที่ 42 ม.", weight: "32 ตัน (รวมเปลือกหินที่ยังไม่แตกออกหมด)",

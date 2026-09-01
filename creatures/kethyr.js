@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-217-905", name: "Kethyr", nickname: "สิ่งใต้น้ำแข็ง", status: "DRAFT", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KETHYR", color: "#bfe8ff",
-        category: "สิ่งมีชีวิตลึกลับยุคโบราณใต้ธารน้ำแข็ง (Ancient cryptid, sub-glacial, cross-era survivor)",
+        category: "ไม่สามารถจัดประเภทได้ · สิ่งมีชีวิตลึกลับยุคโบราณใต้ธารน้ำแข็ง (Ancient cryptid, sub-glacial, cross-era survivor)",
         habitat: "ทวีปน้ำแข็งขั้วดาว Kessara — Zone 1: The Glass Shelf, ลึกลงไปใต้ธารน้ำแข็งโบราณ",
         foodChain: "ไม่มีตำแหน่งที่ระบุได้ในห่วงโซ่อาหารปัจจุบัน — ไม่เคยมีบันทึกว่าล่าอะไรเป็นประจำ หรือมีอะไรล่ามันได้",
         danger: "ประเมินไม่ได้แน่ชัด (raw ~97%)", size: "ไม่ทราบขนาดจริง — บันทึกภาคสนามแต่ละครั้งประมาณไม่ตรงกัน (ระดับ 7+ โดยประมาณ)", height: "ไม่ทราบแน่ชัด — ส่วนที่เคยเห็นสูงเกิน 6 ม. แต่ไม่มีใครเห็น \"ตัวเต็ม\" เลยสักครั้ง", weight: "ไม่ทราบ — ไม่เคยมีการวัดที่สมบูรณ์",

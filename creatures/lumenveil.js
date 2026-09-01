@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-213-064", name: "Lumenveil", nickname: "แผ่นเรืองทอง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "LUMENVEIL", color: "#86efac",
-        category: "สิ่งมีชีวิตกินแสงเกาะกิ่งไม้กึ่งเคลื่อนที่ (Semi-sessile light-absorbing canopy organism)",
+        category: "ผู้ผลิต (สังเคราะห์แสง) · สิ่งมีชีวิตกินแสงเกาะกิ่งไม้กึ่งเคลื่อนที่ (Semi-sessile light-absorbing canopy organism)",
         habitat: "รอยต่อชั้นเรือนยอดกับชั้นหมอกกลาง (Verath, Canopy-Mist Boundary)",
         foodChain: "ผู้ผลิตปฐมภูมิลอยตัวชั้นเรือนยอด — แหล่งอาหารหลักที่แท้จริงของ Luvenn",
         danger: "0% (Harmless, non-motile)", size: "ระดับ 2 — เล็กต่อผืน (ผืนหนึ่งกว้างเฉลี่ย 1.5 ม.)",

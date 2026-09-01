@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-208-640", name: "Dunkrell", nickname: "เจ้าท่อนไม้เดินได้", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "DUNKRELL", color: "#c8e05a",
-        category: "ผู้ย่อยสลายซากขนาดใหญ่ (Large detritivore/scavenger)",
+        category: "สัตว์กินซาก/ผู้ย่อยสลาย · ผู้ย่อยสลายซากขนาดใหญ่ (Large detritivore/scavenger)",
         habitat: "พื้นป่าหมอก/หนองบึง (Verath, Forest Floor — The Dark Mire)",
         foodChain: "ผู้ย่อยสลาย — เก็บกินซากที่เหลือจาก Karvos, Skyther และนักล่าอื่น",
         danger: "12% (Harmless)", size: "ระดับ 4 — กลาง (เท่าหมูใหญ่)", height: "0.7 ม. ที่หลัง · ลำตัวยาว 1.4 ม.", weight: "86 กก.",

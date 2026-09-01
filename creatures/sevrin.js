@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-214-529", name: "Sevrin", nickname: "เจ้าแสงลวงตา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "SEVRIN", color: "#f97373",
-        category: "สัตว์ขนาดเล็กเลียนแบบสัญญาณเตือนภัย (Bioluminescent mimic, nocturnal glider)",
+        category: "สัตว์กินเนื้อ · สัตว์ขนาดเล็กเลียนแบบสัญญาณเตือนภัย (Bioluminescent mimic, nocturnal glider)",
         habitat: "ชั้นหมอกกลาง (Verath, The Mist Layer)",
         foodChain: "ผู้บริโภคทุติยภูมิขนาดเล็ก — ล่าแมลงและ Glimmerwing เป็นเหยื่อฉวยโอกาสของนักล่าที่ไม่ทันสังเกตลายเลียนแบบ",
         danger: "5% (Harmless, deceptive appearance only)", size: "ระดับ 1 — จิ๋ว (เท่ากระรอกตัวเล็ก)",

@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-201-330", name: "Skyther", nickname: "เจ้าเงาปีกกว้าง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "SKYTHER", color: "#fcd34d",
-        category: "นักล่าและผู้กินซากชั้นเรือนยอด (Apex aerial scavenger-predator)", 
+        category: "สัตว์กินเนื้อ · นักล่าและผู้กินซากชั้นเรือนยอด (Apex aerial scavenger-predator)", 
         habitat: "ป่าหมอกชั้นเรือนยอด (Verath, The Inner Canopy)",
         foodChain: "ผู้ล่าระดับสูงสุดทางอากาศ — โฉบกิน Luvenn วัยอ่อน และขโมยซากเหยื่อจาก Karvos",
         danger: "65% (Highly Lethal)", size: "ระดับ 5 — ใหญ่ (ปีกกว้างเท่าเครื่องบินเล็ก)", 

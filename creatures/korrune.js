@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-205-001", name: "Korrune", nickname: "เจ้าไร้เสียง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KORRUNE", color: "#eef4f8",
-        category: "ผู้ล่าสูงสุดแห่งยุคป่าหมอก (Mistwood Apex Predator, ambush-stalker)",
+        category: "สัตว์กินเนื้อ · ผู้ล่าสูงสุดแห่งยุคป่าหมอก (Mistwood Apex Predator, ambush-stalker)",
         habitat: "เคลื่อนย้ายข้ามทุกชั้นของทวีป Verath ไม่ยึดอาณาเขตตายตัว",
         foodChain: "ยอดสุดของห่วงโซ่อาหารในยุคปัจจุบัน — ล่าได้แม้กระทั่งฝูง Karvos เต็มฝูง",
         danger: "92% (Apex Predator)", size: "ระดับ 6 — ใหญ่มาก (ใหญ่กว่า Karvos มาก แต่เล็กกว่า Vorthak)", height: "2.4 ม. ที่ไหล่ · 4.6 ม. ยาวรวมหาง", weight: "2,100 กก.",

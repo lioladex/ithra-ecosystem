@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-211-350", name: "Vellith", nickname: "แพลอยฟ้า", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "VELLITH", color: "#c4b5fd",
-        category: "สิ่งมีชีวิตลอยฟ้าแบบฝูงอาณานิคม (Colonial gas-drifter, aerial swarm-raft)",
+        category: "ผู้กรองอาหาร · สิ่งมีชีวิตลอยฟ้าแบบฝูงอาณานิคม (Colonial gas-drifter, aerial swarm-raft)",
         habitat: "น่านฟ้าเปิดเหนือเรือนยอด (Verath, The Open Sky above The Inner Canopy)",
         foodChain: "ผู้บริโภคปฐมภูมิลอยฟ้า — กินสปอร์และละอองเกสรที่ลอยขึ้นจากป่าหมอก เป็นเหยื่อฉวยโอกาสของ Skyther",
         danger: "8% (Harmless)", size: "ระดับ 2 ต่อหน่วย — เล็ก แต่รวมฝูงเป็นแพลอยฟ้าขนาดใหญ่ได้ (แพหนึ่งกว้างได้ถึง 40 ม.)",

@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-212-118", name: "Ozgrun", nickname: "เจ้าก้อนหินกลม", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "OZGRUN", color: "#f97316",
-        category: "สัตว์หุ้มเกราะแร่ธาตุกินราก (Mineral-plated root-forager, defensive roller)",
+        category: "สัตว์กินพืช · สัตว์หุ้มเกราะแร่ธาตุกินราก (Mineral-plated root-forager, defensive roller)",
         habitat: "พื้นป่าและหนองบึง (Verath, The Dark Mire)",
         foodChain: "ผู้บริโภคปฐมภูมิภาคพื้น — เหยื่อสำคัญของฝูง Karvos (ต้องล่าเป็นทีมเท่านั้น)",
         danger: "22% (Low, but costly to hunt alone)", size: "ระดับ 4 — กลาง (เท่าหมูป่าตัวใหญ่)",

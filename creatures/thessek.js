@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-A-338-104", name: "Thessek", nickname: "เจ้าเงาที่คุ้นเคย", status: "EXTINCT", era: "ยุคหมุนเวียน (Cycling Era)",
         imageKey: "THESSEK", color: "#ffb84a",
-        category: "นักล่าลำดับรองแบบซุ่มขุด (Mesopredator, ambush burrower) — Alien Intensity Tier II", habitat: "ทุ่งหินตะกอนโล่งแจ้งเชิงเทือกเขา Sorn",
+        category: "สัตว์กินเนื้อ · นักล่าลำดับรองแบบซุ่มขุด (Mesopredator, ambush burrower) — Alien Intensity Tier II", habitat: "ทุ่งหินตะกอนโล่งแจ้งเชิงเทือกเขา Sorn",
         danger: "41% (Dangerous)", size: "ระดับ 4 — กลาง (เท่าสุนัขใหญ่)", height: "0.85 ม. ที่ไหล่", weight: "68 กก.",
         desc: "นักล่าลำดับรองที่ตกเป็นเหยื่อประจำของ Vorthak ขุดโพรงซุ่มและพุ่งแทงจากด้านล่าง ยังคงเดิน 4 ขา ขนาดใกล้เคียง Karvos ตามหมายเหตุเฉพาะตัว (จุดที่ทำให้สัญชาตญาณเก่าของตัวเอกสับสนในฉากตื่นรู้) แต่หาง/พื้นผิวปรับให้เอเลี่ยนเข้มข้นขึ้นแล้ว",
         mutation: { pro: "แรงขุดและตะปบสูง ขุดโพรงซุ่มได้เร็วมาก", con: "ความเร็วในการวิ่งระยะไกลต่ำ หนี Apex Predator ไม่พ้น" },

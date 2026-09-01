@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-014-772", name: "Luvenn", nickname: "ร่างสี่ขา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "LUVENN", color: "#6ef2a0",
-        category: "สัตว์กินแสงสี่ขา (Quadrupedal photosynthetic grazer)", habitat: "ป่าหมอกชั้นกลาง (Verath, Mist Layer)",
+        category: "ผู้ผลิต (สังเคราะห์แสง) · สัตว์กินแสงสี่ขา (Quadrupedal photosynthetic grazer)", habitat: "ป่าหมอกชั้นกลาง (Verath, Mist Layer)",
         foodChain: "ผู้ผลิตและผู้บริโภคปฐมภูมิ — เหยื่อหลักของ Karvos",
         danger: "20% (Harmless)", size: "ระดับ 5 — ใหญ่ (เท่าม้า)", height: "2.05 ม. ที่ไหล่ · 3.1 ม. เมื่อชูคอเต็มที่", weight: "310 กก.",
         desc: "สิ่งมีชีวิตกึ่งพืช ร่างปัจจุบันที่ตัวเอกสวมอยู่ ณ จุดตื่นรู้ ไร้อาวุธ วิ่งช้ามาก ดำรงชีวิตด้วยการกางแผงรับแสงจากกลางหัวรับแสงกระจายผ่านหมอก อาศัยมวลน้ำหนักตัวในการป้องกันตัวเมื่อจวนตัว",

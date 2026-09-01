@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-210-077", name: "Cindergrub", nickname: "เจ้าตัวปล่องไฟ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "CINDERGRUB", color: "#ff6a2e",
-        category: "แมลงทนความร้อนแห่งภูเขาไฟ (Thermotolerant insect, chemosynthetic grazer) — Alien Intensity Tier IV",
+        category: "สิ่งมีชีวิตสังเคราะห์เคมี · แมลงทนความร้อนแห่งภูเขาไฟ (Thermotolerant insect, chemosynthetic grazer) — Alien Intensity Tier IV",
         habitat: "หมู่เกาะ Dothen (เขตภูเขาไฟ) — The Basalt Calderas",
         foodChain: "ผู้บริโภคปฐมภูมิ/ผู้ย่อยสลายของหมู่เกาะ Dothen — อาหารหลักของสัตว์เฉพาะถิ่นบนเกาะ",
         danger: "5% (Harmless)", size: "ระดับ 1 — จิ๋ว", height: "ลำตัวยาว 9 ซม.", weight: "0.06 กก.",

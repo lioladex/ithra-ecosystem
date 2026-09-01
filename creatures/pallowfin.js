@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-207-275", name: "Pallowfin", nickname: "เจ้าฝูงครีบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "PALLOWFIN", color: "#eaf4ff",
-        category: "ปลากรองอาหารฝูงใหญ่ (Filter-feeding shoaler)",
+        category: "ผู้กรองอาหาร · ปลากรองอาหารฝูงใหญ่ (Filter-feeding shoaler)",
         habitat: "แหล่งน้ำ/พื้นที่ชุ่มน้ำ — The Resonant Strait และทุ่งสันทรายมหึมา",
         foodChain: "ผู้บริโภคปฐมภูมิของแหล่งน้ำ — ฐานอาหารหลักของ Threndle",
         danger: "6% (Harmless)", size: "ระดับ 3 — เล็ก (เท่าปลาขนาดกลาง)", height: "ลำตัวยาว 42 ซม.", weight: "2.6 กก. (ต่อตัว)",

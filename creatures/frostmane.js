@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-209-903", name: "Frostmane", nickname: "เจ้าขนน้ำแข็ง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "FROSTMANE", color: "#ffc978",
-        category: "สัตว์กินพืชขนหนาแห่งขั้วดาว (Polar grazer, herd herbivore) — Alien Intensity Tier III",
+        category: "สัตว์กินพืช · สัตว์กินพืชขนหนาแห่งขั้วดาว (Polar grazer, herd herbivore) — Alien Intensity Tier III",
         habitat: "ทวีป Kessara (เขตหนาวเย็น) — The Frost Tundra & Pine Barrens",
         foodChain: "ผู้บริโภคปฐมภูมิหลักของทวีป Kessara — เหยื่อของนักล่าขั้วดาวที่ยังไม่บันทึก",
         danger: "24% (Cautious)", size: "ระดับ 5 — ใหญ่ (เท่าไบสัน)", height: "2.0 ม. ที่ไหล่", weight: "710 กก.",

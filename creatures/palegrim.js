@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-215-847", name: "Palegrim", nickname: "เจ้าเงาสีซีด", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "PALEGRIM", color: "#d4d4d8",
-        category: "สัตว์กินซากตามรอย Korrune ระยะปลอดภัย (Long-range trailing scavenger)",
+        category: "สัตว์กินซาก/ผู้ย่อยสลาย · สัตว์กินซากตามรอย Korrune ระยะปลอดภัย (Long-range trailing scavenger)",
         habitat: "เคลื่อนย้ายตามอาณาเขตของ Korrune ทั่วทวีป Verath ไม่ยึดถิ่นตายตัว",
         foodChain: "ผู้ย่อยสลายฉวยโอกาส — กินเศษซากที่ Korrune ทิ้งไว้เท่านั้น ไม่ล่าเองเลย",
         danger: "3% (Harmless, extremely skittish)", size: "ระดับ 2 — เล็ก (เท่าสุนัขจิ้งจอกตัวเล็ก)",

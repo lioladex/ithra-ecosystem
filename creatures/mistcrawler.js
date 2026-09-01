@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-204-560", name: "Mistcrawler", nickname: "เจ้าใยระยิบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "MISTCRAWLER", color: "#d4e8e8",
-        category: "สัตว์ขาปล้องล่าแมลงแบบทอใย (Arthropod web-trap insectivore)",
+        category: "สัตว์กินเนื้อ · สัตว์ขาปล้องล่าแมลงแบบทอใย (Arthropod web-trap insectivore)",
         habitat: "ป่าหมอกชั้นกลางต่อเนื่องพื้นดิน (Verath, Mist Layer)",
         foodChain: "ผู้บริโภคทุติยภูมิขนาดเล็ก — ล่า Glimmerwing และแมลงอื่น เป็นเหยื่อของสัตว์ปีกขนาดเล็กและ Karvos วัยอ่อน",
         danger: "28% (Cautious)", size: "ระดับ 2 — เล็ก (เท่าแมวเล็ก)", height: "ลำตัวยาว 38 ซม. (ไม่รวมขา)", weight: "3.4 กก.",

@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-206-410", name: "Threndle", nickname: "เจ้าใต้เงาน้ำ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "THRENDLE", color: "#4ce0c0",
-        category: "ผู้ล่าสูงสุดแห่งสายน้ำ (Aquatic apex predator, tidal ambusher) — Alien Intensity Tier V",
+        category: "สัตว์กินเนื้อ · ผู้ล่าสูงสุดแห่งสายน้ำ (Aquatic apex predator, tidal ambusher) — Alien Intensity Tier V",
         habitat: "แหล่งน้ำ/พื้นที่ชุ่มน้ำ (กระแสน้ำขึ้นลงจากดวงจันทร์ Ren และ Kol) — The Great Tidal Flats",
         foodChain: "ยอดสุดของห่วงโซ่อาหารในแหล่งน้ำ/พื้นที่ชุ่มน้ำ — ล่าฝูง Pallowfin เป็นอาหารหลัก",
         danger: "74% (Highly Lethal)", size: "ไม่ทราบขนาดจริงที่แน่นอน — บันทึกแต่ละครั้งวัดได้ไม่ตรงกัน (ประมาณระดับ 6 — ใหญ่มาก)", height: "ความยาวลำตัวที่บันทึกได้: 4.8-9 ม. หัวถึงปลายหาง แล้วแต่ครั้งที่พบ", weight: "ประมาณ 900-1,100 กก. (ไม่เคยชั่งได้แม่นยำ)",

@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-203-882", name: "Glimmerwing", nickname: "ฝูงแสงกะพริบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "GLIMMERWING", color: "#06b6d4",
-        category: "แมลงแกนกลางระบบนิเวศ (Keystone Species)", 
+        category: "สัตว์กินพืช · แมลงแกนกลางระบบนิเวศ (Keystone Species)", 
         habitat: "ทั่วทั้งทวีป Verath",
         danger: "0% (Harmless)", size: "ระดับ 1 — จิ๋ว", 
         height: "10 ซม.", weight: "0.1 กก.",
