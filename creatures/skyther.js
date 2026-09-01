@@ -1,6 +1,6 @@
 /* ITH-201-330 — Skyther (ALIVE) */
 creaturesData.push({
-        id: "ITH-201-330", name: "Skyther", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-201-330", name: "Skyther", nickname: "เจ้าเงาปีกกว้าง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "SKYTHER", color: "#fcd34d",
         category: "นักล่าและผู้กินซากชั้นเรือนยอด (Apex aerial scavenger-predator)", 
         habitat: "ป่าหมอกชั้นเรือนยอด (Verath, The Inner Canopy)",

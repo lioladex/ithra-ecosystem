@@ -1,6 +1,6 @@
 /* ITH-202-115 — Vashli (ALIVE) */
 creaturesData.push({
-        id: "ITH-202-115", name: "Vashli", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-202-115", name: "Vashli", nickname: "เจ้าตาโต", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "VASHLI", color: "#38bdf8",
         category: "สัตว์กินพืชปีนป่ายชั้นเรือนยอด (Canopy browser)",
         habitat: "ป่าหมอกชั้นเรือนยอด (Verath, The Inner Canopy)",

@@ -1,6 +1,6 @@
 /* ITH-510-961 — Karvos (ALIVE) */
 creaturesData.push({
-        id: "ITH-510-961", name: "Karvos", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
+        id: "ITH-510-961", name: "Karvos", nickname: "เจ้าตัวสี่ขา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KARVOS", color: "#ff7a3d",
         category: "นักล่าฝูงรับความร้อน (Thermoreceptive pack-hunter)", habitat: "ป่าหมอกชั้นพื้นดิน (Verath)",
         foodChain: "ผู้ล่าระดับสูงของชั้นพื้นดิน — ล่า Luvenn เป็นอาหารหลัก",

@@ -838,6 +838,8 @@
     <script src="creatures/lumenveil.js"></script>
     <script src="creatures/sevrin.js"></script>
     <script src="creatures/palegrim.js"></script>
+    <script src="creatures/ashkarn.js"></script>
+    <script src="creatures/kethyr.js"></script>
 
     <!-- Content Documents (Ecosystem / Memory Mechanics / Rulebook / Journey of Confluence) -->
     <script src="data/ecosystem.js"></script>
@@ -881,12 +883,26 @@
            ปลด tier N แปลว่าปลด 0..N ทั้งหมดพร้อมกันเสมอ (tier สูงขึ้นเรื่อยๆ
            ไม่มีวันลดลง) — บันทึกไว้ใน localStorage ทนต่อการ refresh
            DEV MODE toggle ไว้สำหรับดูข้อมูลทั้งหมด (tier 4) ระหว่างพัฒนา
-           ไม่ถือเป็นการปลดล็อกจริง (ไม่เขียนลง knownTiers) */
+           ไม่ถือเป็นการปลดล็อกจริง (ไม่เขียนลง knownTiers)
+
+           Visual Data (รูปโปรไฟล์จริง) แยก state ออกจาก knownTiers ต่างหาก —
+           "รู้จัก" (tier >= 0) ไม่ได้แปลว่า "เคยเห็นตัวจริง" เสมอไป ดูรายละเอียด
+           ที่คอมเมนต์เหนือ VISUAL_CONFIRMED_KEY ด้านล่าง */
         const KNOWN_SPECIES_KEY = 'ithra_known_species_tiers_v1';
         const DEV_MODE_KEY = 'ithra_dev_mode_v1';
         const LORE_TIER_LABELS = ['พบตัวอีกครั้ง', 'เห็นรูปร่างชัดเจนขึ้น', 'สังเกตพฤติกรรมได้แล้ว', 'วิเคราะห์เชิงลึกสำเร็จ', 'เข้าใจครบทุกด้านแล้ว'];
         let knownTiers = {}; // { [imageKey]: tier 0-4 } — key ไม่มีอยู่เลย = ยังไม่รู้จักเลย
         let devModeOn = false;
+
+        /* --- Visual Data unlock (แยกจาก knownTiers) ---
+           "รู้จัก" (tier >= 0) ไม่ได้แปลว่า "เคยเห็นตัวจริง" เสมอไป — บางจุดใน
+           เนื้อเรื่องเป็นแค่ร่องรอยทางอ้อม (กลิ่น, เสียง, ข่าวลือ) ที่ไม่ควรปลด
+           รูปโปรไฟล์จริง (Visual Data) ให้ ค่า default คือ "ปลดพร้อม knownTiers"
+           (unlockSpeciesTier เรียกแบบไม่ใส่ opts.indirect) ยกเว้นจุดที่ journey.js
+           ตั้งใจแท็ก indirect: true ไว้บน action/pool entry นั้นๆ (เช่น การได้กลิ่น
+           Korrune ผ่านลมที่ T-0 ไม่เห็นตัวเลยแม้แต่เงา) */
+        const VISUAL_CONFIRMED_KEY = 'ithra_visual_confirmed_v1';
+        let visualConfirmed = {}; // { [imageKey]: true } — เคย Direct Visual แล้ว
 
         function loadKnownSpecies() {
             try {
@@ -898,9 +914,84 @@
             try { localStorage.setItem(KNOWN_SPECIES_KEY, JSON.stringify(knownTiers)); } catch (e) {}
         }
         function resetKnownSpecies() {
+            // เรียกทั้งตอนกดรีเซ็ตจริงๆ และตอนกระโดดไป checkpoint (journeyStartChapter)
+            // ซึ่ง rebuild knownTiers/visualConfirmed ใหม่จาก replay ได้ (ดู
+            // journeyBackfillUnlocks + replay journeyExploredMap ใน journey.js)
+            // — nameRevealed ยังไม่มีกลไก replay แบบเดียวกัน เพราะยังไม่มีจุด
+            // เรียก revealRealName() จริงในเนื้อเรื่อง ถ้าในอนาคตเพิ่มจุดเรียก
+            // ต้องเพิ่ม replay ให้ nameRevealed ตรงนี้ด้วย ไม่งั้นกระโดด checkpoint
+            // จะทำให้ชื่อที่เคยเปิดเผยแล้วกลับไปเป็นชื่อเล่นผิดพลาด
             knownTiers = {};
             try { localStorage.removeItem(KNOWN_SPECIES_KEY); } catch (e) {}
+            resetVisualConfirmed();
+            resetNameRevealed();
             renderSpeciesGrid();
+        }
+        function loadVisualConfirmed() {
+            try {
+                const raw = localStorage.getItem(VISUAL_CONFIRMED_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) { return {}; }
+        }
+        function saveVisualConfirmed() {
+            try { localStorage.setItem(VISUAL_CONFIRMED_KEY, JSON.stringify(visualConfirmed)); } catch (e) {}
+        }
+        function resetVisualConfirmed() {
+            visualConfirmed = {};
+            try { localStorage.removeItem(VISUAL_CONFIRMED_KEY); } catch (e) {}
+        }
+        function isVisuallyConfirmed(imageKey) {
+            return devModeOn || !!visualConfirmed[imageKey];
+        }
+
+        /* --- ชื่อชั่วคราว (nickname) ---
+           สิ่งมีชีวิตบาง Tier I (Karvos/Skyther/Vashli — ดู field `nickname`
+           ใน creatures/*.js และกฎข้อ 2 ของ writing-style.md) มีชื่อเล่นที่
+           Confluence ใช้เรียกเองในเนื้อเรื่อง เพราะไม่เคยรู้ชื่อจริง — Species
+           Database แสดงชื่อชั่วคราวแทนชื่อจริงจนกว่า `revealRealName()` จะถูก
+           เรียก (ยังไม่มีจุดเรียกจริงใน data/journey.js ณ ตอนนี้ — โครงไว้รอ
+           เนื้อเรื่องในอนาคตเป็นคนตัดสินใจจุดเปิดเผย) DEV MODE เห็นชื่อจริงเสมอ
+           พร้อมโน้ตชื่อชั่วคราวกำกับไว้ (ดู getDisplayName) */
+        const NAME_REVEALED_KEY = 'ithra_name_revealed_v1';
+        let nameRevealed = {}; // { [imageKey]: true } — เนื้อเรื่องเปิดเผยชื่อจริงแล้ว
+
+        function loadNameRevealed() {
+            try {
+                const raw = localStorage.getItem(NAME_REVEALED_KEY);
+                return raw ? JSON.parse(raw) : {};
+            } catch (e) { return {}; }
+        }
+        function saveNameRevealed() {
+            try { localStorage.setItem(NAME_REVEALED_KEY, JSON.stringify(nameRevealed)); } catch (e) {}
+        }
+        function resetNameRevealed() {
+            nameRevealed = {};
+            try { localStorage.removeItem(NAME_REVEALED_KEY); } catch (e) {}
+        }
+        function isNameRevealed(imageKey) {
+            return devModeOn || !!nameRevealed[imageKey];
+        }
+        /* เรียกจาก data/journey.js เมื่อเนื้อเรื่องมีฉากที่เปิดเผยชื่อจริงแล้ว
+           (ยังไม่มีการเรียกจริง ณ ตอนนี้) — ปลดถาวร ไม่มีวันย้อนกลับเป็นชื่อเล่น */
+        function revealRealName(keys) {
+            if (!keys || !keys.length) return;
+            let changed = false;
+            keys.forEach(key => {
+                if (!nameRevealed[key]) { nameRevealed[key] = true; changed = true; }
+            });
+            if (changed) {
+                saveNameRevealed();
+                renderSpeciesGrid();
+                initContentSections();
+            }
+        }
+        /* ชื่อที่ควรแสดงบนการ์ด/หน้า detail — ตัวเดียวที่ UI ควรเรียกใช้แทน
+           creature.name ตรงๆ เพื่อให้กฎชื่อชั่วคราวถูกเคารพทุกจุดที่แสดงชื่อ */
+        function getDisplayName(creature) {
+            if (!creature) return '';
+            if (!creature.nickname) return creature.name;
+            if (devModeOn) return `${creature.name} (ชื่อชั่วคราว: ${creature.nickname})`;
+            return isNameRevealed(creature.imageKey) ? creature.name : creature.nickname;
         }
         function loadDevMode() {
             try { return localStorage.getItem(DEV_MODE_KEY) === '1'; } catch (e) { return false; }
@@ -964,21 +1055,34 @@
             return knownTiers[imageKey] !== undefined ? knownTiers[imageKey] : -1;
         }
 
-        /* ปลด keys ทั้งหมดถึง tier ที่ระบุ (ไม่ทำอะไรถ้า tier ปัจจุบันสูงกว่าหรือเท่ากันอยู่แล้ว) */
+        /* ปลด keys ทั้งหมดถึง tier ที่ระบุ (ไม่ทำอะไรถ้า tier ปัจจุบันสูงกว่าหรือเท่ากันอยู่แล้ว)
+           opts.indirect: true = การพบเจอครั้งนี้เป็นร่องรอยทางอ้อม (กลิ่น/เสียง/
+           ข่าวลือ) ไม่ใช่ Direct Visual — ปลด tier ตามปกติแต่ "ไม่" ปลด Visual
+           Data ให้ ค่า default (ไม่ใส่ opts.indirect เลย) คือปลด visual ไปด้วย
+           เสมอ เพราะ unlockKey ส่วนใหญ่ในเนื้อเรื่องเป็นการเห็นตัวจริงจริงๆ */
         function unlockSpeciesTier(keys, tier, opts) {
             if (!keys || !keys.length) return;
             const silent = opts && opts.silent;
+            const indirect = opts && opts.indirect;
+            let visualChanged = false;
             keys.forEach(key => {
                 const current = knownTiers[key];
-                if (current !== undefined && current >= tier) return; // ไม่มีอะไรใหม่
+                if (current !== undefined && current >= tier) {
+                    // tier ไม่ได้เพิ่มขึ้น แต่ถ้าครั้งนี้เป็น direct visual ครั้งแรก
+                    // (เคยรู้จักแค่ทางอ้อมมาก่อน) ก็ยังปลด Visual Data ให้ได้
+                    if (!indirect && !visualConfirmed[key]) { visualConfirmed[key] = true; visualChanged = true; }
+                    return;
+                }
                 const isFirstDiscovery = current === undefined;
                 knownTiers[key] = tier;
+                if (!indirect && !visualConfirmed[key]) { visualConfirmed[key] = true; visualChanged = true; }
                 if (!silent) {
                     const creature = creaturesData.find(c => c.imageKey === key);
                     showSpeciesToast(creature ? creature.name : key, tier, isFirstDiscovery);
                 }
             });
             saveKnownSpecies();
+            if (visualChanged) saveVisualConfirmed();
             renderSpeciesGrid();
             // เอกสาร lore ถูกถมแถบเซ็นเซอร์ไว้ตั้งแต่ตอน render ครั้งแรก — พอปลดล็อกตัวใหม่
             // ต้อง render ใหม่ทั้งชุด แถบของตัวนั้นถึงจะคลายออก (ดู applySpoilerRedaction)
@@ -1185,19 +1289,25 @@
                 const statusClass = statusClassFor(creature.status);
                 card.className = 'species-card';
 
-                const dataUri = creature.imageKey ? IMAGE_LIBRARY[creature.imageKey] : null;
+                const visuallyKnown = isVisuallyConfirmed(creature.imageKey);
+                const dataUri = creature.imageKey && visuallyKnown ? IMAGE_LIBRARY[creature.imageKey] : null;
                 const bgLayers = dataUri
                     ? `<div class="card-bg-image" style="background-image:url('${dataUri}');"></div><div class="card-bg-gradient"></div>`
+                    : '';
+                // รู้จักแล้ว (tier >= 0) แต่ยังไม่เคย Direct Visual — โชว์ป้ายแทนรูปพื้นหลัง
+                const noVisualBadge = !dataUri
+                    ? `<div class="no-image" style="position:absolute; inset:0; z-index:0; font-size:0.75rem;">NO VISUAL DATA<br><span style="font-size:0.65rem; opacity:0.7;">ยังไม่เคยเห็นตัวจริง</span></div>`
                     : '';
 
                 card.innerHTML = `
                     ${bgLayers}
+                    ${noVisualBadge}
                     <div class="card-content">
                         <div style="display: flex; justify-content: space-between; align-items: center; width: 100%;">
                             <span class="card-id font-hud">${creature.id}</span>
                             <span class="status-badge ${statusClass}">${creature.status}</span>
                         </div>
-                        <div class="species-card-name">${creature.name}</div>
+                        <div class="species-card-name">${getDisplayName(creature)}</div>
                         <div class="card-desc" style="margin-top:auto; padding-top:12px; border-top:1px dashed var(--border-color);">${creature.category}</div>
                     </div>
                 `;
@@ -1216,6 +1326,14 @@
             const imgEl = document.getElementById('d-image');
             const noImgEl = document.getElementById('d-no-img');
             const dataUri = IMAGE_LIBRARY[imageKey];
+
+            if (dataUri && !isVisuallyConfirmed(imageKey)) {
+                // มีรูปอยู่ในคลังจริง แต่ Confluence ยังไม่เคย Direct Visual เลย
+                imgEl.style.display = 'none';
+                noImgEl.innerHTML = 'NO VISUAL DATA<br><span style="font-size:0.7rem;opacity:0.75;">รู้จักสิ่งมีชีวิตนี้แล้ว แต่ยังไม่เคยเห็นตัวจริง</span>';
+                noImgEl.style.display = 'flex';
+                return;
+            }
 
             if (!dataUri) {
                 imgEl.style.display = 'none';
@@ -1237,7 +1355,7 @@
 
             document.getElementById('d-id').innerText = data.id;
             document.getElementById('d-id').style.color = data.color;
-            document.getElementById('d-name').innerText = data.name;
+            document.getElementById('d-name').innerText = getDisplayName(data);
             document.getElementById('d-era').innerText = data.era;
             document.getElementById('d-desc').innerText = data.desc;
             document.getElementById('d-desc').style.borderLeftColor = data.color;
@@ -1750,6 +1868,8 @@
 
         // Initialize the app
         knownTiers = loadKnownSpecies();
+        visualConfirmed = loadVisualConfirmed();
+        nameRevealed = loadNameRevealed();
         journeyLogEntries = journeyLoadLog();
         devModeOn = loadDevMode();
         updateDevModeButtonLabel();

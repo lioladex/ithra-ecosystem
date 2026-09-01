@@ -116,6 +116,9 @@ const JOURNEY_STEPS = [
                     },
                     {
                         unlockKey: "KORRUNE",
+                        // แค่ได้กลิ่น ไม่เห็นแม้แต่เงา — ไม่นับเป็น Direct Visual
+                        // (ดู index.html: unlockSpeciesTier opts.indirect)
+                        indirect: true,
                         text: `ลมพัดพากลิ่นแปลกปลอมบางอย่างผ่านมาแวบหนึ่ง ไม่เหมือนกลิ่นของสิ่งมีชีวิตใดที่เคยผ่านมาทางนี้เลย ทั่วทั้งป่าเงียบลงพร้อมกันในเสี้ยววินาทีนั้น ก่อนกลิ่นจะจางหายไปในสายลม เหมือนไม่มีอะไรเกิดขึ้น`
                     },
                     {
@@ -1535,7 +1538,7 @@ let journeyLane = null;
 let journeyUnlockedIds = new Set();
 let journeyState = 'step'; // 'step' | 'warning' | 'close'
 let journeyPendingWarning = '';
-let journeyExploredMap = {}; // { [stepId]: { [actionId]: { text, unlockKey } } } — action ที่ใช้ไปแล้วต่อ step (ทน refresh, กดซ้ำไม่ได้)
+let journeyExploredMap = {}; // { [stepId]: { [actionId]: { text, unlockKey, indirect } } } — action ที่ใช้ไปแล้วต่อ step (ทน refresh, กดซ้ำไม่ได้) — indirect ดูที่ index.html unlockSpeciesTier()
 let apCurrent = 0;
 let apMax = 0;
 let journeyApPulse = false; // true = เพิ่งฟื้น AP มา — ให้ journeyRenderActionsBlock() เล่น animation เน้นย้ำครั้งเดียวตอน render ถัดไป แล้วเคลียร์ทิ้ง
@@ -1842,7 +1845,7 @@ function journeyResetFromStep(targetId) {
     if (typeof unlockSpeciesTier === 'function') {
         Object.keys(journeyExploredMap).forEach(stepId => {
             Object.values(journeyExploredMap[stepId]).forEach(entry => {
-                if (entry && entry.unlockKey) unlockSpeciesTier([entry.unlockKey], 0, { silent: true });
+                if (entry && entry.unlockKey) unlockSpeciesTier([entry.unlockKey], 0, { silent: true, indirect: !!entry.indirect });
             });
         });
     }
@@ -2023,19 +2026,23 @@ function journeyDoAction(actionId) {
         // text เป็นฟังก์ชันได้ สำหรับ action ที่ข้อความขึ้นกับเลน/ร่างที่ผู้อ่านเลือก
         let text = typeof action.text === 'function' ? action.text() : action.text;
         let unlockKey = action.unlockKey;
+        let indirect = action.indirect;
         if (action.pool) {
             const pick = action.pool[Math.floor(Math.random() * action.pool.length)];
             text = pick.text;
             unlockKey = pick.unlockKey;
+            indirect = pick.indirect;
         }
         if (action.teachesSkill) skillObserve(action.teachesSkill);
 
         if (!journeyExploredMap[step.id]) journeyExploredMap[step.id] = {};
-        journeyExploredMap[step.id][actionId] = { text, unlockKey };
+        journeyExploredMap[step.id][actionId] = { text, unlockKey, indirect };
         journeySaveExplored();
 
         // การสำรวจ/สังเกตแบบนี้คือแค่ "พบเห็น" (Tier 0) — ไม่ใช่การเผชิญหน้าจริง
-        if (unlockKey && typeof unlockSpeciesTier === 'function') unlockSpeciesTier([unlockKey], 0);
+        // indirect: true = รู้จักผ่านร่องรอยทางอ้อม (กลิ่น/เสียง) ไม่ใช่ Direct
+        // Visual — ไม่ปลด Visual Data ให้ (ดู index.html unlockSpeciesTier)
+        if (unlockKey && typeof unlockSpeciesTier === 'function') unlockSpeciesTier([unlockKey], 0, indirect ? { indirect: true } : undefined);
 
         journeyRenderActionsBlock(step);
     } finally {
