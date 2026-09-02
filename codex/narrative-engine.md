@@ -11,8 +11,8 @@
 `JOURNEY_CHAPTERS` (array) คือ metadata ระดับบท แต่ละ object มี:
 ```js
 {
-    num: 3, title: "ความทรงจำแรก", range: "T+21 → T+30",
-    startId: "herd-watch",       // id ของ step แรกในบท
+    num: 3, title: "จุดบอด", range: "T+21 → T+25",
+    startId: "watch-fork",       // id ของ step แรกในบท
     endId: "__end_ch3__",         // id พิเศษที่ใช้ mark ว่าบทจบแล้ว
     closeTag: "// ...", closeText: "...", nextLabel: "...",
     reflections: [...] // หรือ function() {...} — ดูหัวข้อ reflections ด้านล่าง

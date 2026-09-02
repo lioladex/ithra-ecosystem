@@ -1,0 +1,404 @@
+{
+  "creatures/_imageLibrary.js": {
+    "mtime": 1788353714.5148695,
+    "seen": 1788354979.081609,
+    "ast_hash": "6efd737b91fa01c568976c98ba363468",
+    "semantic_hash": "6efd737b91fa01c568976c98ba363468"
+  },
+  "creatures/_registry.js": {
+    "mtime": 1787919089.83449,
+    "seen": 1788354979.081609,
+    "ast_hash": "a2456842236c4849a8e88de9b0fbc18a",
+    "semantic_hash": "a2456842236c4849a8e88de9b0fbc18a"
+  },
+  "creatures/ashkarn.js": {
+    "mtime": 1788353714.5148695,
+    "seen": 1788354979.081609,
+    "ast_hash": "bcf84bd5543f4c844f6d577b902225c8",
+    "semantic_hash": "bcf84bd5543f4c844f6d577b902225c8"
+  },
+  "creatures/cindergrub.js": {
+    "mtime": 1788353714.51661,
+    "seen": 1788354979.081609,
+    "ast_hash": "51acee154b438b74a112bb4042123147",
+    "semantic_hash": "51acee154b438b74a112bb4042123147"
+  },
+  "creatures/dunkrell.js": {
+    "mtime": 1788353714.51661,
+    "seen": 1788354979.081609,
+    "ast_hash": "4682039fd468aa7d323edd2fc2fe2423",
+    "semantic_hash": "4682039fd468aa7d323edd2fc2fe2423"
+  },
+  "creatures/frostmane.js": {
+    "mtime": 1788353714.517614,
+    "seen": 1788354979.081609,
+    "ast_hash": "46a1d76e437363e658871128fb8c6bd3",
+    "semantic_hash": "46a1d76e437363e658871128fb8c6bd3"
+  },
+  "creatures/glimmerwing.js": {
+    "mtime": 1788353714.517614,
+    "seen": 1788354979.081609,
+    "ast_hash": "2fbdbe097b4407f34fab17b88fbde75c",
+    "semantic_hash": "2fbdbe097b4407f34fab17b88fbde75c"
+  },
+  "creatures/karvos.js": {
+    "mtime": 1788353714.517614,
+    "seen": 1788354979.081609,
+    "ast_hash": "c607344fb25b80f91ddd04ba18d39f04",
+    "semantic_hash": "c607344fb25b80f91ddd04ba18d39f04"
+  },
+  "creatures/kethyr.js": {
+    "mtime": 1788353714.517614,
+    "seen": 1788354979.081609,
+    "ast_hash": "69f526f704c5c0b592f1e91e74654e65",
+    "semantic_hash": "69f526f704c5c0b592f1e91e74654e65"
+  },
+  "creatures/korrune.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "71b1c757e1f0116aad9ab93f4a42fefd",
+    "semantic_hash": "71b1c757e1f0116aad9ab93f4a42fefd"
+  },
+  "creatures/lumenveil.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "8b7863dc092ea1560183f93715fb7e44",
+    "semantic_hash": "8b7863dc092ea1560183f93715fb7e44"
+  },
+  "creatures/luvenn.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "dd9149fb2993c3f388e87afaac844be5",
+    "semantic_hash": "dd9149fb2993c3f388e87afaac844be5"
+  },
+  "creatures/mistcrawler.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "0dae090f58b00149e5398b70ab61c9b5",
+    "semantic_hash": "0dae090f58b00149e5398b70ab61c9b5"
+  },
+  "creatures/ozgrun.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "a055a4a0116802573eaf095fb4d0ca8c",
+    "semantic_hash": "a055a4a0116802573eaf095fb4d0ca8c"
+  },
+  "creatures/palegrim.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "02ad5fe9321230189122af091cc71df5",
+    "semantic_hash": "02ad5fe9321230189122af091cc71df5"
+  },
+  "creatures/pallowfin.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "045eb0298100e87b4a73be28c09270c8",
+    "semantic_hash": "045eb0298100e87b4a73be28c09270c8"
+  },
+  "creatures/sevrin.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "e25b873ea5ab7d508698b008a50ee5fc",
+    "semantic_hash": "e25b873ea5ab7d508698b008a50ee5fc"
+  },
+  "creatures/skyther.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "809152fa0c56e172960a3ee70b5df160",
+    "semantic_hash": "809152fa0c56e172960a3ee70b5df160"
+  },
+  "creatures/thessek.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "26a6898476fd3966042a848ca1d381cc",
+    "semantic_hash": "26a6898476fd3966042a848ca1d381cc"
+  },
+  "creatures/threndle.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "ee68f5592b67120704b959b0326fbd5c",
+    "semantic_hash": "ee68f5592b67120704b959b0326fbd5c"
+  },
+  "creatures/vashli.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "1bf425ff12f630deacf7b8a906e66284",
+    "semantic_hash": "1bf425ff12f630deacf7b8a906e66284"
+  },
+  "creatures/vellith.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "4e9cbee9200947f1f8e2a283f3149a39",
+    "semantic_hash": "4e9cbee9200947f1f8e2a283f3149a39"
+  },
+  "creatures/vorthak.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "19f77db81f084274295f7e2816ded9a3",
+    "semantic_hash": "19f77db81f084274295f7e2816ded9a3"
+  },
+  "data/ecosystem.js": {
+    "mtime": 1787919089.84161,
+    "seen": 1788354979.081609,
+    "ast_hash": "7bb955aaa536ccdc0abd6d24fc5129c2",
+    "semantic_hash": "7bb955aaa536ccdc0abd6d24fc5129c2"
+  },
+  "data/journey.js": {
+    "mtime": 1788353714.5205276,
+    "seen": 1788354979.081609,
+    "ast_hash": "7b7000cda38913d5630d5dfe5d130414",
+    "semantic_hash": "7b7000cda38913d5630d5dfe5d130414"
+  },
+  "data/memoryMechanics.js": {
+    "mtime": 1788010448.4984934,
+    "seen": 1788354979.081609,
+    "ast_hash": "e64b6d40e50d32e41371e4ce573eb2c4",
+    "semantic_hash": "e64b6d40e50d32e41371e4ce573eb2c4"
+  },
+  "data/rulebook.js": {
+    "mtime": 1788353714.5345676,
+    "seen": 1788354979.081609,
+    "ast_hash": "fa2ced4d72350d5588d4a4fa923c7f00",
+    "semantic_hash": "fa2ced4d72350d5588d4a4fa923c7f00"
+  },
+  "data/skillSystem.js": {
+    "mtime": 1788016119.1790864,
+    "seen": 1788354979.081609,
+    "ast_hash": "e8ca3ca44a566273a74b1a45d0735b6e",
+    "semantic_hash": "e8ca3ca44a566273a74b1a45d0735b6e"
+  },
+  "scripts/check-creatures.js": {
+    "mtime": 1788181253.0529923,
+    "seen": 1788354979.081609,
+    "ast_hash": "bc087365ecc804419a32d2b4b4f16671",
+    "semantic_hash": "bc087365ecc804419a32d2b4b4f16671"
+  },
+  "scripts/check-journey.js": {
+    "mtime": 1788029508.2983763,
+    "seen": 1788354979.081609,
+    "ast_hash": "bb33f322f8667310a4d4a2e5c19579ce",
+    "semantic_hash": "bb33f322f8667310a4d4a2e5c19579ce"
+  },
+  "scripts/check-prose.js": {
+    "mtime": 1788061301.9428031,
+    "seen": 1788354979.081609,
+    "ast_hash": "448aa031cc81082a448ca7f14d24d140",
+    "semantic_hash": "448aa031cc81082a448ca7f14d24d140"
+  },
+  "skills-lock.json": {
+    "mtime": 1787975114.6325123,
+    "seen": 1788354979.081609,
+    "ast_hash": "6a4811759567043a6c24fa439b311e0a",
+    "semantic_hash": "6a4811759567043a6c24fa439b311e0a"
+  },
+  ".claude/skills/find-skills/SKILL.md": {
+    "mtime": 1787975114.6314962,
+    "seen": 1788354979.081609,
+    "ast_hash": "62b297abdee9aea84c577ab2e04e1974",
+    "semantic_hash": "62b297abdee9aea84c577ab2e04e1974"
+  },
+  ".claude/skills/ithra-narrative-style/SKILL.md": {
+    "mtime": 1788075789.2870922,
+    "seen": 1788354979.081609,
+    "ast_hash": "82c4ada824d59ba8f13f3c9744db78ab",
+    "semantic_hash": "82c4ada824d59ba8f13f3c9744db78ab"
+  },
+  "README.md": {
+    "mtime": 1787919089.817037,
+    "seen": 1788354979.081609,
+    "ast_hash": "8dbf54f88d2cc7a971d0db04d78c01be",
+    "semantic_hash": "8dbf54f88d2cc7a971d0db04d78c01be"
+  },
+  "codex/README.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "126a86ed24135ab475232feebf12f3b3",
+    "semantic_hash": "126a86ed24135ab475232feebf12f3b3"
+  },
+  "codex/chapter3-redesign-draft.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "99af37bba7fab068ae9eef0753f784ef",
+    "semantic_hash": "99af37bba7fab068ae9eef0753f784ef"
+  },
+  "codex/collaborative-writing-protocol.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "329d8eb459177fd268d7797ab731128d",
+    "semantic_hash": "329d8eb459177fd268d7797ab731128d"
+  },
+  "codex/creature-design.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "b45aad69ffba0f4e981721628edb3d82",
+    "semantic_hash": "b45aad69ffba0f4e981721628edb3d82"
+  },
+  "codex/memory-and-transformation.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "ffc1393bc87ab415dd6f51ebfe01528f",
+    "semantic_hash": "ffc1393bc87ab415dd6f51ebfe01528f"
+  },
+  "codex/narrative-engine.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "ea9f6077897330fdc3109996c7e0a33d",
+    "semantic_hash": "ea9f6077897330fdc3109996c7e0a33d"
+  },
+  "codex/world-building.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "b8d3292693183763e2f83019569dae88",
+    "semantic_hash": "b8d3292693183763e2f83019569dae88"
+  },
+  "codex/writing-style.md": {
+    "mtime": 1788353714.510432,
+    "seen": 1788354979.081609,
+    "ast_hash": "d846e5885843c2e209e1e253905c2257",
+    "semantic_hash": "d846e5885843c2e209e1e253905c2257"
+  },
+  "creatures/README.md": {
+    "mtime": 1788353714.5148695,
+    "seen": 1788354979.081609,
+    "ast_hash": "59301b43c548f89e5c5f53b38f923605",
+    "semantic_hash": "59301b43c548f89e5c5f53b38f923605"
+  },
+  "index.html": {
+    "mtime": 1788353714.5345676,
+    "seen": 1788354979.081609,
+    "ast_hash": "042cb36c6ffcaf79b3c5f6105a135029",
+    "semantic_hash": "042cb36c6ffcaf79b3c5f6105a135029"
+  },
+  "assets/creatures/Kethyr.jpg": {
+    "mtime": 1788353714.4924905,
+    "seen": 1788354979.081609,
+    "ast_hash": "9f887f35f152807a0b167474106b96b3",
+    "semantic_hash": "9f887f35f152807a0b167474106b96b3"
+  },
+  "assets/creatures/Lumenveil.jpg": {
+    "mtime": 1788002309.5687876,
+    "seen": 1788354979.081609,
+    "ast_hash": "92972013dac683a97a331de439dedc1f",
+    "semantic_hash": "92972013dac683a97a331de439dedc1f"
+  },
+  "assets/creatures/Ozgrun.jpg": {
+    "mtime": 1788002309.4756157,
+    "seen": 1788354979.081609,
+    "ast_hash": "50d9c3225f526028744ab39bbf35c621",
+    "semantic_hash": "50d9c3225f526028744ab39bbf35c621"
+  },
+  "assets/creatures/Palegrim.jpg": {
+    "mtime": 1788002309.7524176,
+    "seen": 1788354979.081609,
+    "ast_hash": "e496804ecf2f8b28a7c2ecc84c20df0f",
+    "semantic_hash": "e496804ecf2f8b28a7c2ecc84c20df0f"
+  },
+  "assets/creatures/Sevrin.jpg": {
+    "mtime": 1788002309.659838,
+    "seen": 1788354979.081609,
+    "ast_hash": "965c74ab2dbd5749c67cb4ed1aa7a83a",
+    "semantic_hash": "965c74ab2dbd5749c67cb4ed1aa7a83a"
+  },
+  "assets/creatures/Vellith.jpg": {
+    "mtime": 1788002309.3732722,
+    "seen": 1788354979.081609,
+    "ast_hash": "71974504063599a35e4938f0150979ac",
+    "semantic_hash": "71974504063599a35e4938f0150979ac"
+  },
+  "assets/creatures/ashkarn.jpg": {
+    "mtime": 1788353714.4924905,
+    "seen": 1788354979.081609,
+    "ast_hash": "ef8ba90009b66b8e38c5a949b3c24a64",
+    "semantic_hash": "ef8ba90009b66b8e38c5a949b3c24a64"
+  },
+  "assets/creatures/cindergrub.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "1aec83b348bebc8f14d66339d6217c46",
+    "semantic_hash": "1aec83b348bebc8f14d66339d6217c46"
+  },
+  "assets/creatures/dunkrell.jpg": {
+    "mtime": 1787919089.819555,
+    "seen": 1788354979.081609,
+    "ast_hash": "c3b0165e54281164bb02a5a8fe906b13",
+    "semantic_hash": "c3b0165e54281164bb02a5a8fe906b13"
+  },
+  "assets/creatures/frostmane.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "6fe4da83bbbae6119bea16e3a5079b9a",
+    "semantic_hash": "6fe4da83bbbae6119bea16e3a5079b9a"
+  },
+  "assets/creatures/glimmerwing.jpg": {
+    "mtime": 1787919089.8218298,
+    "seen": 1788354979.081609,
+    "ast_hash": "b9245e71ff472b0b45000bb7accfaf1e",
+    "semantic_hash": "b9245e71ff472b0b45000bb7accfaf1e"
+  },
+  "assets/creatures/karvos.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "cf0405722f02b73e762eb95175f9c925",
+    "semantic_hash": "cf0405722f02b73e762eb95175f9c925"
+  },
+  "assets/creatures/korrune.jpg": {
+    "mtime": 1787919089.8238356,
+    "seen": 1788354979.081609,
+    "ast_hash": "a7fe402b596afb37009ea0be50d10caa",
+    "semantic_hash": "a7fe402b596afb37009ea0be50d10caa"
+  },
+  "assets/creatures/luvenn.jpg": {
+    "mtime": 1787919089.8238356,
+    "seen": 1788354979.081609,
+    "ast_hash": "1fa60f6113303bafba169087aafdaec3",
+    "semantic_hash": "1fa60f6113303bafba169087aafdaec3"
+  },
+  "assets/creatures/mistcrawler.jpg": {
+    "mtime": 1787919089.825835,
+    "seen": 1788354979.081609,
+    "ast_hash": "c3666376b96b83fdf14a138f802a9d26",
+    "semantic_hash": "c3666376b96b83fdf14a138f802a9d26"
+  },
+  "assets/creatures/pallowfin.jpg": {
+    "mtime": 1787919089.8268352,
+    "seen": 1788354979.081609,
+    "ast_hash": "f3e490a7c3e62bff658c9805b576c49c",
+    "semantic_hash": "f3e490a7c3e62bff658c9805b576c49c"
+  },
+  "assets/creatures/skyther.jpg": {
+    "mtime": 1787919089.8268352,
+    "seen": 1788354979.081609,
+    "ast_hash": "7a06c458dbffca00c4ca77733deff0c3",
+    "semantic_hash": "7a06c458dbffca00c4ca77733deff0c3"
+  },
+  "assets/creatures/thessek.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "c994b98df092736f08f0694c733c0b85",
+    "semantic_hash": "c994b98df092736f08f0694c733c0b85"
+  },
+  "assets/creatures/threndle.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "92a10bb79ea2d8be647d1b1f788507c5",
+    "semantic_hash": "92a10bb79ea2d8be647d1b1f788507c5"
+  },
+  "assets/creatures/vashli.jpg": {
+    "mtime": 1787919089.8303466,
+    "seen": 1788354979.081609,
+    "ast_hash": "2bc15aaca3c2306677049b37e62c71be",
+    "semantic_hash": "2bc15aaca3c2306677049b37e62c71be"
+  },
+  "assets/creatures/vorthak.jpg": {
+    "mtime": 1788353714.500485,
+    "seen": 1788354979.081609,
+    "ast_hash": "21309533bdcbf33dab2b9db2e6138b71",
+    "semantic_hash": "21309533bdcbf33dab2b9db2e6138b71"
+  },
+  "assets/world/ithra-map.jpg": {
+    "mtime": 1787919089.8333464,
+    "seen": 1788354979.081609,
+    "ast_hash": "df935d9d59deacaf4f27a43a3a9fb968",
+    "semantic_hash": "df935d9d59deacaf4f27a43a3a9fb968"
+  }
+}

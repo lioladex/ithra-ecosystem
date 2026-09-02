@@ -4,13 +4,13 @@ creaturesData.push({
         imageKey: "SKYTHER", color: "#fcd34d",
         category: "สัตว์กินเนื้อ · นักล่าและผู้กินซากชั้นเรือนยอด (Apex aerial scavenger-predator)", 
         habitat: "ป่าหมอกชั้นเรือนยอด (Verath, The Inner Canopy)",
-        foodChain: "ผู้ล่าระดับสูงสุดทางอากาศ — โฉบกิน Luvenn วัยอ่อน และขโมยซากเหยื่อจาก Karvos",
+        foodChain: "ผู้ล่าระดับสูงสุดทางอากาศ — โฉบกินร่างสี่ขาวัยอ่อน และขโมยซากเหยื่อจากเจ้าตัวสี่ขา",
         danger: "65% (Highly Lethal)", size: "ระดับ 5 — ใหญ่ (ปีกกว้างเท่าเครื่องบินเล็ก)", 
         height: "2.2 ม. (เวลายืน) · ปีกกางกว้าง 8.5 ม.", weight: "140 กก. (เบาผิดปกติ)",
         desc: "เจ้าเวหาแห่งป่าหมอก ร่อนตรวจการณ์เหนือเรือนยอดได้นานหลายวันโดยแทบไม่กระพือปีก อาศัยกระแสลมร้อนที่ลอยขึ้นจากหมอกเบื้องล่าง สายตาคมกริบมองเห็นรอยเลือดจากความสูง 2 กิโลเมตร มักโฉบลงมาขโมยซากหรือจับเหยื่อขนาดเล็กบินขึ้นไปทิ้งดิ่งลงมาให้กระดูกแหลก",
         mutation: { pro: "โครงกระดูกกลวงแบบรังผึ้ง น้ำหนักเบาหวิวแต่รับแรงต้านลมได้มหาศาล", con: "เปราะบางอย่างรุนแรง หากถูกตบหรือกระแทกบนพื้นดิน กระดูกจะหักทันที" },
         weapons: [ "จะงอยปากตะขอคมกริบ (ฉีกหนังหนาได้ในครั้งเดียว)", "กรงเล็บเท้าแบบล็อกอัตโนมัติ (Zygodactyl) แรงบีบ 800 psi", "ทิ้งดิ่งเหยื่อจากความสูง 200 เมตร" ],
-        social: "หวงถิ่นรุนแรง ล่าเดี่ยวเป็นหลัก อาณาเขตครอบคลุมเรือนยอดกว่า 100 ตร.กม. จะรวมฝูงชั่วคราว (3-5 ตัว) เฉพาะตอนเจอซากสัตว์ขนาดใหญ่ (เช่น ซาก Vorthak ในอดีต)",
+        social: "หวงถิ่นรุนแรง ล่าเดี่ยวเป็นหลัก อาณาเขตครอบคลุมเรือนยอดกว่า 100 ตร.กม. จะรวมฝูงชั่วคราว (3-5 ตัว) เฉพาะตอนเจอซากสัตว์ขนาดใหญ่ (เช่น ซากสัญชาตญาณที่ไม่เคยเห็นตัวในอดีต)",
         head: [
             ["ดวงตา", "4 ดวง (คู่หน้า + คู่ล่าง)", "คู่หน้าเป็นตานักล่ามองไกลสามมิติ คู่ล่างเล็กกว่าชี้ลงพื้นเพื่อตรวจจับความเคลื่อนไหวผ่านละอองหมอกใต้ท้องขณะบิน ม่านตาสีทองสว่าง"],
             ["จมูก", "ร่องจมูกแบบปิดได้", "มีแผ่นหนังปิดโพรงจมูกอัตโนมัติเมื่อบินด้วยความเร็วสูงหรือปะทะลมหนาวชั้นบรรยากาศชั้นบน"],
@@ -42,7 +42,7 @@ creaturesData.push({
             proTitle: "กระดูกรังผึ้ง / การร่อนในกระแสลมร้อน",
             proDesc: "วิวัฒนาการกระดูกให้กลวงและมีโครงตาข่ายภายในแบบสมบูรณ์แบบ ทำให้น้ำหนักตัวเบาจนสามารถกางปีกร่อนไปตามกระแสลมร้อน (Thermals) ที่ลอยขึ้นจากป่าหมอกได้ตลอดทั้งวันโดยแทบไม่ใช้พลังงาน",
             conTitle: "ความหนาแน่นมวล / ความเปราะบางบนพื้นดิน",
-            conDesc: "เพื่อให้ร่อนได้ กระดูกจึงสูญเสียความหนาแน่นไปเกือบหมด หากมันพลาดตกลงพื้นดิน หรือถูกสัตว์กินเนื้อภาคพื้นดิน (เช่น Karvos) ตะปบเพียงครั้งเดียว กระดูกมันจะหักร้าวทันที มันจึงหลีกเลี่ยงพื้นดินประดุจลาวาเดือด"
+            conDesc: "เพื่อให้ร่อนได้ กระดูกจึงสูญเสียความหนาแน่นไปเกือบหมด หากมันพลาดตกลงพื้นดิน หรือถูกสัตว์กินเนื้อภาคพื้นดิน (เช่น เจ้าตัวสี่ขา) ตะปบเพียงครั้งเดียว กระดูกมันจะหักร้าวทันที มันจึงหลีกเลี่ยงพื้นดินประดุจลาวาเดือด"
         },
         dangerDetail: {
             raw: "130 / 200", percent: 65, tier: "อันตรายสูง (Highly Lethal)",
@@ -50,7 +50,7 @@ creaturesData.push({
             note: "ระดับความอันตรายพุ่งสูงปรี๊ดเมื่อคุณอยู่บนพื้นที่เปิดโล่งหรือบนเรือนยอดไม้ แต่จะลดลงเหลือ 0 ทันทีหากคุณหลบอยู่ใต้พุ่มไม้ทึบ หรือบังคับให้มันต้องสู้บนพื้นดิน"
         },
         combat: [
-            ["Gravity Drop", "โฉบจับเหยื่อขนาดกลาง (เช่น Vashli หรือ Luvenn วัยอ่อน) บินทะยานขึ้นฟ้า แล้วปล่อยทิ้งลงมากระแทกหินหรือกิ่งไม้ใหญ่ให้ตายก่อนลงมากิน"],
+            ["Gravity Drop", "โฉบจับเหยื่อขนาดกลาง (เช่น เจ้าตาโต หรือร่างสี่ขาวัยอ่อน) บินทะยานขึ้นฟ้า แล้วปล่อยทิ้งลงมากระแทกหินหรือกิ่งไม้ใหญ่ให้ตายก่อนลงมากิน"],
             ["Acid Regurgitation", "หากถูกศัตรูรุมล้อม มันจะสำรอกน้ำย่อยกรดเข้มข้นที่กำลังย่อยซากสัตว์ในถุงลมออกมาสาดใส่หน้าศัตรู เพื่อซื้อเวลาให้ตัวเองกระพือปีกหนี"],
             ["Thief's Swoop", "รอดูนกนักล่าหรือสัตว์อื่นล่าเหยื่อจนเสร็จ จากนั้นโฉบลงมาด้วยความเร็วสูง ใช้เสียงกระพือปีกและขนาดตัวข่มขู่ให้ผู้ล่าเดิมตกใจผละออก แล้วขโมยซากนั้นไป"]
         ],
@@ -67,13 +67,13 @@ creaturesData.push({
             },
             {
                 name: "การอาบแสงด้วยปีกแทนแผงคอ", type: "Cognitive — ความจำข้ามร่าง",
-                desc: "ร่างนี้ไม่มีแผงรับแสงแบบ Luvenn อีกต่อไป แต่แรงกระตุ้นให้ 'อาบแสงเพื่อฟื้นตัว' ยังอยู่ — กางปีกออกเข้าหาแสงแทน เผยให้เห็นร่างแหเส้นเลือดฝอยผ่านเยื่อปีกโปร่งแสง อุ่นเลือดโดยตรงผ่านปีกจนอาการชาที่ปลายปีกหายเร็วขึ้นอย่างเห็นได้ชัด",
+                desc: "ร่างนี้ไม่มีแผงรับแสงแบบร่างสี่ขาอีกต่อไป แต่แรงกระตุ้นให้ 'อาบแสงเพื่อฟื้นตัว' ยังอยู่ — กางปีกออกเข้าหาแสงแทน เผยให้เห็นร่างแหเส้นเลือดฝอยผ่านเยื่อปีกโปร่งแสง อุ่นเลือดโดยตรงผ่านปีกจนอาการชาที่ปลายปีกหายเร็วขึ้นอย่างเห็นได้ชัด",
                 origin: "สัญชาตญาณเก่าจากร่างก่อนหน้าไม่ได้หายไปเปล่าๆ เมื่อร่างเปลี่ยน มันแค่หาอวัยวะใหม่ที่ใกล้เคียงที่สุดมาทำหน้าที่แทน — หลักฐานว่าความเข้าใจบางอย่างส่งผ่านข้ามร่างได้จริง ไม่ใช่แค่ทักษะที่ต้องเรียนใหม่ทุกครั้ง"
             }
         ],
         notes: [
-            ["", "<strong>โจรแห่งป่าหมอก</strong> ฝูง Karvos เกลียดชัง Skyther เป็นอย่างมาก เพราะหลายครั้งที่ Karvos ไล่ต้อนเหยื่อจนเหนื่อยหอบและเพิ่งล้มเหยื่อได้ Skyther จะโฉบลงมาจากฟ้าและคีบซากนั้นบินหนีไปต่อหน้าต่อตา"],
-            ["warn", "<strong>เงามัจจุราชของ Luvenn</strong> ในร่างของ Luvenn (ตัวเอก) แม้ว่าจะระแวง Karvos บนพื้นป่า แต่สัญชาตญาณความกลัวที่ฝังลึกที่สุดเมื่ออยู่ใต้ช่องว่างของเรือนยอดไม้ คือเงาขนาดมหึมาที่พาดผ่านพื้นดิน สัญชาตญาณ Luvenn จะสั่งให้ 'ยืนนิ่งและหยุดหายใจ' ทันทีเมื่อเห็นเงาของ Skyther"]
+            ["", "<strong>โจรแห่งป่าหมอก</strong> ฝูงเจ้าตัวสี่ขาเกลียดชังเจ้าเงาปีกกว้างเป็นอย่างมาก เพราะหลายครั้งที่เจ้าตัวสี่ขาไล่ต้อนเหยื่อจนเหนื่อยหอบและเพิ่งล้มเหยื่อได้ เจ้าเงาปีกกว้างจะโฉบลงมาจากฟ้าและคีบซากนั้นบินหนีไปต่อหน้าต่อตา"],
+            ["warn", "<strong>เงามัจจุราชของร่างสี่ขา</strong> ในร่างของร่างสี่ขา (ตัวเอก) แม้ว่าจะระแวงเจ้าตัวสี่ขาบนพื้นป่า แต่สัญชาตญาณความกลัวที่ฝังลึกที่สุดเมื่ออยู่ใต้ช่องว่างของเรือนยอดไม้ คือเงาขนาดมหึมาที่พาดผ่านพื้นดิน สัญชาตญาณร่างสี่ขาจะสั่งให้ 'ยืนนิ่งและหยุดหายใจ' ทันทีเมื่อเห็นเงาของเจ้าเงาปีกกว้าง"]
         ],
         prompt: "A massive alien wyvern-like aerial apex predator-scavenger standing 2.2 meters tall with its wings folded, boasting an immense 8.5-meter wingspan when fully spread, deceptively light-framed with a deep keeled chest and a fully honeycombed hollow skeleton built for endless soaring. Its head bears four glowing sun-gold eyes: a forward-facing binocular pair for hunting from great height and a smaller downward-facing pair beneath them for scanning movement through the fog below, a sealed nostril groove that closes shut during high-speed dives or in the freezing upper air, and a toothless hooked bone beak with serrated blade-like edges built for tearing thick hide and tough sinew, gaping wide enough to swallow small bones whole. Its ears are internal aerodynamic sound-channels tuned to the frequency of a dying animal's cry rather than external flaps. A translucent solar-sail crest webbed with asymmetric, irregularly branching blood vessels — tracing more like mineral fracture lines than an animal's veins — flares from the back of its skull to catch sunlight and rapidly rewarm its blood after flights through bitterly cold high air, and an elastic gular throat pouch hangs beneath its chin, used to carry meat back to its young or to regurgitate concentrated digestive acid at any attacker that corners it. Its six-limbed body has a deep-keeled aerodynamic frame with tiny spiracle vents running along the spine that feed air directly into its flight muscles, tapering to a stiff tail ending in a diamond-shaped kite of skin that acts as a rudder in turbulent wind. It has three limb pairs: immense leathery wings spanning 8.5 meters, braced by three long fingers and a hooked thumb-talon for climbing canopy trunks; short but densely muscled grasping arms with three talons for pinning carrion in place while the beak tears; and long powerful legs ending in zygodactyl raptor feet that lock rigid onto branches even while asleep and snatch prey clean out of midair. Its wings and back are sheathed in taut, shark-like micro-scaled skin with a faint gem-like iridescent sheen when it catches direct light, structured in overlapping layers like cut mineral facets rather than ordinary scales, that silences the sound of air over its body, while its throat and underbelly are thick creased hide protecting its organs from canopy branches, and its arms and legs are armored in large reptilian scutes against a struggling prey's bite. Countershading splits its body cleanly: deep slate-blue-grey above to vanish against the canopy from a hunter's-eye view, pale fog-blue below to vanish against the sky from beneath. Its hollow honeycombed skeleton lets it ride thermal updrafts for days without a single wingbeat, at the cost of shattering instantly the moment it is struck or forced down onto solid ground. Its coloration is a harmonious cool slate-blue palette, deepened by near-black blue-grey shadows in the recesses and lifted by pale sky-blue highlights along the wing membranes, with rust-brown tones worked into the leg and arm-joint scales and dull crimson streaked along the wing membrane edges, and a glowing sun-gold highlight reserved only for its four eyes, the veins of its solar-sail crest and the serrated edge of its beak. It perches on a massive moss-covered branch high in the misty canopy of an alien fog-forest, wings held half-spread in a threatening display, crest flared, looking down over the drifting mist below.\n\nPhotorealistic 3D creature render, cinematic film-VFX quality, perched full-body in its natural canopy habitat, three-quarter view, shot with a telephoto lens at eye level, shallow depth of field with softly blurred background canopy and mist, volumetric god rays filtering through the fog behind it, soft naturalistic backlighting that makes the translucent crest and wing membranes glow from within, hyper-detailed micro-texturing on every scale and surface, subsurface scattering, physically-based rendering, muted natural color grading with deep shadows, 1:1 square composition, subject centered and fully visible from head to feet, no readable text."
 });

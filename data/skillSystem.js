@@ -139,7 +139,7 @@ const CREATURE_PROFILES = {
         }
     },
     OZGRUN: {
-        organs: ["ขาสี่ข้าง", "กรงเล็บขุด"],
+        organs: ["ขาสี่ข้าง", "กรงเล็บขุด", "เกราะแร่ธาตุตกผลึก"],
         sizeTier: 4, frame: 'heavy', apMax: 3,
         recoveryAction: {
             label: "ขุดรากไม้กิน", apRestored: 2,
@@ -203,5 +203,12 @@ const SKILL_DEFINITIONS = {
         requiresOrgan: "ขาสี่ข้างสำหรับวิ่งไล่ระยะไกล", // ร่าง Skyther (2 ขา+ปีก+แขน) ไม่มีอวัยวะนี้ — เก็บความเข้าใจไว้ก่อน ใช้ไม่ได้จนกว่าจะสวมร่างที่มีขาแบบนี้
         obsNeeded: 5, // Karvos เป็น Alien Intensity Tier III (ล่าฝูงประสานงาน ไม่ใช่แค่ไล่เดี่ยว)
         learnedLabel: "เข้าใจการล่าเป็นฝูง"
+    },
+    CURL_DEFENSE: {
+        name: "การหดตัวเข้าวงป้องกัน (Curl Defense)", // Ozgrun สอน — เห็นครั้งแรกใน Ch.2 ตอน T+17 เท่านั้น ยังไม่ครบสังเกต
+        progressLabel: "พยายามทำความเข้าใจจังหวะการหดตัวป้องกันภัยบางอย่าง",
+        requiresOrgan: "เกราะแร่ธาตุตกผลึก",
+        obsNeeded: 3, // Ozgrun เป็น Alien Intensity Tier II — เจตนาให้เรียนไม่จบใน Ch.2 (สังเกตได้แค่ 1 ครั้งในบทนี้)
+        learnedLabel: "เข้าใจการหดตัวเข้าวงป้องกัน"
     }
 };
