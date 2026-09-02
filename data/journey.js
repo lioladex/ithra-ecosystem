@@ -1877,7 +1877,8 @@ function journeyBuildTimelineHTML() {
         if (isCurrent) cls.push('current');
         if (isEnd) cls.push('end');
         const clickAttr = unlocked ? ` onclick="journeyGoTo('${id}')"` : '';
-        html += `<span class="${cls.join(' ')}" title="${label}"${clickAttr}></span>`;
+        const num = isEnd ? '' : (n + 1);
+        html += `<span class="${cls.join(' ')}" title="${label}"${clickAttr}>${num}</span>`;
         if (n < total) {
             const nextId = (n + 1 === total) ? ch.endId : JOURNEY_STEPS[start + n + 1].id;
             html += `<span class="vn-tp-line${journeyUnlockedIds.has(nextId) ? ' unlocked' : ''}"></span>`;
