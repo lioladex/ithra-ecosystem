@@ -38,9 +38,9 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 **หมวดที่ใช้ได้ (เลือกได้ข้อเดียวต่อตัว):**
 - `ผู้ผลิต (สังเคราะห์แสง)` — สิ่งมีชีวิตที่ดำรงชีวิตด้วยแสงเป็นหลัก (Luvenn, Lumenveil)
 - `สัตว์กินพืช` — Herbivore/nectarivore (Vashli, Frostmane, Ozgrun, Glimmerwing)
-- `สัตว์กินเนื้อ` — Carnivore/predator ทุกขนาด รวมนักล่าที่กินซากเสริมด้วย (Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin)
-- `สัตว์กินซาก/ผู้ย่อยสลาย` — กินเฉพาะซาก ไม่ล่าเองเลย (Dunkrell, Palegrim)
-- `ผู้กรองอาหาร` — Filter feeder ทั้งในน้ำและอากาศ (Pallowfin, Vellith)
+- `สัตว์กินเนื้อ` — Carnivore/predator ทุกขนาด รวมนักล่าที่กินซากเสริมด้วย (Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin, Duskchime)
+- `สัตว์กินซาก/ผู้ย่อยสลาย` — กินเฉพาะซาก ไม่ล่าเองเลย (Dunkrell, Palegrim, Rustleback, Murrow)
+- `ผู้กรองอาหาร` — Filter feeder ทั้งในน้ำและอากาศ (Pallowfin, Vellith, Torvane)
 - `สิ่งมีชีวิตสังเคราะห์เคมี` — Chemosynthetic (Cindergrub)
 - `ไม่สามารถจัดประเภทได้` — สำหรับตัวที่คลุมเครือเกินจะจัดหมวดอาหารได้ (Kethyr เท่านั้น)
 
@@ -50,8 +50,8 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 
 ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและหมายเหตุรายตัวได้ในหน้า Design Rulebook (`data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE") สรุปสั้นๆ:
 
-- **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
-- **Tier II (เข้มข้น)**: Thessek, Glimmerwing
+- **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler, Duskchime, Rustleback, Torvane — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
+- **Tier II (เข้มข้น)**: Thessek, Glimmerwing, Murrow
 - **Tier III (สุดขั้ว)**: Korrune, Frostmane — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
 - **Tier IV (หลุดกรอบกายวิภาค)**: Vorthak, Cindergrub, Ashkarn (DRAFT)
 - **Tier V (เหนือจริง)**: Threndle, Kethyr (DRAFT)

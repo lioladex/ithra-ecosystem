@@ -38,9 +38,9 @@ creaturesData.push({
 หมวดที่ใช้ได้ (เลือกข้อเดียวต่อตัว จัดตามอาหาร/วิธีดำรงชีวิตเท่านั้น ไม่ผสมกับ habitat):
 - `ผู้ผลิต (สังเคราะห์แสง)` — Luvenn, Lumenveil
 - `สัตว์กินพืช` — Vashli, Frostmane, Ozgrun, Glimmerwing
-- `สัตว์กินเนื้อ` — Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin
-- `สัตว์กินซาก/ผู้ย่อยสลาย` — Dunkrell, Palegrim
-- `ผู้กรองอาหาร` — Pallowfin, Vellith
+- `สัตว์กินเนื้อ` — Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin, Duskchime
+- `สัตว์กินซาก/ผู้ย่อยสลาย` — Dunkrell, Palegrim, Rustleback, Murrow
+- `ผู้กรองอาหาร` — Pallowfin, Vellith, Torvane
 - `สิ่งมีชีวิตสังเคราะห์เคมี` — Cindergrub
 - `ไม่สามารถจัดประเภทได้` — Kethyr เท่านั้น
 
@@ -94,8 +94,8 @@ creaturesData.push({
 
 ### Tier รายตัว + หมายเหตุเฉพาะตัว (สรุปจาก rulebook.js — อัปเดต 2026-09-01 หลัง redesign)
 
-- **Tier I**: Karvos ↔ Thessek (ร่วมกันแค่ "เดิน 4 ขา เป็นนักล่า ขนาดตัวใกล้เคียงกัน"), Luvenn (ต้องคง "ท่าทางคล้ายกวาง สังเคราะห์แสงเป็นพลังงานหลัก ขนคล้ายใบไม้"), Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler (ไม่มีหมายเหตุพิเศษ)
-- **Tier II**: Thessek (ร่วมกับ Karvos ตามเงื่อนไขข้างบน), Glimmerwing
+- **Tier I**: Karvos ↔ Thessek (ร่วมกันแค่ "เดิน 4 ขา เป็นนักล่า ขนาดตัวใกล้เคียงกัน"), Luvenn (ต้องคง "ท่าทางคล้ายกวาง สังเคราะห์แสงเป็นพลังงานหลัก ขนคล้ายใบไม้"), Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler, Duskchime, Rustleback, Torvane (ไม่มีหมายเหตุพิเศษ)
+- **Tier II**: Thessek (ร่วมกับ Karvos ตามเงื่อนไขข้างบน), Glimmerwing, Murrow
 - **Tier III**: Korrune, Frostmane (ต้องคง "ภาพสัตว์กีบขนหนา" เพื่อ contrast กับ Vorthak)
 - **Tier IV**: Vorthak (ไม่ผูก silhouette กับ Luvenn — เชื่อมกันแค่ "เทคนิคการล่าแบบ Counter" ทางสัญชาตญาณ; คงขาหน้า/ขาหลัง 2 คู่ไว้เพราะผูกกับท่า combat ใน journey.js), Cindergrub (แก้ขาจาก "4-6 คู่ไม่สมมาตร" เป็น 4 คู่คงที่), Ashkarn (DRAFT)
 - **Tier V**: Threndle (รูปทรงที่แท้จริงไม่เคยถูกมองเห็นตรงกัน เพราะกระแสน้ำขึ้นลงซับซ้อนจากดวงจันทร์คู่บิดเบือนแสง), Kethyr (DRAFT)

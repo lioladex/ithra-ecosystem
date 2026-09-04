@@ -36,4 +36,8 @@ const IMAGE_LIBRARY = {
     PALEGRIM: `${ITHRA_CDN_BASE}/creatures/Palegrim.jpg`,
     ASHKARN: `${ITHRA_CDN_BASE}/creatures/ashkarn.jpg`,
     KETHYR: `${ITHRA_CDN_BASE}/creatures/Kethyr.jpg`,
+    DUSKCHIME: `${ITHRA_CDN_BASE}/creatures/duskchime.jpg`,
+    RUSTLEBACK: `${ITHRA_CDN_BASE}/creatures/rustleback.jpg`,
+    MURROW: `${ITHRA_CDN_BASE}/creatures/murrow.jpg`,
+    TORVANE: `${ITHRA_CDN_BASE}/creatures/torvane.jpg`,
 };
