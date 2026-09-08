@@ -8,7 +8,7 @@
 |---|---|
 | `_registry.js` | ประกาศ `const creaturesData = []` — ต้องโหลดก่อนไฟล์อื่นในโฟลเดอร์นี้เสมอ |
 | `_imageLibrary.js` | ประกาศ `const IMAGE_LIBRARY = {...}` และ `const ITHRA_CDN_BASE` (รูปภาพเสิร์ฟผ่าน jsDelivr CDN จาก repo นี้เอง) |
-| `vorthak.js`, `thessek.js`, `luvenn.js`, `karvos.js`, `skyther.js`, `vashli.js`, `glimmerwing.js`, `mistcrawler.js`, `korrune.js`, `threndle.js`, `pallowfin.js`, `dunkrell.js`, `frostmane.js`, `cindergrub.js` | โปรไฟล์เต็มทั้ง 14 ตัว (ครบ field รวม `prompt` สำหรับ AI image-gen) |
+| `<slug>.js` อื่นๆ ทั้งหมด | โปรไฟล์เต็มของแต่ละตัว (ครบ field รวม `prompt` สำหรับ AI image-gen ถ้า `status` ไม่ใช่ `DRAFT`) |
 
 แต่ละไฟล์ `creatures/<name>.js` มีรูปแบบเดียวกัน:
 
@@ -53,8 +53,8 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 - **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler, Duskchime, Rustleback, Torvane — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
 - **Tier II (เข้มข้น)**: Thessek, Glimmerwing, Murrow
 - **Tier III (สุดขั้ว)**: Korrune, Frostmane — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
-- **Tier IV (หลุดกรอบกายวิภาค)**: Vorthak, Cindergrub, Ashkarn (DRAFT)
-- **Tier V (เหนือจริง)**: Threndle, Kethyr (DRAFT)
+- **Tier IV (หลุดกรอบกายวิภาค)**: Vorthak, Cindergrub, Ashkarn
+- **Tier V (เหนือจริง)**: Threndle, Kethyr
 
 **ข้อจำกัดบังคับทุก Tier (เพิ่ม 2026-09-01)**: จำนวนแขนขาหลัก (ปีก/ขา/แขน) ต้องเป็นคู่สมมาตรเสมอ ห้ามใช้จำนวนไม่เป็นคู่ (เช่น ปีก 3 ข้าง ขา 3 ข้าง) แม้จะมีเหตุผลเชิงวิวัฒนาการรองรับดีแค่ไหนก็ตาม — เครื่องมือ AI image-gen ที่ใช้จริง render จำนวนแขนขาไม่สมมาตรไม่แม่นยำ มักดริฟท์กลับไปเป็นคู่มาตรฐานเองแบบสุ่มไม่คงที่ (พบปัญหานี้จริงกับดราฟ Ashkarn ที่เคยออกแบบปีก 3 ข้าง/ขา 3 ข้างไว้ ต้องแก้ย้อนกลับ) ความไม่สมมาตรที่ยังใช้ได้ทุก Tier คือขนาด/รูปร่าง/หน้าที่ที่ต่างกันระหว่างข้างซ้าย-ขวาของคู่เดิม (ดู Monster Design Toolkit ข้อ 2 ด้านล่าง)
 
