@@ -1082,7 +1082,7 @@
                 if (!indirect && !visualConfirmed[key]) { visualConfirmed[key] = true; visualChanged = true; }
                 if (!silent) {
                     const creature = creaturesData.find(c => c.imageKey === key);
-                    showSpeciesToast(creature ? creature.name : key, tier, isFirstDiscovery);
+                    showSpeciesToast(creature ? getDisplayName(creature) : key, tier, isFirstDiscovery);
                 }
             });
             saveKnownSpecies();
