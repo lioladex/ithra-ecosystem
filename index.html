@@ -331,23 +331,21 @@
         /* --- Journey of Confluence — visual-novel style stepper --- */
         .scene-container { max-width: 720px; margin: 0 auto; }
 
-        /* เมนูเลือกบท — การ์ดหนึ่งใบต่อหนึ่งบท (ดู journeyBuildChapterBarHTML
-           ใน data/journey.js) กว้างเท่ากันทุกใบด้วย grid auto-fit จึงเพิ่มบทที่
-           3, 4 ต่อไปได้โดยไม่ต้องแก้ layout — จอแคบจะไหลลงเป็นแถวเดียวเอง */
-        .vn-chapter-bar { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 10px; margin-bottom: 18px; }
-        .vn-chapter-card { display: flex; flex-direction: column; gap: 3px; text-align: left; padding: 12px 14px; border: 1px solid rgba(56,189,248,0.22); border-left: 3px solid rgba(56,189,248,0.35); border-radius: 5px; background: rgba(10,14,18,0.55); color: #94a3b8; font-family: inherit; cursor: pointer; transition: all 0.22s ease; }
-        .vn-chapter-card:hover:not(.locked) { background: rgba(56,189,248,0.08); border-color: var(--accent-default); transform: translateY(-2px); }
-        .vn-chapter-card.current { background: rgba(56,189,248,0.12); border-color: var(--accent-default); border-left-color: var(--accent-default); box-shadow: 0 0 14px rgba(56,189,248,0.15); }
-        .vn-chapter-card.done:not(.current) { border-left-color: #ffb84a; }
-        .vn-chapter-card.locked { cursor: not-allowed; opacity: 0.45; border-style: dashed; border-left-color: rgba(255,255,255,0.15); }
-        .vn-chapter-num { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; }
-        .vn-chapter-card.current .vn-chapter-num { color: var(--accent-default); }
-        .vn-chapter-title { color: #e2e8f0; font-size: 0.98rem; font-weight: 600; }
-        .vn-chapter-card.locked .vn-chapter-title { color: #64748b; font-style: italic; }
-        .vn-chapter-range { font-family: 'Rajdhani', sans-serif; font-size: 0.74rem; letter-spacing: 1.5px; color: #64748b; }
-        .vn-chapter-status { font-size: 0.72rem; letter-spacing: 1px; color: #475569; margin-top: 2px; }
-        .vn-chapter-card.current .vn-chapter-status { color: #94a3b8; }
-        .vn-chapter-card.done .vn-chapter-status { color: #ffb84a; }
+        /* เมนูเลือกบท — dropdown เดียวกระชับ วางในช่องว่างกลาง .sub-header
+           (ระหว่างหัวเรื่องกับปุ่ม SYS-SIM/RESET) แทนแถวการ์ดเดิมที่กินพื้นที่
+           แนวตั้งเยอะ ตัวเลือกสร้างจาก journeyRenderChapterSelect() ใน
+           data/journey.js ทุกครั้งที่ journeyRender() ทำงาน */
+        .vn-chapter-select-wrap { display: flex; align-items: center; gap: 8px; }
+        .vn-chapter-select-label { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; white-space: nowrap; }
+        .vn-chapter-select {
+            font-family: inherit; font-size: 0.88rem; font-weight: 600; color: #e2e8f0;
+            background: rgba(10,14,18,0.65); border: 1px solid rgba(56,189,248,0.3); border-left: 3px solid var(--accent-default);
+            border-radius: 5px; padding: 7px 12px; cursor: pointer; min-width: 220px;
+            transition: all 0.2s ease;
+        }
+        .vn-chapter-select:hover { background: rgba(56,189,248,0.08); border-color: var(--accent-default); }
+        .vn-chapter-select:focus { outline: none; box-shadow: 0 0 0 2px rgba(56,189,248,0.25); }
+        .vn-chapter-select option:disabled { color: #475569; font-style: italic; }
 
         /* --- ฉากประมวลความคิดปิดบท (ดู journeyBuildChapterCloseHTML ใน
            data/journey.js) ประโยคมุมมองบุคคลที่หนึ่งลอยขึ้นทีละประโยคแล้วจาง
@@ -787,6 +785,10 @@
                 <div>
                     <h1 style="color: var(--accent-default); text-shadow: 0 0 15px rgba(56,189,248,0.5);">JOURNEY OF CONFLUENCE</h1>
                     <p style="color:#64748b;margin:5px 0 0;font-size:0.85rem;letter-spacing:2px;">SIMULATION PROTOCOL // AWAKENING SEQUENCE</p>
+                </div>
+                <div class="vn-chapter-select-wrap">
+                    <span class="vn-chapter-select-label">CHAPTER</span>
+                    <select id="journey-chapter-select" class="vn-chapter-select" onchange="journeySelectChapter(parseInt(this.value, 10))"></select>
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                     <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
@@ -1301,7 +1303,7 @@
                     : '';
                 // รู้จักแล้ว (tier >= 0) แต่ยังไม่เคย Direct Visual — โชว์ป้ายแทนรูปพื้นหลัง
                 const noVisualBadge = !dataUri
-                    ? `<div class="no-image" style="position:absolute; inset:0; z-index:0; font-size:0.75rem;">NO VISUAL DATA<br><span style="font-size:0.65rem; opacity:0.7;">ยังไม่เคยเห็นตัวจริง</span></div>`
+                    ? `<div class="no-image" style="position:absolute; inset:0; z-index:0; font-size:0.75rem; text-align:center;">NO VISUAL DATA</div>`
                     : '';
 
                 card.innerHTML = `
@@ -1335,7 +1337,7 @@
             if (dataUri && !isVisuallyConfirmed(imageKey)) {
                 // มีรูปอยู่ในคลังจริง แต่ Confluence ยังไม่เคย Direct Visual เลย
                 imgEl.style.display = 'none';
-                noImgEl.innerHTML = 'NO VISUAL DATA<br><span style="font-size:0.7rem;opacity:0.75;">รู้จักสิ่งมีชีวิตนี้แล้ว แต่ยังไม่เคยเห็นตัวจริง</span>';
+                noImgEl.innerHTML = 'NO VISUAL DATA';
                 noImgEl.style.display = 'flex';
                 return;
             }

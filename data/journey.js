@@ -2091,34 +2091,26 @@ function journeyGoTo(targetId) {
     journeyRender();
 }
 
-/* เมนูเลือกบท — การ์ดหนึ่งใบต่อหนึ่งบท เรียงบนสุดของฉาก บทที่ยังไม่ถึง
-   แสดงเป็นการ์ดล็อก (ไม่มี onclick) ไม่สปอยล์ชื่อบท */
-function journeyBuildChapterBarHTML() {
-    let html = '<div class="vn-chapter-bar">';
+/* เมนูเลือกบท — dropdown เดียวกระชับ วางใน .sub-header (นอก #journey-view-content)
+   ไม่ใช่ innerHTML string ที่ประกอบเข้ากับฉากเหมือนเดิม จึงเป็น DOM side-effect
+   แยกต่างหาก เรียกจาก journeyRender() ทุกครั้งเพื่อ sync ตัวเลือก + ค่าที่เลือกอยู่
+   ให้ตรงกับ journeyChapterIdx เสมอ บทที่ยังไม่ปลดล็อกเป็น option disabled
+   ไม่สปอยล์ชื่อบท */
+function journeyRenderChapterSelect() {
+    const select = document.getElementById('journey-chapter-select');
+    if (!select) return;
+    let html = '';
     JOURNEY_CHAPTERS.forEach((ch, i) => {
         const unlocked = journeyChapterUnlocked(i);
         const finished = journeyChapterFinished(i);
         const isCurrent = i === journeyChapterIdx;
-        const cls = ['vn-chapter-card'];
-        if (!unlocked) cls.push('locked');
-        if (finished) cls.push('done');
-        if (isCurrent) cls.push('current');
-        let status;
-        if (!unlocked) status = '🔒 ยังไม่ปลดล็อก';
-        else if (finished) status = isCurrent ? 'กำลังอ่าน · จบแล้ว' : 'อ่านจบแล้ว';
-        else status = isCurrent ? 'กำลังอ่าน' : 'ค้างไว้';
-        const title = unlocked ? ch.title : 'ยังไม่เปิดเผย';
-        const range = unlocked ? ch.range : '— — —';
-        const clickAttr = unlocked ? ` onclick="journeySelectChapter(${i})"` : '';
-        html += `<button class="${cls.join(' ')}"${clickAttr}${unlocked ? '' : ' disabled'}>`
-            + `<span class="vn-chapter-num">บทที่ ${ch.num}</span>`
-            + `<span class="vn-chapter-title">${title}</span>`
-            + `<span class="vn-chapter-range">${range}</span>`
-            + `<span class="vn-chapter-status">${status}</span>`
-            + '</button>';
+        let label = `บทที่ ${ch.num} — ${unlocked ? ch.title : 'ยังไม่เปิดเผย'}`;
+        if (unlocked) label += finished ? (isCurrent ? ' (กำลังอ่าน · จบแล้ว)' : ' (จบแล้ว)') : (isCurrent ? ' (กำลังอ่าน)' : '');
+        else label = `🔒 ${label}`;
+        html += `<option value="${i}"${unlocked ? '' : ' disabled'}${isCurrent ? ' selected' : ''}>${label}</option>`;
     });
-    html += '</div>';
-    return html;
+    select.innerHTML = html;
+    select.value = String(journeyChapterIdx);
 }
 
 /* timeline แสดงเฉพาะ checkpoint ของบทที่กำลังอ่านอยู่ (+ จุดจบบทนั้น) —
@@ -2258,7 +2250,8 @@ function journeyRender() {
     const container = document.getElementById('journey-view-content');
     if (!container) return;
 
-    let html = '<div class="scene-container">' + journeyBuildChapterBarHTML() + journeyBuildTimelineHTML();
+    journeyRenderChapterSelect();
+    let html = '<div class="scene-container">' + journeyBuildTimelineHTML();
 
     if (journeyState === 'close') {
         html += journeyBuildChapterCloseHTML() + '</div>';
