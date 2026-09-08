@@ -6,11 +6,11 @@
 
 | ไฟล์ | หมวด | ใช้เมื่อ |
 |---|---|---|
-| [`writing-style.md`](writing-style.md) | Writing | เขียน/รีวิว/ขัดเกลาย่อหน้าเนื้อเรื่อง, action text, sysnote ใน `data/journey.js` (มิเรอร์จาก `.claude/skills/ithra-narrative-style/SKILL.md` — ไฟล์ skill คือ source of truth) |
+| [`writing-style.md`](writing-style.md) | Writing | เขียน/รีวิว/ขัดเกลาย่อหน้าเนื้อเรื่อง, action text, sysnote ใน `journey/chapter*.js` (มิเรอร์จาก `.claude/skills/ithra-narrative-style/SKILL.md` — ไฟล์ skill คือ source of truth) |
 | [`creature-design.md`](creature-design.md) | Creature Design | สร้าง/แก้ไขไฟล์ `creatures/*.js` — โครงสร้างไฟล์, ระบบ Part Combination, Alien Intensity Scale, กฎ field `abilities`, สูตร AI image-gen prompt (รวมจาก `data/rulebook.js` + `creatures/README.md`) |
 | [`world-building.md`](world-building.md) | World Building | ต้องอ้างอิงภูมิศาสตร์/ระบบดาว/ยุคสมัยของ Ithra (แปลงจาก `data/ecosystem.js`) |
 | [`memory-and-transformation.md`](memory-and-transformation.md) | Lore Mechanics | เขียนฉากที่เกี่ยวกับสัญชาตญาณข้ามร่าง, การเปลี่ยนร่างของ Confluence, หรือพัฒนาการความทรงจำ (แปลงจาก `data/memoryMechanics.js`) |
-| [`narrative-engine.md`](narrative-engine.md) | Systems/Engine | แก้ไข/เพิ่ม step ใหม่ใน `data/journey.js` — โครงสร้าง step/chapter, ระบบ unlock tier, ระบบ AP/skill (สรุปจากคอมเมนต์ใน `data/journey.js` + `data/skillSystem.js` + `index.html`) |
+| [`narrative-engine.md`](narrative-engine.md) | Systems/Engine | แก้ไข/เพิ่ม step ใหม่ใน `journey/chapter*.js` (เนื้อหา) หรือ `data/journey.js` (engine/`JOURNEY_CHAPTERS`) — โครงสร้าง step/chapter, ระบบ unlock tier, ระบบ AP/skill (สรุปจากคอมเมนต์ใน `data/journey.js` + `journey/_registry.js` + `data/skillSystem.js` + `index.html`) |
 
 ## เอกสารสถานะงาน (ไม่ใช่กฎถาวร — อัปเดตบ่อย)
 

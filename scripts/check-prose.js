@@ -46,7 +46,11 @@ const ctx = {
     creaturesData: []
 };
 vm.createContext(ctx);
-["creatures/_imageLibrary.js", "data/skillSystem.js", "data/journey.js"].forEach(rel => {
+[
+    "creatures/_imageLibrary.js", "data/skillSystem.js",
+    "journey/_registry.js", "journey/chapter1.js", "journey/chapter2.js", "journey/chapter3.js", "journey/chapter4.js",
+    "data/journey.js"
+].forEach(rel => {
     vm.runInContext(fs.readFileSync(path.join(ROOT, rel), "utf8"), ctx, { filename: rel });
 });
 vm.runInContext(`globalThis.__export = { JOURNEY_STEPS, JOURNEY_CHAPTERS, journeyUnlockedIds };`, ctx);

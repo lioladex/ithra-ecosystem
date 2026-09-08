@@ -16,7 +16,13 @@ data/                     เนื้อหาข้อความยาวข
   ecosystem.js              เนื้อหาส่วน Ecosystem
   memoryMechanics.js        เนื้อหาส่วน Memory Mechanics
   rulebook.js                Design Rulebook (รวม Alien Intensity Scale)
-  journey.js                 เนื้อหาส่วน Journey
+  skillSystem.js              ระบบ AP/skill ของ Journey
+  journey.js                 engine ของ Journey of Confluence (ตัวเดินเรื่อง,
+                              state, JOURNEY_CHAPTERS) — เนื้อหาแต่ละบทอยู่ที่
+                              journey/ แยกต่างหาก ไม่ได้อยู่ในไฟล์นี้แล้ว
+journey/                 เนื้อหา Journey of Confluence 1 ไฟล์ต่อ 1 บท
+  _registry.js              ประกาศ array JOURNEY_STEPS (โหลดก่อนเสมอ)
+  chapter1.js .. chapter4.js  เนื้อหาเต็มของแต่ละบท (บทที่ final แล้วไม่ต้องแตะซ้ำ)
 assets/creatures/         รูปภาพสิ่งมีชีวิต (jpg)
 scripts/                  สคริปต์ตรวจสอบข้อมูล (ดูด้านล่าง)
 ```

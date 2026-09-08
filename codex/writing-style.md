@@ -2,7 +2,9 @@
 
 **แหล่งที่มา (canonical source):** `.claude/skills/ithra-narrative-style/SKILL.md` — ไฟล์นี้คือสำเนาไว้ใน codex เพื่อให้ศึกษารวมจุดเดียวกับกฎหมวดอื่น ถ้าเนื้อหาสองไฟล์ไม่ตรงกันในอนาคต ให้ยึดไฟล์ skill เป็นหลักเสมอ (แก้ที่ไฟล์ skill ก่อน แล้วค่อย sync มาที่นี่)
 
-ใช้เมื่อ: เขียน/รีวิว/ขัดเกลาย่อหน้าเนื้อเรื่อง, action flavor text, หรือ sysnote สำหรับ journey ของ Confluence ใน `data/journey.js` — **ไม่ใช้**กับ UI chrome, code comment, หรือข้อความฐานข้อมูล/lore-entry (เช่น field `desc`/`notes` ของ creature ให้ดู `creature-design.md` แทน)
+ใช้เมื่อ: เขียน/รีวิว/ขัดเกลาย่อหน้าเนื้อเรื่อง, action flavor text, หรือ sysnote สำหรับ journey ของ Confluence ใน `journey/chapter*.js` — **ไม่ใช้**กับ UI chrome, code comment, หรือข้อความฐานข้อมูล/lore-entry (เช่น field `desc`/`notes` ของ creature ให้ดู `creature-design.md` แทน)
+
+เนื้อหาแต่ละบทแยกเป็นคนละไฟล์ใน `journey/` (`chapter1.js`…`chapter4.js`, โหลดผ่าน `journey/_registry.js`) เพื่อไม่ให้บทที่ final แล้วต้องถูกแตะไฟล์ซ้ำ — `data/journey.js` เหลือแค่ engine (ตัวเดินเรื่อง, state, AP/skill) กับ `JOURNEY_CHAPTERS` (metadata ของบท + ประโยคปิดบท `reflections` ดูข้อ 9)
 
 ---
 

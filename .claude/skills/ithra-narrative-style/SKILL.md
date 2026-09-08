@@ -1,11 +1,13 @@
 ---
 name: ithra-narrative-style
-description: Prose/narration guideline for the Ithra Field Codex journey (data/journey.js and any other in-fiction VN text). Use whenever writing, reviewing, or polishing story paragraphs, action flavor text, or sysnotes for Confluence's journey — not for UI chrome, code comments, or database/lore-entry text.
+description: Prose/narration guideline for the Ithra Field Codex journey (journey/chapter*.js and any other in-fiction VN text). Use whenever writing, reviewing, or polishing story paragraphs, action flavor text, or sysnotes for Confluence's journey — not for UI chrome, code comments, or database/lore-entry text.
 ---
 
 # Ithra Journey Narrative Style
 
-Distilled from the T-0 → Chapter-1-close prose in `data/journey.js`, written across many editing passes with the project owner. Follow these rules for any new or revised `paragraphs`/action `text` in that file.
+Distilled from the T-0 → Chapter-1-close prose in `journey/chapter1.js`, written across many editing passes with the project owner. Follow these rules for any new or revised `paragraphs`/action `text` in those files.
+
+Step content lives one file per chapter under `journey/` (`chapter1.js`…`chapter4.js`, loaded via `journey/_registry.js`) so a finished chapter never needs touching again. `data/journey.js` only holds the engine (stepper, AP/skill state, rendering) plus `JOURNEY_CHAPTERS` (chapter metadata and the chapter-close `reflections` lines — see rule 9).
 
 ## 0. Voice charter
 Set by the project owner in a style interview on 2026-08-30. When a later rule and this section disagree, this section wins, because the rules below are techniques and this is the target they serve.
