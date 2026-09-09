@@ -7,17 +7,22 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Sarabun:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;600;700&family=Sarabun:wght@300;400;600&family=Noto+Serif+Thai:wght@300;400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
     <style>
         :root {
-            --bg-color: #070b10;
-            --panel-bg: rgba(20, 29, 38, 0.75);
+            --bg-color: #050608;
+            --panel-bg: rgba(16, 21, 27, 0.55);
+            --panel-bg-strong: rgba(18, 24, 31, 0.72);
             --text-main: #b4c5d6;
             --accent-default: #38bdf8;
+            --azure: #4fd8ff;
+            --azure-dim: rgba(79, 216, 255, 0.35);
             --border-color: #1e293b;
+            --glass-border: rgba(255, 255, 255, 0.09);
+            --glass-edge: rgba(255, 255, 255, 0.14);
             --danger: #ff3b28;
             --alive: #6ef2a0;
         }
@@ -28,12 +33,39 @@
             color: var(--text-main);
             margin: 0; padding: 0;
             min-height: 100vh; overflow-x: hidden;
-            background-image: radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 70%), linear-gradient(to bottom, #05080c 0%, #0a0f16 100%);
+            background-image:
+                radial-gradient(ellipse 1100px 620px at 15% -10%, rgba(79, 216, 255, 0.10) 0%, transparent 62%),
+                radial-gradient(ellipse 900px 600px at 100% 10%, rgba(56, 189, 248, 0.05) 0%, transparent 58%),
+                radial-gradient(circle at 50% 0%, rgba(56, 189, 248, 0.05) 0%, transparent 70%),
+                linear-gradient(to bottom, #030405 0%, #070a0e 100%);
             background-attachment: fixed;
+        }
+        /* เกรนละเอียดทับทั้งหน้าให้พื้นดำสนิทไม่ดูแบนเป็นสีเดียวเรียบๆ —
+           fixed layer เดียว ไม่ผูกกับ view-section ไหนเป็นพิเศษ */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image: radial-gradient(rgba(255,255,255,0.028) 1px, transparent 1px);
+            background-size: 3px 3px; opacity: 0.5;
         }
 
         h1, h2, h3, h4, .font-hud { font-family: 'Rajdhani', sans-serif; }
-        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px 30px; box-sizing: border-box; }
+        .container { width: 100%; max-width: 1400px; margin: 0 auto; padding: 40px 30px; box-sizing: border-box; position: relative; z-index: 1; }
+
+        /* ฝุ่นแสงฟ้าลอยขึ้นเบาๆ ทั่วหน้า — เพิ่มมิติบรรยากาศแบบ sci-fi/fantasy
+           เจือกันเบาๆ ไม่ใช่แค่ HUD เย็นชาล้วน (เคารพ prefers-reduced-motion
+           ด้านล่างสุดของไฟล์) */
+        .ambient-motes { position: fixed; inset: 0; z-index: 0; pointer-events: none; overflow: hidden; }
+        .ambient-motes span {
+            position: absolute; bottom: -6%; width: 3px; height: 3px; border-radius: 50%;
+            background: var(--azure); box-shadow: 0 0 6px 1px var(--azure-dim);
+            opacity: 0; animation: mote-drift linear infinite;
+        }
+        @keyframes mote-drift {
+            0% { opacity: 0; transform: translateY(0) translateX(0); }
+            8% { opacity: 0.7; }
+            92% { opacity: 0.35; }
+            100% { opacity: 0; transform: translateY(-112vh) translateX(var(--drift, 20px)); }
+        }
 
         .hud-frame-tl { position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 2px solid var(--accent-default); border-left: 2px solid var(--accent-default); opacity: 0.5; pointer-events: none; z-index: 100; }
         .hud-frame-br { position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px; border-bottom: 2px solid var(--border-color); border-right: 2px solid var(--border-color); opacity: 0.5; pointer-events: none; z-index: 100; }
@@ -49,22 +81,45 @@
         #landing-view .left-col { flex: 0 0 520px; display: flex; flex-direction: column; }
         #landing-view .right-col { flex: 1; display: flex; align-items: center; }
 
-        .header { border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; }
-        .header h1 { font-size: 3.2rem; color: #ffffff; margin: 0; letter-spacing: 10px; text-transform: uppercase; font-weight: 300; line-height: 1.1; }
-        .header h2 { font-size: 1rem; color: var(--accent-default); letter-spacing: 4px; margin: 10px 0 0 0; font-weight: normal; }
-        .status-bar { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-family: monospace; font-size: 0.75rem; color: #8fa6b8; padding: 6px 15px; border-radius: 20px; border: 1px solid var(--border-color); text-transform: uppercase; background: rgba(0,0,0,0.3); }
+        .header { border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 30px; position: relative; }
+        .header h1 {
+            font-size: 3.2rem; color: #ffffff; margin: 0; letter-spacing: 10px; text-transform: uppercase; font-weight: 300; line-height: 1.1;
+            text-shadow: 0 0 26px rgba(79, 216, 255, 0.35), 0 0 60px rgba(79, 216, 255, 0.12);
+        }
+        .header h2 { font-size: 1rem; color: var(--accent-default); letter-spacing: 4px; margin: 10px 0 0 0; font-weight: normal; text-shadow: 0 0 14px rgba(79, 216, 255, 0.4); }
+        /* วงแหวนสัญลักษณ์หมุนช้าๆ หลังหัวเรื่อง — จุดเดียวที่ใส่ลูกเล่น "sci-fi
+           fantasy" แรงกว่าจุดอื่น ตามที่เจ้าของโปรเจกต์ขอเพิ่ม ส่วนที่เหลือของเว็บ
+           ยังคงนิ่งสงบตามภาษา HUD เดิม ไม่ใส่ลูกเล่นซ้ำอีกหลายจุด */
+        .rune-ring {
+            position: absolute; top: -22px; right: 60px; width: 130px; height: 130px;
+            border: 1px dashed rgba(79, 216, 255, 0.35); border-radius: 50%;
+            animation: rune-spin 44s linear infinite; pointer-events: none;
+        }
+        .rune-ring::before { content: ''; position: absolute; inset: 13px; border: 1px solid rgba(79, 216, 255, 0.2); border-radius: 50%; }
+        .rune-ring::after {
+            content: ''; position: absolute; top: -3px; left: 50%; width: 6px; height: 6px; margin-left: -3px;
+            background: var(--azure); border-radius: 50%; box-shadow: 0 0 10px 2px var(--azure-dim);
+        }
+        @keyframes rune-spin { to { transform: rotate(360deg); } }
+        @media (max-width: 900px) { .rune-ring { display: none; } }
+        .status-bar { display: inline-flex; align-items: center; gap: 10px; margin-top: 20px; font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: #8fa6b8; padding: 6px 15px; border-radius: 20px; border: 1px solid var(--border-color); text-transform: uppercase; background: rgba(0,0,0,0.3); }
         .blink { width: 6px; height: 6px; background-color: var(--alive); border-radius: 50%; animation: pulse 1.5s infinite; }
         @keyframes pulse { 0%, 100% { opacity: 1; box-shadow: 0 0 8px var(--alive); } 50% { opacity: 0.2; box-shadow: none; } }
 
         .nav-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; width: 100%; }
         .nav-card {
-            background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 25px 20px;
-            cursor: pointer; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; min-height: 160px; box-sizing: border-box; backdrop-filter: blur(5px);
+            background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 6px; padding: 25px 20px;
+            cursor: pointer; position: relative; transition: all 0.3s ease; display: flex; flex-direction: column; min-height: 160px; box-sizing: border-box;
+            backdrop-filter: blur(12px) saturate(140%); -webkit-backdrop-filter: blur(12px) saturate(140%);
         }
-        .nav-card:hover { border-color: rgba(56, 189, 248, 0.4); transform: translateY(-3px); background: rgba(25, 36, 48, 0.9); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-        .nav-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background-color: var(--accent-default); transform: scaleY(0); transition: transform 0.3s ease; transform-origin: bottom; }
+        .nav-card::after {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-edge) 45%, transparent 90%);
+        }
+        .nav-card:hover { border-color: var(--azure-dim); transform: translateY(-3px); background: rgba(20, 28, 36, 0.75); box-shadow: 0 10px 24px rgba(0,0,0,0.45), 0 0 20px -8px var(--azure-dim); }
+        .nav-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background-color: var(--azure); transform: scaleY(0); transition: transform 0.3s ease; transform-origin: bottom; box-shadow: 0 0 10px var(--azure-dim); }
         .nav-card:hover::before { transform: scaleY(1); }
-        .card-id { font-family: monospace; font-size: 0.7rem; color: #64748b; letter-spacing: 1px; }
+        .card-id { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #64748b; letter-spacing: 1px; }
         .card-icon { font-size: 1.8rem; margin-bottom: 12px; }
         .card-title { color: white; font-size: 1rem; margin: 0 0 8px 0; letter-spacing: 1px; text-transform: uppercase; font-weight: 600; }
         .card-desc { color: #8fa6b8; font-size: 0.75rem; line-height: 1.4; margin: 0; }
@@ -95,8 +150,16 @@
         .story-eyebrow { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 4px; color: #7dd3fc; text-transform: uppercase; display: block; margin-bottom: 6px; opacity: 0.85; }
         .story-subtitle { font-family: 'Sarabun', sans-serif; font-size: 0.85rem; color: #cfe4f2; letter-spacing: normal; text-transform: none; display: block; margin-top: 6px; font-weight: 400; }
 
-        .info-box-right { background: rgba(15, 22, 30, 0.7); border: 1px solid var(--border-color); border-radius: 4px; padding: 30px; width: 100%; font-family: monospace; font-size: 0.85rem; color: #4a7a80; line-height: 1.6; position: relative; }
-        .info-box-right::after { content: ''; position: absolute; bottom: -1px; right: -1px; width: 15px; height: 15px; border-right: 2px solid #4a6478; border-bottom: 2px solid #4a6478; }
+        .info-box-right {
+            background: var(--panel-bg-strong); border: 1px solid var(--glass-border); border-radius: 4px; padding: 30px; width: 100%;
+            font-family: 'JetBrains Mono', monospace; font-size: 0.85rem; color: #6fa8b3; line-height: 1.6; position: relative;
+            backdrop-filter: blur(12px) saturate(130%); -webkit-backdrop-filter: blur(12px) saturate(130%);
+        }
+        .info-box-right::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+            background: linear-gradient(90deg, transparent, var(--glass-edge) 45%, transparent 90%);
+        }
+        .info-box-right::after { content: ''; position: absolute; bottom: -1px; right: -1px; width: 15px; height: 15px; border-right: 2px solid var(--azure-dim); border-bottom: 2px solid var(--azure-dim); }
 
         /* --- Ithra planet visualization (landing page right column) --- */
         .planet-panel { width: 100%; display: flex; flex-direction: column; align-items: center; gap: 16px; position: relative; }
@@ -120,7 +183,7 @@
         }
 
         .sub-header { border-bottom: 1px solid var(--border-color); padding-bottom: 15px; margin-bottom: 30px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 10px; }
-        .sub-header h1 { font-size: 2.2rem; color: #ffffff; margin: 0; letter-spacing: 4px; text-transform: uppercase; }
+        .sub-header h1 { font-size: 2.2rem; color: #ffffff; margin: 0; letter-spacing: 4px; text-transform: uppercase; text-shadow: 0 0 20px rgba(79, 216, 255, 0.22); }
         .btn-back {
             background: transparent; border: 1px solid var(--border-color); color: #94a3b8; padding: 8px 20px; font-size: 0.9rem;
             cursor: pointer; border-radius: 4px; display: inline-flex; align-items: center; gap: 10px; transition: all 0.2s;
@@ -130,11 +193,17 @@
 
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
         .species-card {
-            background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px;
-            cursor: pointer; position: relative; transition: all 0.3s ease; backdrop-filter: blur(5px);
+            background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 6px;
+            cursor: pointer; position: relative; transition: all 0.3s ease; backdrop-filter: blur(10px) saturate(130%); -webkit-backdrop-filter: blur(10px) saturate(130%);
             overflow: hidden; min-height: 195px;
         }
-        .species-card:hover { transform: translateY(-4px); box-shadow: 0 10px 24px rgba(0,0,0,0.45); border-color: var(--accent-default); }
+        .species-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; z-index: 3;
+            background: linear-gradient(90deg, transparent, var(--glass-edge) 45%, transparent 90%);
+        }
+        /* เรืองด้วยสีของตัวมันเอง (--card-glow ตั้งจาก field `color` ตอน render) —
+           ไม่ใช่ accent เดียวทั้งกริดเหมือนก่อน */
+        .species-card:hover { transform: translateY(-4px); box-shadow: 0 10px 28px rgba(0,0,0,0.5), 0 0 22px -6px var(--card-glow, var(--accent-default)); border-color: var(--card-glow, var(--accent-default)); }
         .card-bg-image {
             position: absolute; inset: 0; background-size: cover; background-position: center 22%;
             filter: brightness(0.5) saturate(0.8) contrast(1.05); transform: scale(1.02);
@@ -189,8 +258,9 @@
             position: sticky; top: 20px; flex: 0 0 260px; width: 260px;
             /* ความสูงคงที่ ไม่ยืดตามจำนวนบันทึก — บันทึกใหม่ดันของเก่าขึ้นไปแทน */
             height: min(460px, calc(100vh - 40px));
-            background: rgba(10,14,20,0.92); border: 1px solid var(--border-color); border-radius: 8px;
-            backdrop-filter: blur(6px); display: flex; flex-direction: column;
+            background: rgba(10,14,20,0.7); border: 1px solid var(--glass-border); border-radius: 8px;
+            backdrop-filter: blur(14px) saturate(130%); -webkit-backdrop-filter: blur(14px) saturate(130%);
+            display: flex; flex-direction: column;
             box-shadow: 0 8px 24px rgba(0,0,0,0.4);
         }
         @media (max-width: 900px) {
@@ -232,9 +302,10 @@
 
         .profile-header-container { display: flex; flex-direction: row; flex-wrap: nowrap; align-items: flex-start; gap: 26px; margin-bottom: 30px; border-bottom: 1px solid var(--border-color); padding-bottom: 28px; }
         .image-box {
-            width: 230px; height: 230px; border: 1px solid var(--border-color); border-radius: 8px;
-            background: rgba(0,0,0,0.6); position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;
-            flex-shrink: 0; box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            width: 230px; height: 230px; border: 1px solid var(--glass-border); border-radius: 8px;
+            background: rgba(6,9,12,0.65); position: relative; overflow: hidden; display: flex; justify-content: center; align-items: center;
+            flex-shrink: 0; backdrop-filter: blur(6px);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8), 0 0 26px -10px var(--card-glow, var(--azure-dim));
         }
         .image-box::before {
             content: ''; position: absolute; width: 100%; height: 100%;
@@ -345,27 +416,28 @@
         .vn-chapter-select {
             display: flex; align-items: center; justify-content: space-between; gap: 14px;
             font-family: inherit; font-size: 0.88rem; font-weight: 600; color: #e2e8f0;
-            background: rgba(10,14,18,0.65); border: 1px solid rgba(56,189,248,0.3); border-left: 3px solid var(--accent-default);
+            background: rgba(10,14,18,0.55); border: 1px solid rgba(79,216,255,0.3); border-left: 3px solid var(--azure);
             border-radius: 5px; padding: 7px 12px; cursor: pointer; min-width: 220px;
-            transition: all 0.2s ease;
+            transition: all 0.2s ease; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
         }
-        .vn-chapter-select:hover { background: rgba(56,189,248,0.08); border-color: var(--accent-default); }
-        .vn-chapter-select:focus { outline: none; box-shadow: 0 0 0 2px rgba(56,189,248,0.25); }
+        .vn-chapter-select:hover { background: rgba(79,216,255,0.08); border-color: var(--azure); }
+        .vn-chapter-select:focus { outline: none; box-shadow: 0 0 0 2px var(--azure-dim); }
         .vn-chapter-select-arrow { color: #64748b; font-size: 0.75rem; transition: transform 0.2s ease; flex-shrink: 0; }
         .vn-chapter-dropdown[aria-expanded="true"] .vn-chapter-select-arrow,
         .vn-chapter-select[aria-expanded="true"] .vn-chapter-select-arrow { transform: rotate(180deg); }
         .vn-chapter-dropdown-list {
             position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50;
             list-style: none; margin: 0; padding: 5px; max-height: 260px; overflow-y: auto;
-            background: #0b1016; border: 1px solid rgba(56,189,248,0.3); border-radius: 6px;
+            background: rgba(9,13,17,0.85); border: 1px solid rgba(79,216,255,0.3); border-radius: 6px;
+            backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%);
             box-shadow: 0 12px 28px rgba(0,0,0,0.55);
         }
         .vn-chapter-dropdown-item {
             padding: 8px 10px; border-radius: 4px; font-size: 0.85rem; color: #cbd5e1;
             cursor: pointer; white-space: nowrap; transition: background 0.15s ease;
         }
-        .vn-chapter-dropdown-item:hover:not(.locked) { background: rgba(56,189,248,0.12); }
-        .vn-chapter-dropdown-item.current { background: rgba(56,189,248,0.18); color: var(--accent-default); font-weight: 600; }
+        .vn-chapter-dropdown-item:hover:not(.locked) { background: rgba(79,216,255,0.12); }
+        .vn-chapter-dropdown-item.current { background: rgba(79,216,255,0.18); color: var(--azure); font-weight: 600; }
         .vn-chapter-dropdown-item.locked { color: #475569; font-style: italic; cursor: not-allowed; }
 
         /* --- ฉากประมวลความคิดปิดบท (ดู journeyBuildChapterCloseHTML ใน
@@ -393,6 +465,8 @@
             .vn-reflect-seq { display: none; }
             .vn-chapter-close .scene-close { opacity: 1 !important; animation: none !important; }
             .vn-reflect-line { animation: none; }
+            .ambient-motes { display: none; }
+            .rune-ring { animation: none; }
         }
         .vn-chapter-close .scene-close { opacity: 0; animation: vnCloseReveal 0.9s ease forwards; }
         @keyframes vnCloseReveal { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
@@ -427,17 +501,26 @@
         .vn-tp.end.current { background: #ffb84a; border-color: #ffb84a; box-shadow: 0 0 10px #ffb84a; }
         .vn-tp-line { flex: 1 0 10px; height: 1px; background: #334155; min-width: 10px; }
         .vn-tp-line.unlocked { background: rgba(56, 189, 248, 0.4); }
-        .vn-stage { min-height: 36vh; display: flex; flex-direction: column; justify-content: center; padding: 4px 2px; }
+        /* ฉาก VN เป็นแผงกระจก "field log" — เส้นซ้ายเรืองฟ้าแทนกรอบ HUD ทึบ
+           ให้ความรู้สึกเหมือนบันทึกที่ลอยอยู่เหนือพื้นดำ ไม่ใช่กล่องข้อความปกติ */
+        .vn-stage {
+            min-height: 36vh; display: flex; flex-direction: column; justify-content: center;
+            padding: 30px 34px; background: var(--panel-bg-strong); border: 1px solid var(--glass-border);
+            border-left: 2px solid var(--azure); border-radius: 6px;
+            backdrop-filter: blur(14px) saturate(130%); -webkit-backdrop-filter: blur(14px) saturate(130%);
+            box-shadow: -14px 0 34px -24px rgba(79,216,255,0.55), 0 18px 40px -22px rgba(0,0,0,0.6);
+        }
+        @media (max-width: 640px) { .vn-stage { padding: 22px 20px; } }
         .scene-tag { font-family: 'Rajdhani', sans-serif; font-size: 0.75rem; letter-spacing: 4px; color: var(--accent-default); text-transform: uppercase; margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
         .scene-tag::before { content: ''; width: 18px; height: 1px; background: var(--accent-default); flex-shrink: 0; }
         .scene-tag.key { color: #ffb84a; }
         .scene-tag.key::before { background: #ffb84a; }
-        .scene-text { font-family: 'Sarabun', sans-serif; font-size: 1.15rem; font-weight: 600; line-height: 1.95; color: #c3ceda; margin: 0 0 13px 0; opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
+        .scene-text { font-family: 'Noto Serif Thai', 'Sarabun', serif; font-size: 1.18rem; font-weight: 400; line-height: 2; color: #c3ceda; margin: 0 0 13px 0; opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
         .scene-text:last-child { margin-bottom: 0; }
         .scene-text em { color: var(--accent-default); font-style: normal; }
         .scene-text em.glow-danger { color: var(--danger); }
         .scene-text em.glow-warn { color: #ffb84a; }
-        .scene-sysnote { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #4a6478; margin: 18px 0 0; padding: 10px 14px; border-left: 2px solid #2a3a45; background: rgba(56,189,248,0.03); opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
+        .scene-sysnote { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 1px; color: #4a6478; margin: 18px 0 0; padding: 10px 14px; border-left: 2px solid #2a3a45; background: rgba(56,189,248,0.03); opacity: 0; animation: vn-fade-in 0.5s ease forwards; }
         @keyframes vn-fade-in { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
 
         .vn-actions { margin-top: 24px; display: flex; justify-content: flex-end; }
@@ -471,7 +554,7 @@
             0%, 100% { box-shadow: 0 0 0 rgba(255,184,74,0); }
             50% { box-shadow: 0 0 18px rgba(255,184,74,0.35); }
         }
-        .vn-decision-prompt .hint { display: block; font-family: monospace; font-size: 0.68rem; letter-spacing: 2px; color: #8a6a3a; margin-top: 6px; }
+        .vn-decision-prompt .hint { display: block; font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; letter-spacing: 2px; color: #8a6a3a; margin-top: 6px; }
         .vn-decision-options {
             display: flex; gap: 14px; justify-content: center; flex-wrap: wrap; margin-top: 18px;
             max-height: 0; opacity: 0; overflow: hidden; pointer-events: none;
@@ -487,7 +570,7 @@
         .vn-explore-entry { font-family: 'Sarabun', sans-serif; font-size: 0.92rem; line-height: 1.8; color: #b8c4d4; background: rgba(167,139,250,0.06); border-left: 2px solid #a78bfa; padding: 10px 14px; border-radius: 4px; margin: 0; opacity: 0; animation: vn-fade-in 0.4s ease forwards; }
         .vn-explore-btn { background: rgba(167,139,250,0.08); border: 1px solid #a78bfa; color: #c4b5fd; padding: 9px 18px; border-radius: 6px; font-family: 'Rajdhani', sans-serif; letter-spacing: 1.5px; font-size: 0.82rem; text-transform: uppercase; cursor: pointer; transition: all 0.25s ease; display: inline-flex; align-items: center; gap: 7px; }
         .vn-explore-btn:hover { background: rgba(167,139,250,0.18); border-color: #c4b5fd; transform: translateY(-1px); }
-        .vn-explore-done { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; }
+        .vn-explore-done { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; }
         .vn-explore-btn:disabled { opacity: 0.35; cursor: not-allowed; }
         .vn-explore-btn:disabled:hover { background: rgba(167,139,250,0.08); border-color: #a78bfa; transform: none; }
         .vn-rest-btn { background: rgba(110,242,160,0.08); border-color: #6ef2a0; color: #a8e8c0; }
@@ -509,7 +592,7 @@
             0% { transform: scale(1.7); box-shadow: 0 0 14px #6ef2a0; }
             100% { transform: scale(1); }
         }
-        .vn-skill-progress { font-family: monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; margin-top: 6px; }
+        .vn-skill-progress { font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 1px; color: #6b5b95; margin-top: 6px; }
         .vn-action-row { display: flex; flex-wrap: wrap; gap: 10px; }
 
         .scene-close { margin-top: 8px; padding: 28px; border: 1px dashed rgba(56, 189, 248, 0.3); border-radius: 8px; background: rgba(0,0,0,0.3); text-align: center; }
@@ -525,7 +608,7 @@
         .swatch .lbl { font-size: 0.65rem; color: #8fa6b8; }
 
         .pill-row { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 6px; }
-        .pill { font-size: 0.72rem; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color); color: #94a3b8; font-family: monospace; }
+        .pill { font-size: 0.72rem; padding: 4px 10px; border-radius: 20px; border: 1px solid var(--border-color); color: #94a3b8; font-family: 'JetBrains Mono', monospace; }
 
         /* --- Interactive Tactical Map (Anime Sci-Fi Style) --- */
         .tactical-map-container {
@@ -573,7 +656,7 @@
         .hud-status .dot { width: 6px; height: 6px; background: var(--alive); border-radius: 50%; animation: pulse 1s infinite; }
         .hud-title { font-family: 'Rajdhani', sans-serif; font-size: 1.4rem; color: white; letter-spacing: 2px; margin: 0 0 5px 0; text-transform: uppercase; }
         .hud-desc { font-size: 0.8rem; color: #94a3b8; line-height: 1.5; margin: 0; font-family: 'Sarabun', sans-serif; }
-        .hud-coord { font-family: monospace; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; }
+        .hud-coord { font-family: 'JetBrains Mono', monospace; font-size: 0.7rem; color: #64748b; margin-top: 10px; border-top: 1px dashed rgba(255,255,255,0.1); padding-top: 8px; }
 
         @media (max-width: 1000px) {
             #landing-view .main-layout { flex-direction: column; }
@@ -591,6 +674,15 @@
     <div class="hud-frame-tl"></div>
     <div class="hud-frame-br"></div>
     <div class="radar-bg"></div>
+    <div class="ambient-motes" aria-hidden="true">
+        <span style="left:6%; --drift:14px; animation-duration:15s; animation-delay:0s;"></span>
+        <span style="left:18%; --drift:-18px; animation-duration:20s; animation-delay:4s;"></span>
+        <span style="left:34%; --drift:10px; animation-duration:17s; animation-delay:8s;"></span>
+        <span style="left:52%; --drift:-12px; animation-duration:22s; animation-delay:2s;"></span>
+        <span style="left:67%; --drift:20px; animation-duration:18s; animation-delay:11s;"></span>
+        <span style="left:81%; --drift:-16px; animation-duration:24s; animation-delay:6s;"></span>
+        <span style="left:93%; --drift:12px; animation-duration:16s; animation-delay:14s;"></span>
+    </div>
 
     <div class="container">
 
@@ -598,6 +690,7 @@
             <div class="main-layout">
                 <div class="left-col">
                     <div class="header">
+                        <div class="rune-ring" aria-hidden="true"></div>
                         <h1>ITHRA FIELD<br>CODEX</h1>
                         <h2>CONFLUENCE PROJECT DB</h2>
                         <div class="status-bar">
@@ -1327,6 +1420,9 @@
 
                 const statusClass = statusClassFor(creature.status);
                 card.className = 'species-card';
+                // เรืองขอบ/แสงตอน hover ด้วยสีของตัวมันเอง (field `color` มีอยู่แล้ว
+                // ทุกไฟล์ creature) แทนที่จะใช้ accent เดียวทั้งกริดเหมือนเดิม
+                card.style.setProperty('--card-glow', creature.color || 'var(--accent-default)');
 
                 const visuallyKnown = isVisuallyConfirmed(creature.imageKey);
                 const dataUri = creature.imageKey && visuallyKnown ? IMAGE_LIBRARY[creature.imageKey] : null;
@@ -1394,6 +1490,7 @@
 
             document.getElementById('d-id').innerText = data.id;
             document.getElementById('d-id').style.color = data.color;
+            document.querySelector('.image-box').style.setProperty('--card-glow', data.color || 'var(--azure-dim)');
             document.getElementById('d-name').innerHTML = getDisplayName(data);
             document.getElementById('d-era').innerText = data.era;
             document.getElementById('d-desc').innerText = data.desc;
