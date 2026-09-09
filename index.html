@@ -333,11 +333,17 @@
 
         /* เมนูเลือกบท — dropdown เดียวกระชับ วางในช่องว่างกลาง .sub-header
            (ระหว่างหัวเรื่องกับปุ่ม SYS-SIM/RESET) แทนแถวการ์ดเดิมที่กินพื้นที่
-           แนวตั้งเยอะ ตัวเลือกสร้างจาก journeyRenderChapterSelect() ใน
-           data/journey.js ทุกครั้งที่ journeyRender() ทำงาน */
+           แนวตั้งเยอะ เป็น custom widget (button + ul ลอย) ไม่ใช้ <select>
+           ดิบๆ เพราะ list ที่ native select เปิดมาถูก OS/เบราว์เซอร์คุมสไตล์
+           เอง (ตัวเลือกพื้นขาวไฮไลต์น้ำเงินของระบบ) แต่งให้เข้าธีมมืดของเว็บ
+           ไม่ได้ ตัวเลือกสร้างจาก journeyRenderChapterSelect() ใน
+           data/journey.js ทุกครั้งที่ journeyRender() ทำงาน เปิด/ปิดคุมด้วย
+           journeyToggleChapterDropdown() */
         .vn-chapter-select-wrap { display: flex; align-items: center; gap: 8px; }
         .vn-chapter-select-label { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; white-space: nowrap; }
+        .vn-chapter-dropdown { position: relative; }
         .vn-chapter-select {
+            display: flex; align-items: center; justify-content: space-between; gap: 14px;
             font-family: inherit; font-size: 0.88rem; font-weight: 600; color: #e2e8f0;
             background: rgba(10,14,18,0.65); border: 1px solid rgba(56,189,248,0.3); border-left: 3px solid var(--accent-default);
             border-radius: 5px; padding: 7px 12px; cursor: pointer; min-width: 220px;
@@ -345,7 +351,22 @@
         }
         .vn-chapter-select:hover { background: rgba(56,189,248,0.08); border-color: var(--accent-default); }
         .vn-chapter-select:focus { outline: none; box-shadow: 0 0 0 2px rgba(56,189,248,0.25); }
-        .vn-chapter-select option:disabled { color: #475569; font-style: italic; }
+        .vn-chapter-select-arrow { color: #64748b; font-size: 0.75rem; transition: transform 0.2s ease; flex-shrink: 0; }
+        .vn-chapter-dropdown[aria-expanded="true"] .vn-chapter-select-arrow,
+        .vn-chapter-select[aria-expanded="true"] .vn-chapter-select-arrow { transform: rotate(180deg); }
+        .vn-chapter-dropdown-list {
+            position: absolute; top: calc(100% + 6px); left: 0; right: 0; z-index: 50;
+            list-style: none; margin: 0; padding: 5px; max-height: 260px; overflow-y: auto;
+            background: #0b1016; border: 1px solid rgba(56,189,248,0.3); border-radius: 6px;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.55);
+        }
+        .vn-chapter-dropdown-item {
+            padding: 8px 10px; border-radius: 4px; font-size: 0.85rem; color: #cbd5e1;
+            cursor: pointer; white-space: nowrap; transition: background 0.15s ease;
+        }
+        .vn-chapter-dropdown-item:hover:not(.locked) { background: rgba(56,189,248,0.12); }
+        .vn-chapter-dropdown-item.current { background: rgba(56,189,248,0.18); color: var(--accent-default); font-weight: 600; }
+        .vn-chapter-dropdown-item.locked { color: #475569; font-style: italic; cursor: not-allowed; }
 
         /* --- ฉากประมวลความคิดปิดบท (ดู journeyBuildChapterCloseHTML ใน
            data/journey.js) ประโยคมุมมองบุคคลที่หนึ่งลอยขึ้นทีละประโยคแล้วจาง
@@ -788,7 +809,10 @@
                 </div>
                 <div class="vn-chapter-select-wrap">
                     <span class="vn-chapter-select-label">CHAPTER</span>
-                    <select id="journey-chapter-select" class="vn-chapter-select" onchange="journeySelectChapter(parseInt(this.value, 10))"></select>
+                    <div class="vn-chapter-dropdown" id="journey-chapter-dropdown">
+                        <button type="button" class="vn-chapter-select" id="journey-chapter-select-btn" onclick="journeyToggleChapterDropdown(event)" aria-haspopup="listbox" aria-expanded="false"></button>
+                        <ul class="vn-chapter-dropdown-list" id="journey-chapter-dropdown-list" role="listbox" hidden></ul>
+                    </div>
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                     <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>

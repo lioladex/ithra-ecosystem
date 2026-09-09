@@ -866,26 +866,76 @@ function journeyGoTo(targetId) {
     journeyRender();
 }
 
-/* เมนูเลือกบท — dropdown เดียวกระชับ วางใน .sub-header (นอก #journey-view-content)
-   ไม่ใช่ innerHTML string ที่ประกอบเข้ากับฉากเหมือนเดิม จึงเป็น DOM side-effect
-   แยกต่างหาก เรียกจาก journeyRender() ทุกครั้งเพื่อ sync ตัวเลือก + ค่าที่เลือกอยู่
-   ให้ตรงกับ journeyChapterIdx เสมอ บทที่ยังไม่ปลดล็อกเป็น option disabled
-   ไม่สปอยล์ชื่อบท */
+/* เมนูเลือกบท — custom dropdown (button + ul ลอย) วางใน .sub-header (นอก
+   #journey-view-content) ไม่ใช้ <select> ดิบเพราะ list ที่เปิดมาถูก
+   OS/เบราว์เซอร์คุมสไตล์เอง แต่งเข้าธีมมืดของเว็บไม่ได้ (ดูคอมเมนต์ CSS
+   ที่ .vn-chapter-select ใน index.html) เป็น DOM side-effect แยกต่างหาก
+   เรียกจาก journeyRender() ทุกครั้งเพื่อ sync ตัวเลือก + ค่าที่เลือกอยู่ให้
+   ตรงกับ journeyChapterIdx เสมอ บทที่ยังไม่ปลดล็อกกดไม่ได้ ไม่สปอยล์ชื่อบท
+   list ปิดอยู่เสมอหลัง re-render (เช่นตอนเลือกบทใหม่) */
+function journeyChapterLabel(i) {
+    const ch = JOURNEY_CHAPTERS[i];
+    const unlocked = journeyChapterUnlocked(i);
+    const finished = journeyChapterFinished(i);
+    const isCurrent = i === journeyChapterIdx;
+    let label = `บทที่ ${ch.num} — ${unlocked ? ch.title : 'ยังไม่เปิดเผย'}`;
+    if (unlocked) label += finished ? (isCurrent ? ' (กำลังอ่าน · จบแล้ว)' : ' (จบแล้ว)') : (isCurrent ? ' (กำลังอ่าน)' : '');
+    else label = `🔒 ${label}`;
+    return label;
+}
+
 function journeyRenderChapterSelect() {
-    const select = document.getElementById('journey-chapter-select');
-    if (!select) return;
+    const btn = document.getElementById('journey-chapter-select-btn');
+    const list = document.getElementById('journey-chapter-dropdown-list');
+    if (!btn || !list) return;
+    btn.innerHTML = `<span class="vn-chapter-select-text">${journeyChapterLabel(journeyChapterIdx)}</span><span class="vn-chapter-select-arrow">▾</span>`;
+
     let html = '';
     JOURNEY_CHAPTERS.forEach((ch, i) => {
         const unlocked = journeyChapterUnlocked(i);
-        const finished = journeyChapterFinished(i);
         const isCurrent = i === journeyChapterIdx;
-        let label = `บทที่ ${ch.num} — ${unlocked ? ch.title : 'ยังไม่เปิดเผย'}`;
-        if (unlocked) label += finished ? (isCurrent ? ' (กำลังอ่าน · จบแล้ว)' : ' (จบแล้ว)') : (isCurrent ? ' (กำลังอ่าน)' : '');
-        else label = `🔒 ${label}`;
-        html += `<option value="${i}"${unlocked ? '' : ' disabled'}${isCurrent ? ' selected' : ''}>${label}</option>`;
+        const cls = ['vn-chapter-dropdown-item'];
+        if (!unlocked) cls.push('locked');
+        if (isCurrent) cls.push('current');
+        const clickAttr = unlocked ? ` onclick="journeySelectChapterFromDropdown(${i})"` : '';
+        html += `<li class="${cls.join(' ')}" role="option" aria-selected="${isCurrent}"${clickAttr}>${journeyChapterLabel(i)}</li>`;
     });
-    select.innerHTML = html;
-    select.value = String(journeyChapterIdx);
+    list.innerHTML = html;
+    journeyCloseChapterDropdown();
+}
+
+function journeyToggleChapterDropdown(evt) {
+    if (evt) evt.stopPropagation();
+    const dropdown = document.getElementById('journey-chapter-dropdown');
+    const list = document.getElementById('journey-chapter-dropdown-list');
+    if (!dropdown || !list) return;
+    const opening = list.hasAttribute('hidden');
+    if (opening) journeyOpenChapterDropdown(); else journeyCloseChapterDropdown();
+}
+
+function journeyOpenChapterDropdown() {
+    const btn = document.getElementById('journey-chapter-select-btn');
+    const list = document.getElementById('journey-chapter-dropdown-list');
+    if (!btn || !list) return;
+    list.removeAttribute('hidden');
+    btn.setAttribute('aria-expanded', 'true');
+    // ปิดเองเมื่อคลิกที่อื่นนอกกล่อง — ผูก listener แค่ตอนเปิดจริง แล้วถอดทิ้ง
+    // ทันทีที่ปิด กัน listener ค้างสะสมทุกครั้งที่ journeyRenderChapterSelect()
+    // เรียก journeyCloseChapterDropdown() ระหว่าง re-render ปกติ
+    setTimeout(() => document.addEventListener('click', journeyCloseChapterDropdown, { once: true }), 0);
+}
+
+function journeyCloseChapterDropdown() {
+    const btn = document.getElementById('journey-chapter-select-btn');
+    const list = document.getElementById('journey-chapter-dropdown-list');
+    if (!btn || !list) return;
+    list.setAttribute('hidden', '');
+    btn.setAttribute('aria-expanded', 'false');
+}
+
+function journeySelectChapterFromDropdown(chIdx) {
+    journeyCloseChapterDropdown();
+    journeySelectChapter(chIdx);
 }
 
 /* timeline แสดงเฉพาะ checkpoint ของบทที่กำลังอ่านอยู่ (+ จุดจบบทนั้น) —
