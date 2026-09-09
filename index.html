@@ -422,9 +422,13 @@
            data/journey.js ทุกครั้งที่ journeyRender() ทำงาน เปิด/ปิดคุมด้วย
            journeyToggleChapterDropdown() */
         /* รวม chapter-select-wrap + แถบ SYS-SIM เป็น flex item เดียวของ .sub-header
-           (ดูคอมเมนต์ตรง HTML) เพื่อให้จุดตัดขึ้นบรรทัดใหม่คงที่ไม่ขยับตามความยาว
-           ชื่อบทที่เลือกอยู่ */
-        .vn-toolbar-row { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
+           (ดูคอมเมนต์ตรง HTML) พร้อม flex-basis: 100% บังคับให้แถวนี้ตกลงบรรทัด
+           ใหม่เสมอ ไม่แชร์แถวกับหัวเรื่องไม่ว่ากรณีใด — เดิมปล่อยให้ wrap ตาม
+           ธรรมชาติทำให้ตำแหน่งขยับไปมาตามความยาวชื่อบทที่เลือกอยู่ (บทที่มีชื่อสั้น
+           อย่าง "การตื่นรู้" ขึ้นแถวเดียวกับหัวเรื่องได้ แต่บทที่ชื่อยาวอย่าง
+           "ผู้ล่าและเหยื่อ" ดันตัวเองตกไปอีกบรรทัด) ตอนนี้ตกบรรทัดใหม่เสมอทุกบท
+           ตำแหน่งจึงคงที่ไม่เด้ง */
+        .vn-toolbar-row { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px; flex-basis: 100%; margin-top: 14px; }
         .vn-chapter-select-wrap { display: flex; align-items: center; gap: 8px; }
         .vn-chapter-select-label { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; white-space: nowrap; }
         .vn-chapter-dropdown { position: relative; }
