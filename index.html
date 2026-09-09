@@ -344,7 +344,18 @@
         .desc-text { line-height: 1.75; color: #94a3b8; font-size: 0.92rem; border-left: 2px solid var(--accent-default); padding-left: 14px; margin-top: 13px; }
 
         .profile-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 25px; }
-        .info-box { background: var(--panel-bg); border: 1px solid var(--border-color); border-radius: 6px; padding: 22px; backdrop-filter: blur(5px); }
+        /* ใช้ร่วมกันทั้งกริดข้อมูล creature detail และเนื้อหา World & Ecosystem
+           (data/ecosystem.js) — เดิมยังเป็นกระจกอ่อนกว่าพาเนลอื่น (blur 5px,
+           ขอบทึบ) ตอนปรับธีมกระจกรอบแรกพลาดจุดนี้ไป แก้ให้ตรงกับพาเนลอื่นๆ */
+        .info-box {
+            background: var(--panel-bg); border: 1px solid var(--glass-border); border-radius: 6px; padding: 22px;
+            backdrop-filter: blur(12px) saturate(130%); -webkit-backdrop-filter: blur(12px) saturate(130%);
+            position: relative;
+        }
+        .info-box::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; border-radius: 6px 6px 0 0;
+            background: linear-gradient(90deg, transparent, var(--glass-edge) 45%, transparent 90%);
+        }
         .info-box h3 { margin: 0 0 15px 0; color: white; font-size: 1.1rem; letter-spacing: 1px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
 
         .data-row { display: flex; justify-content: space-between; margin-bottom: 10px; border-bottom: 1px dashed rgba(255,255,255,0.05); padding-bottom: 6px; font-size: 0.9rem; gap: 10px; }
@@ -909,6 +920,9 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                     <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
+                    <button class="dev-toggle-btn" onclick="exportSaveFile()" title="ดาวน์โหลดความคืบหน้าทั้งหมดเป็นไฟล์ .json เพื่อย้ายไปเล่นต่อเครื่องอื่น">⬇ EXPORT SAVE</button>
+                    <button class="dev-toggle-btn" onclick="triggerImportSaveFile()" title="โหลดไฟล์เซฟที่เคย export ไว้ ทับความคืบหน้าปัจจุบันในเครื่องนี้">⬆ IMPORT SAVE</button>
+                    <input type="file" id="save-file-input" accept="application/json,.json" style="display:none;" onchange="importSaveFile(this)">
                     <button class="dev-toggle-btn" onclick="journeyResetProgression()" title="สำหรับพัฒนา/ทดสอบเท่านั้น">🔄 RESET PROGRESSION</button>
                     <!-- เครื่องมือไล่ตรวจฉาก (โผล่เฉพาะตอน DEV MODE เปิด) — เลือกฉากแล้ว
                          รีเซ็ตความคืบหน้าตั้งแต่ฉากนั้นถึงท้ายสุด ดู journeyResetFromStep() -->
@@ -1102,6 +1116,82 @@
         }
         function isNameRevealed(imageKey) {
             return devModeOn || !!nameRevealed[imageKey];
+        }
+
+        /* --- Export/Import ไฟล์เซฟ ---
+           เว็บนี้เป็น static site ไม่มี backend/database เลย ความคืบหน้าทั้งหมด
+           อยู่ใน localStorage ของเบราว์เซอร์เครื่องนั้นๆ เท่านั้น ผู้เล่นที่สลับ
+           เล่นหลายเครื่องจึงต้องมีทางย้ายเซฟเอง — ให้ export เป็นไฟล์ .json
+           ดาวน์โหลดเก็บไว้ แล้ว import กลับที่เครื่องปลายทาง เหมือนไฟล์เซฟเกม
+           ทั่วไป แทนการฝัง state ทั้งก้อนไว้ใน URL (ยาวเกินไปเมื่อเล่นไปมาก)
+           รวมทุก key ที่นับเป็น "ความคืบหน้า" จริง — ไม่รวม DEV_MODE_KEY (แค่
+           toggle เครื่องมือนักพัฒนา) และไม่รวม JOURNEY_LOG_KEY (แค่ประวัติ
+           การแจ้งเตือนในเซสชัน ไม่ใช่ progress ที่ทำให้เกมเดินต่อได้) */
+        const SAVE_FILE_KEYS = [
+            JOURNEY_STORAGE_KEY, JOURNEY_EXPLORE_KEY, AP_STATE_KEY, SKILLS_LEARNED_KEY,
+            KNOWN_SPECIES_KEY, VISUAL_CONFIRMED_KEY, NAME_REVEALED_KEY
+        ];
+        const SAVE_FILE_FORMAT = 'ithra-save';
+        const SAVE_FILE_VERSION = 1;
+
+        function exportSaveFile() {
+            const data = {};
+            SAVE_FILE_KEYS.forEach(key => {
+                const raw = localStorage.getItem(key);
+                if (raw === null) return;
+                try { data[key] = JSON.parse(raw); } catch (e) { /* key พังเดี่ยวๆ ข้ามไปเฉยๆ ไม่ให้ล้มทั้งไฟล์ */ }
+            });
+            const exportedAt = new Date().toISOString();
+            const blob = new Blob(
+                [JSON.stringify({ format: SAVE_FILE_FORMAT, version: SAVE_FILE_VERSION, exportedAt, data }, null, 2)],
+                { type: 'application/json' }
+            );
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `ithra-save-${exportedAt.slice(0, 10)}.json`;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+        }
+
+        function triggerImportSaveFile() {
+            const input = document.getElementById('save-file-input');
+            if (input) input.click();
+        }
+
+        function importSaveFile(inputEl) {
+            const file = inputEl.files && inputEl.files[0];
+            inputEl.value = ''; // เคลียร์ไว้ก่อน เผื่อผู้เล่นเลือกไฟล์ชื่อเดิมซ้ำ change event จะได้ยิงอีกครั้ง
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onerror = () => alert('อ่านไฟล์ไม่สำเร็จ ลองใหม่อีกครั้ง');
+            reader.onload = () => {
+                let payload;
+                try { payload = JSON.parse(reader.result); } catch (e) {
+                    alert('ไฟล์นี้ไม่ใช่ไฟล์เซฟที่อ่านได้ (JSON ไม่ถูกต้อง)');
+                    return;
+                }
+                if (!payload || payload.format !== SAVE_FILE_FORMAT || typeof payload.data !== 'object') {
+                    alert('ไฟล์นี้ไม่ใช่ไฟล์เซฟของ ITHRA FIELD CODEX');
+                    return;
+                }
+                if (typeof payload.version === 'number' && payload.version > SAVE_FILE_VERSION) {
+                    alert('ไฟล์เซฟนี้มาจากเวอร์ชันของเว็บที่ใหม่กว่านี้ — หน้าเว็บปัจจุบันยังโหลดให้ไม่ได้');
+                    return;
+                }
+                const savedLabel = payload.exportedAt ? new Date(payload.exportedAt).toLocaleString('th-TH') : 'ไม่ทราบเวลา';
+                if (!confirm(`นำเข้าไฟล์เซฟนี้ (บันทึกไว้เมื่อ ${savedLabel}) ทับความคืบหน้าปัจจุบันในเครื่องนี้ทั้งหมด?`)) return;
+
+                SAVE_FILE_KEYS.forEach(key => {
+                    if (!Object.prototype.hasOwnProperty.call(payload.data, key)) return;
+                    try { localStorage.setItem(key, JSON.stringify(payload.data[key])); } catch (e) {}
+                });
+                location.reload();
+            };
+            reader.readAsText(file);
         }
         /* เรียกจาก data/journey.js เมื่อเนื้อเรื่องมีฉากที่เปิดเผยชื่อจริงแล้ว
            (ยังไม่มีการเรียกจริง ณ ตอนนี้) — ปลดถาวร ไม่มีวันย้อนกลับเป็นชื่อเล่น */
