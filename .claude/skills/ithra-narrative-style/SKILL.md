@@ -62,7 +62,7 @@ When something would be too much to narrate moment-to-moment (fainting, the inst
 Any narrative event with mechanical side-effects that don't match a creature's `recoveryAction`/`teachesSkill` canon (e.g. the small AP recovery from fainting at `shock-collapse`) must ship with a short code comment explaining *why* it's non-canon and why it's justified by the specific scene — so a future editor doesn't "fix" it into consistency by accident.
 
 ## 8. Branch text must feel authored, not bolted on
-When `paragraphs`/`text` is a function branching on prior choices (e.g. kicked vs. not-kicked at T+8/T+9), both branches must read as equally deliberate prose — no branch should feel like a shorter afterthought bolted onto the "real" path.
+When `paragraphs`/`text` is a function branching on prior choices (e.g. kicked vs. not-kicked at T+2/T+3), both branches must read as equally deliberate prose — no branch should feel like a shorter afterthought bolted onto the "real" path.
 
 ## 9. Chapter-close reflection lines (`reflections` in JOURNEY_CHAPTERS)
 Every chapter ends with a processing sequence: one-sentence, first-person lines that float in and fade out, then a gain/loss ledger. Rules specific to these lines:

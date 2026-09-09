@@ -1,15 +1,15 @@
 JOURNEY_STEPS.push(
-    /* ===== บทที่ 3 — "ความทรงจำแรก" (T+21 → T+25) =====
-       Act 1 (T+21)    เฝ้าฝูงร่างเดิมต่อจากบทที่ 2 ปิดองก์ด้วยทางแยกระยะเข้าใกล้
-                        (lane "near" = เกาะกิ่งใกล้ชายฝูง · lane "high" = ลอยสูง
-                        ในกระแสลมร้อน) — ทางแยกเดียวของบทนี้
-       Act 2 (T+22-24) ทั้งสองเลนเจอเหตุการณ์เดียวกัน (ฝูง Karvos ย่องเข้าล่าฝูง
-                        ร่างเดิม) แต่ผลต่างกันเพราะระยะที่เลือก lane "near" เสียตัว
-                        หนึ่งเพราะจุดบอดจากการจ้องกันเอง (near-strike), lane "high"
-                        ฝูงหนีทันเพราะไม่มีจุดบอด (high-escape) ทั้งสองเลนบรรจบที่
-                        sharper-question ผ่าน nextId
-       Act 3 (T+25)    บรรจบที่ step เดียว คำถามค้างจากบทที่ 2 (ใครสั่ง "ยืนหยัดไว้"
-                        ที่ T+3) แหลมคมขึ้นแต่ไม่คลี่คลาย ปิดบท
+    /* ===== บทที่ 3 — "ความทรงจำแรก" (T+7 → T+8) =====
+       เหตุการณ์ T+7 (watch-fork → near-strike/high-escape) เฝ้าฝูงร่างเดิมต่อ
+                    จากบทที่ 2 แยกด้วยทางแยกระยะเข้าใกล้ (lane "near" = เกาะกิ่ง
+                    ใกล้ชายฝูง · lane "high" = ลอยสูงในกระแสลมร้อน) — ทางแยก
+                    เดียวของบทนี้ ทั้งสองเลนเจอเหตุการณ์เดียวกัน (ฝูง Karvos
+                    ย่องเข้าล่าฝูงร่างเดิม) แต่ผลต่างกันเพราะระยะที่เลือก lane
+                    "near" เสียตัวหนึ่งเพราะจุดบอดจากการจ้องกันเอง (near-strike),
+                    lane "high" ฝูงหนีทันเพราะไม่มีจุดบอด (high-escape) ทั้งสอง
+                    เลนบรรจบที่ sharper-question ผ่าน nextId
+       เหตุการณ์ T+8 (sharper-question) บรรจบที่ step เดียว คำถามค้างจากบทที่ 1
+                    (ใครสั่ง "ยืนหยัดไว้" ที่ T+1) แหลมคมขึ้นแต่ไม่คลี่คลาย ปิดบท
        ทางแยกร่างใหม่ Karvos/Ozgrun (เดิมอยู่ท้ายบทนี้: the-collision/wake-karvos/
        wake-ozgrun/after-ash) ถูกย้ายไปเปิดบทที่ 4 แทนตามดราฟที่ยืนยันแล้วกับ
        เจ้าของโปรเจกต์ 2026-09-01 (ดู codex/chapter3-draft-script.md ในประวัติ git
@@ -17,7 +17,7 @@ JOURNEY_STEPS.push(
        Skyther ตลอดบท ไม่มี skill ใหม่ (PACK_HUNT เรียนจบจากบทที่ 2 แล้ว) */
     {
         id: "watch-fork",
-        tag: "T+21 — ระยะที่ยังเลือกได้",
+        tag: "T+7 — ระยะที่ยังเลือกได้",
         key: true,
         recoversAP: true,
         paragraphs: [
@@ -35,7 +35,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "near-vigilance",
-        tag: "T+22 — ตัวที่มองเห็น",
+        tag: "T+7 — ตัวที่มองเห็น",
         lane: "near",
         paragraphs: [
             `กิ่งไม้ที่เลือกอยู่ต่ำพอที่ตัวใกล้ที่สุดในฝูงเงยหน้าขึ้นมาสบตาได้ทันทีที่เกาะนิ่ง`,
@@ -48,7 +48,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "near-blindspot",
-        tag: "T+23 — สองสายตาที่ล็อกกัน",
+        tag: "T+7 — สองสายตาที่ล็อกกัน",
         lane: "near",
         paragraphs: [
             `วันถัดมากลับมาเกาะกิ่งเดิมอีกครั้ง ตัวใกล้ที่สุดตัวเดิมเงยหน้าขึ้นมาเร็วกว่าเมื่อวาน คอลดต่ำทันทีโดยไม่ต้องรอสังเกตนาน`,
@@ -60,7 +60,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "near-strike",
-        tag: "T+24 — จุดบอดร่วม",
+        tag: "T+7 — จุดบอดร่วม",
         lane: "near",
         key: true,
         nextId: "sharper-question",
@@ -78,7 +78,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "high-vantage",
-        tag: "T+22 — ระยะที่ไม่มีใครมองเห็น",
+        tag: "T+7 — ระยะที่ไม่มีใครมองเห็น",
         lane: "high",
         paragraphs: [
             `ลอยสูงต่อไปในกระแสลมร้อนเหนือเรือนยอด ไม่ต้องกระพือปีกเลยตลอดครึ่งวัน ระยะนี้ไกลพอที่ตัวไหนในฝูงจะไม่มีทางเงยหน้าขึ้นมาเห็น`,
@@ -90,7 +90,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "high-signal",
-        tag: "T+23 — สัญญาณจากระยะไกล",
+        tag: "T+7 — สัญญาณจากระยะไกล",
         lane: "high",
         paragraphs: [
             `ไกลออกไปสุดขอบสายตา มีบางอย่างขยับผ่านร่มเงาแนวหนึ่งไปยังอีกแนวหนึ่ง ช้าและเงียบเกินกว่าจะเป็นลม`,
@@ -102,7 +102,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "high-escape",
-        tag: "T+24 — เหยื่อที่รู้ตัวทัน",
+        tag: "T+7 — เหยื่อที่รู้ตัวทัน",
         lane: "high",
         key: true,
         nextId: "sharper-question",
@@ -126,7 +126,7 @@ JOURNEY_STEPS.push(
     },
     {
         id: "sharper-question",
-        tag: "T+25 — สิ่งที่เพิ่งเห็นพอจะตอบได้",
+        tag: "T+8 — สิ่งที่เพิ่งเห็นพอจะตอบได้",
         key: true,
         /* paragraphs เป็นฟังก์ชันเพราะบทนี้มาได้สองเลน (ดูทางแยก watch-fork) —
            ใช้ journeyUnlockedIds.has('near-strike') เช็คเลนที่เดินมาจริง
@@ -150,7 +150,7 @@ JOURNEY_STEPS.push(
             );
             return base;
         },
-        sysnote: `[LOG] SUBJECT'S T+3 RESPONSE PATTERN MATCHES NEITHER OBSERVED PREY BEHAVIOR // CLASSIFICATION STILL PENDING`,
+        sysnote: `[LOG] SUBJECT'S T+1 RESPONSE PATTERN MATCHES NEITHER OBSERVED PREY BEHAVIOR // CLASSIFICATION STILL PENDING`,
         continueLabel: "Continue Journey"
     },
 );

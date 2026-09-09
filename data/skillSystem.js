@@ -205,7 +205,7 @@ const SKILL_DEFINITIONS = {
         learnedLabel: "เข้าใจการล่าเป็นฝูง"
     },
     CURL_DEFENSE: {
-        name: "การหดตัวเข้าวงป้องกัน (Curl Defense)", // Ozgrun สอน — เห็นครั้งแรกใน Ch.2 ตอน T+17 เท่านั้น ยังไม่ครบสังเกต
+        name: "การหดตัวเข้าวงป้องกัน (Curl Defense)", // Ozgrun สอน — เห็นครั้งแรกใน Ch.2 ตอน T+5 เท่านั้น ยังไม่ครบสังเกต
         progressLabel: "พยายามทำความเข้าใจจังหวะการหดตัวป้องกันภัยบางอย่าง",
         requiresOrgan: "เกราะแร่ธาตุตกผลึก",
         obsNeeded: 3, // Ozgrun เป็น Alien Intensity Tier II — เจตนาให้เรียนไม่จบใน Ch.2 (สังเกตได้แค่ 1 ครั้งในบทนี้)

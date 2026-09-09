@@ -11,7 +11,7 @@
 `JOURNEY_CHAPTERS` (array) คือ metadata ระดับบท แต่ละ object มี:
 ```js
 {
-    num: 3, title: "จุดบอด", range: "T+21 → T+25",
+    num: 3, title: "จุดบอด", range: "T+7 → T+8",
     startId: "watch-fork",       // id ของ step แรกในบท
     endId: "__end_ch3__",         // id พิเศษที่ใช้ mark ว่าบทจบแล้ว
     closeTag: "// ...", closeText: "...", nextLabel: "...",
@@ -23,14 +23,14 @@
 - STEP 0 ไม่มีสรรพนาม ไม่มี "คุณ" เลย (ระยะ 0 — ก่อนตื่นรู้)
 - STEP 1 "คุณ" ปรากฏขึ้นครั้งแรกตรงจุดตื่นรู้ (ระยะ 1)
 - STEP 2 ยุคความรู้สึกนำทาง time-skip เข้าสู่ร่าง Luvenn ที่ POI-V01
-- STEP 3-5 ฉาก T-0 → T+3 ตรงกับเส้นเวลาที่วิเคราะห์ไว้ใน `memory-and-transformation.md`
+- STEP 3-5 ฉาก T-0 → T+1 ตรงกับเส้นเวลาที่วิเคราะห์ไว้ใน `memory-and-transformation.md`
 
 ## Field ของ step หนึ่ง (`JOURNEY_STEPS[i]`)
 
 | Field | ความหมาย |
 |---|---|
 | `id` | string ห้ามซ้ำ/ห้ามเปลี่ยน (ดูข้างบน) |
-| `tag` | ป้ายแสดงบนหน้าจอ เช่น `"T+17 — การล่าที่มองจากด้านบน"` |
+| `tag` | ป้ายแสดงบนหน้าจอ เช่น `"T+5 — การล่าที่มองจากด้านบน"` |
 | `key` | boolean — mark step สำคัญของเนื้อเรื่อง (แสดงผลต่างจาก step รอง) |
 | `paragraphs` | array ของ string หรือ **function ที่ return array** (ใช้ function เมื่อเนื้อหาต้องแยกทางตามตัวเลือกก่อนหน้า — เช็คจาก `journeyExploredMap['<step-id>']['<action-id>']`) |
 | `sysnote` | บรรทัด `[LOG]` แบบ voice ผู้สังเกต (ดูกฎในหมวด sysnote ของ `writing-style.md`) |
@@ -55,7 +55,7 @@ actions: [
 ]
 ```
 
-`pool` เป็นทางเลือกของ `actions[]` แบบสุ่ม — action หนึ่งมี `pool: [...]` แทน `text` ตรงๆ เมื่อผลลัพธ์ควรสุ่มได้หลายแบบ (เช่น `scan-area` ที่ T-0 สุ่มเจอสิ่งมีชีวิตต่างกันได้)
+`pool` เป็นทางเลือกของ `actions[]` แบบสุ่ม — action หนึ่งมี `pool: [...]` แทน `text` ตรงๆ เมื่อผลลัพธ์ควรสุ่มได้หลายแบบ (เช่น `scan-area` ที่ T+1 สุ่มเจอสิ่งมีชีวิตต่างกันได้)
 
 ## ระบบ Species Lore Tier (5 ชั้น)
 

@@ -39,7 +39,7 @@ const JOURNEY_CHAPTERS = [
     {
         num: 1,
         title: "การตื่นรู้",
-        range: "T −2,000,000,000 ปี → T+11",
+        range: "T −2,000,000,000 ปี → T+3",
         startId: "genesis",
         endId: "__end_ch1__",
         closeTag: "// จบบทที่ 1 — Confluence ออกเดินทางในร่างใหม่เพื่อตามหา Karvos ต่อ",
@@ -63,11 +63,11 @@ const JOURNEY_CHAPTERS = [
     {
         num: 2,
         title: "ผู้ล่าและเหยื่อ",
-        range: "T+12 → T+20",
+        range: "T+4 → T+6",
         startId: "long-flight",
         endId: "__end_ch2__",
         closeTag: "// จบบทที่ 2 — Confluence มองฝูงร่างเดิมของตัวเองจากฟากฟ้าเป็นครั้งแรก",
-        closeText: "คำถามที่ค้างไว้ตั้งแต่คืนที่เห็นผู้ล่าสูงสุดกลายเป็นผู้ถูกล่ายังไม่มีคำตอบ และการเฝ้ามองฝูงร่างเดิมจากข้างนอกเพิ่งเริ่มต้นเท่านั้น บทถัดไปยังอยู่ระหว่างการพัฒนา ดูสรุปเชิงวิเคราะห์ของฉากตื่นรู้ (T-0 → T+7) ฉบับเต็มได้ที่เอกสาร MEMORY MECHANICS",
+        closeText: "คำถามที่ค้างไว้ตั้งแต่คืนที่เห็นผู้ล่าสูงสุดกลายเป็นผู้ถูกล่ายังไม่มีคำตอบ และการเฝ้ามองฝูงร่างเดิมจากข้างนอกเพิ่งเริ่มต้นเท่านั้น บทถัดไปยังอยู่ระหว่างการพัฒนา ดูสรุปเชิงวิเคราะห์ของฉากตื่นรู้ (T-0 → T+1) ฉบับเต็มได้ที่เอกสาร MEMORY MECHANICS",
         reflections: [
             { kind: "loss", text: "ฉันเสียความรู้สึกว่าโลกนี้เล็กพอจะรู้จักได้ทั้งหมด" },
             { kind: "gain", text: "ฉันได้ตั้งคำถามกับตัวเองเป็นครั้งแรก" },
@@ -80,7 +80,7 @@ const JOURNEY_CHAPTERS = [
     {
         num: 3,
         title: "จุดบอด",
-        range: "T+21 → T+25",
+        range: "T+7 → T+8",
         startId: "watch-fork",
         endId: "__end_ch3__",
         closeTag: "// จบบทที่ 3 — คำถามที่ค้างมาตั้งแต่คืนแรกยิ่งแหลมคมขึ้น ไม่ใช่คลี่คลาย",
@@ -103,7 +103,7 @@ const JOURNEY_CHAPTERS = [
     {
         num: 4,
         title: "เถ้าถ่าน",
-        range: "T+26 → T+30",
+        range: "T+9 → T+10",
         startId: "time-adrift",
         endId: "__end_ch4__",
         closeTag: "// จบบทที่ 4 — ร่างเปลี่ยนไปอีกครั้งโดยที่ไม่ได้เลือก และคำถามใหม่ไม่ใช่ว่าฉันคืออะไรอีกต่อไป แต่เป็นว่าอะไรตัดสินว่าถึงเวลา",
@@ -238,7 +238,7 @@ function apRecover() {
 }
 
 /* เหมือน apRecover() แต่ระบุจำนวน/lore เองแทนของ CREATURE_PROFILES ตรงๆ —
-   ใช้ตอนเหตุการณ์ฟื้นฟูไม่ใช่พฤติกรรม canon ของสายพันธุ์ (เช่น T+8 หมดสติ
+   ใช้ตอนเหตุการณ์ฟื้นฟูไม่ใช่พฤติกรรม canon ของสายพันธุ์ (เช่น T+2 หมดสติ
    ไปครู่หนึ่งนับเป็นการพักเล็กน้อยได้ แต่ไม่ใช่ "กางแผงคอรับแสง" ของ Luvenn
    ที่ใช้ตอนตั้งใจพักจริงๆ) — เรียกผ่าน `recoversAP: {amount, label, flavor}`
    บน JOURNEY_STEPS แทนการใส่ `true` เฉยๆ */
@@ -780,6 +780,11 @@ function journeyCompleteChapter() {
     const ch = JOURNEY_CHAPTERS[journeyChapterIdx];
     if (ch && !journeyUnlockedIds.has(ch.endId)) journeyUnlockedIds.add(ch.endId);
     journeySaveProgress();
+    // ล้าง System Log ทุกครั้งที่จบบทหนึ่ง — บันทึกของบทที่ผ่านไปแล้วไม่มี
+    // ประโยชน์ต่อบทถัดไป ปล่อยค้างไว้มีแต่จะทำให้บทใหม่เปิดมาแล้วเจอ log เก่า
+    // ปนอยู่ (journeyClearLog อยู่ใน index.html — เรียกแบบเช็คก่อนเหมือน
+    // journeyResetProgression() ด้านบน)
+    if (typeof journeyClearLog === 'function') journeyClearLog();
 }
 
 /* ปุ่ม "Continue Journey" ที่หน้าจอปิดบท — เริ่มบทถัดไปจาก step แรกของมัน
