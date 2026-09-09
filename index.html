@@ -421,6 +421,10 @@
            ไม่ได้ ตัวเลือกสร้างจาก journeyRenderChapterSelect() ใน
            data/journey.js ทุกครั้งที่ journeyRender() ทำงาน เปิด/ปิดคุมด้วย
            journeyToggleChapterDropdown() */
+        /* รวม chapter-select-wrap + แถบ SYS-SIM เป็น flex item เดียวของ .sub-header
+           (ดูคอมเมนต์ตรง HTML) เพื่อให้จุดตัดขึ้นบรรทัดใหม่คงที่ไม่ขยับตามความยาว
+           ชื่อบทที่เลือกอยู่ */
+        .vn-toolbar-row { display: flex; align-items: center; flex-wrap: wrap; gap: 20px; }
         .vn-chapter-select-wrap { display: flex; align-items: center; gap: 8px; }
         .vn-chapter-select-label { font-family: 'Rajdhani', sans-serif; font-size: 0.7rem; letter-spacing: 3px; text-transform: uppercase; color: #64748b; white-space: nowrap; }
         .vn-chapter-dropdown { position: relative; }
@@ -911,26 +915,35 @@
                     <h1 style="color: var(--accent-default); text-shadow: 0 0 15px rgba(56,189,248,0.5);">JOURNEY OF CONFLUENCE</h1>
                     <p style="color:#64748b;margin:5px 0 0;font-size:0.85rem;letter-spacing:2px;">SIMULATION PROTOCOL // AWAKENING SEQUENCE</p>
                 </div>
-                <div class="vn-chapter-select-wrap">
-                    <span class="vn-chapter-select-label">CHAPTER</span>
-                    <div class="vn-chapter-dropdown" id="journey-chapter-dropdown">
-                        <button type="button" class="vn-chapter-select" id="journey-chapter-select-btn" onclick="journeyToggleChapterDropdown(event)" aria-haspopup="listbox" aria-expanded="false"></button>
-                        <ul class="vn-chapter-dropdown-list" id="journey-chapter-dropdown-list" role="listbox" hidden></ul>
+                <!-- chapter-select-wrap และแถบ SYS-SIM รวมอยู่ใน wrapper เดียวกันตั้งใจ
+                     (แทนที่จะเป็น flex item แยกกันสองอันใต้ .sub-header ตรงๆ) เพราะ
+                     .sub-header ใช้ justify-content:space-between + flex-wrap:wrap —
+                     ถ้าเป็น flex item แยกกัน จุดตัดขึ้นบรรทัดใหม่จะขยับไปมาตามความยาว
+                     ของชื่อบทที่เลือกอยู่ (เช่น "ผู้ล่าและเหยื่อ" ยาวกว่า "จุดบอด")
+                     ทำให้ layout ไม่คงที่ระหว่างบท — รวมเป็น item เดียวเพื่อให้ทั้งคู่
+                     ขึ้นบรรทัดใหม่พร้อมกันเสมอไม่ว่าชื่อบทจะยาวแค่ไหน -->
+                <div class="vn-toolbar-row">
+                    <div class="vn-chapter-select-wrap">
+                        <span class="vn-chapter-select-label">CHAPTER</span>
+                        <div class="vn-chapter-dropdown" id="journey-chapter-dropdown">
+                            <button type="button" class="vn-chapter-select" id="journey-chapter-select-btn" onclick="journeyToggleChapterDropdown(event)" aria-haspopup="listbox" aria-expanded="false"></button>
+                            <ul class="vn-chapter-dropdown-list" id="journey-chapter-dropdown-list" role="listbox" hidden></ul>
+                        </div>
                     </div>
-                </div>
-                <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
-                    <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
-                    <button class="dev-toggle-btn" onclick="exportSaveFile()" title="ดาวน์โหลดความคืบหน้าทั้งหมดเป็นไฟล์ .json เพื่อย้ายไปเล่นต่อเครื่องอื่น">⬇ EXPORT SAVE</button>
-                    <button class="dev-toggle-btn" onclick="triggerImportSaveFile()" title="โหลดไฟล์เซฟที่เคย export ไว้ ทับความคืบหน้าปัจจุบันในเครื่องนี้">⬆ IMPORT SAVE</button>
-                    <input type="file" id="save-file-input" accept="application/json,.json" style="display:none;" onchange="importSaveFile(this)">
-                    <button class="dev-toggle-btn" onclick="journeyResetProgression()" title="สำหรับพัฒนา/ทดสอบเท่านั้น">🔄 RESET PROGRESSION</button>
-                    <!-- เครื่องมือไล่ตรวจฉาก (โผล่เฉพาะตอน DEV MODE เปิด) — เลือกฉากแล้ว
-                         รีเซ็ตความคืบหน้าตั้งแต่ฉากนั้นถึงท้ายสุด ดู journeyResetFromStep() -->
-                    <span id="journey-dev-tools" class="journey-dev-tools" style="display:none;">
-                        <select id="dev-scene-select" class="dev-scene-select" title="เลือกฉากที่จะรีเซ็ตตั้งแต่จุดนั้นเป็นต้นไป"></select>
-                        <button class="dev-toggle-btn" onclick="journeyDevResetScene()" title="รีเซ็ตความคืบหน้าตั้งแต่ฉากที่เลือกจนจบ">⏪ RESET จากฉากนี้</button>
-                        <select id="dev-host-select" class="dev-scene-select" title="สลับร่างปัจจุบัน (ไล่ตรวจเลนที่แตกตามร่างโดยไม่ต้องเล่นซ้ำ)" onchange="journeyDevSwitchHost(this.value)"></select>
-                    </span>
+                    <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                        <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
+                        <button class="dev-toggle-btn" onclick="exportSaveFile()" title="ดาวน์โหลดความคืบหน้าทั้งหมดเป็นไฟล์ .json เพื่อย้ายไปเล่นต่อเครื่องอื่น">⬇ EXPORT SAVE</button>
+                        <button class="dev-toggle-btn" onclick="triggerImportSaveFile()" title="โหลดไฟล์เซฟที่เคย export ไว้ ทับความคืบหน้าปัจจุบันในเครื่องนี้">⬆ IMPORT SAVE</button>
+                        <input type="file" id="save-file-input" accept="application/json,.json" style="display:none;" onchange="importSaveFile(this)">
+                        <button class="dev-toggle-btn" onclick="journeyResetProgression()" title="สำหรับพัฒนา/ทดสอบเท่านั้น">🔄 RESET PROGRESSION</button>
+                        <!-- เครื่องมือไล่ตรวจฉาก (โผล่เฉพาะตอน DEV MODE เปิด) — เลือกฉากแล้ว
+                             รีเซ็ตความคืบหน้าตั้งแต่ฉากนั้นถึงท้ายสุด ดู journeyResetFromStep() -->
+                        <span id="journey-dev-tools" class="journey-dev-tools" style="display:none;">
+                            <select id="dev-scene-select" class="dev-scene-select" title="เลือกฉากที่จะรีเซ็ตตั้งแต่จุดนั้นเป็นต้นไป"></select>
+                            <button class="dev-toggle-btn" onclick="journeyDevResetScene()" title="รีเซ็ตความคืบหน้าตั้งแต่ฉากที่เลือกจนจบ">⏪ RESET จากฉากนี้</button>
+                            <select id="dev-host-select" class="dev-scene-select" title="สลับร่างปัจจุบัน (ไล่ตรวจเลนที่แตกตามร่างโดยไม่ต้องเล่นซ้ำ)" onchange="journeyDevSwitchHost(this.value)"></select>
+                        </span>
+                    </div>
                 </div>
             </div>
 
