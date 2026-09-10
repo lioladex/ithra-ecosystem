@@ -112,6 +112,10 @@ creaturesData.push({
 4. **ร่องรอยสิ่งแวดล้อมสะสมจริงบนตัว** — ตัวที่มีอายุมากสะสมคราบแร่/มอส/น้ำแข็งจริงในเนื้อเรื่อง (ไม่ใช่แค่สีผิว) เป็นหลักฐานอายุ/ประวัติถิ่นที่ต่างกันทุกตัว
 5. **ขาข้อกลับแบบขาสูง (reversed-joint stilt legs)** — เปลี่ยน silhouette การเดินให้ต่างจากสัตว์เลี้ยงลูกด้วยนมทั่วไป
 6. **โครงหน้า/เขา/แผงคอไม่สมมาตรซ้าย-ขวา** — อ่านเป็น "วิวัฒนาการแบบสุ่มของจริง" มากกว่าออกแบบให้ดูเท่แบบมังกรนิยาย
+7. **มงกุฎหนาม/เขาแผ่รัศมีรอบหัว (Radiating Spike/Horn Crown)** — กลุ่มเขาโค้ง หนามแหลม หรือระยางค์คล้ายขนนกแผ่เป็นรัศมีรอบหัวหรือต้นคอ ความยาว/มุมแต่ละเส้นไม่จำเป็นต้องเท่ากัน ใช้เป็นได้ทั้งอาวุธจริงและตัวขู่ทางสายตา (เพิ่ม 2026-09-10)
+8. **พื้นผิวเปียกชื้นมันวาวแบบเนื้อเยื่อสด (Wet Glistening Organic Skin)** — ผิวหนัง/เกล็ดเคลือบความชื้นแวววาวสะท้อนแสงตลอดตัว แทนขน/หนังแห้งด้าน เขียนลงใน `skin[]` แล้วย้ำในย่อหน้า ANATOMY ของ `prompt` ด้วยคำอย่าง "glistening", "wet sheen" (เพิ่ม 2026-09-10)
+9. **ปากอ้ากว้างเกินสัดส่วนเผยฟันไม่เท่ากันหลายแถว (Disproportionate Gaping Maw)** — ขากรรไกรอ้าได้กว้างเกินกายวิภาคปกติ ฟันซ้อนกันหลายแถวขนาดไม่เท่ากัน มีของเหลวหยดย้อย ใช้แทนการคำรามเป็นท่าข่มขู่หลัก (เพิ่ม 2026-09-10 — ใช้ครั้งแรกกับ Nethrix)
+10. **ท่าหมอบเฉียงสะสมแรงไม่สมมาตร (Coiled Asymmetric Stalking Posture)** — น้ำหนักตัวลงไม่เท่ากันระหว่างขา แขนข้างหนึ่งยันพื้นต่ำกว่าอีกข้าง ให้ความรู้สึก "กำลังจะพุ่งเข้าใส่" — ใช้ได้เฉพาะท่าทางใน `prompt` เท่านั้น (เพิ่ม 2026-09-10)
 
 **อย่าใช้พร้อมกันทุกข้อในตัวเดียว** — เลือก 1-2 กลไกต่อตัวที่เข้ากับ niche/พฤติกรรมจริงของมันเท่านั้น (ตัวอย่างจริง: Ozgrun ใช้แค่กลไก #1 เป็น "หางล่อเป้าปลอม" แทนที่จะยัดทุกกลไก)
 
@@ -194,16 +198,37 @@ quarter view, shot with a telephoto lens at eye level, shallow
 depth of field with softly blurred background [foliage/terrain],
 volumetric god rays [filtering through mist from above / raking
 low across the plain], soft naturalistic backlighting that makes
-the [glowing feature] glow from within, hyper-detailed micro-
-texturing on every [hair/scale] and surface, subsurface
-scattering, physically-based rendering, muted natural color
-grading with deep shadows, 1:1 square composition, subject
-centered and fully visible from head to feet, no readable text.
+the [glowing feature] glow from within, crisp rim lighting along
+its silhouette, hyper-sharp micro-detail texturing on every
+[hair/scale] and surface, subsurface scattering, physically-based
+rendering, muted natural color grading with deep shadows, 1:1
+square composition, subject centered and fully visible from head
+to feet, no readable text.
 ```
+
+**อัปเดต 2026-09-10**: เพิ่ม `crisp rim lighting along its silhouette` และเปลี่ยน `hyper-detailed micro-texturing` เป็น `hyper-sharp micro-detail texturing` เข้าไปในบล็อกคงที่ถาวร — ใช้กับทุกตัวที่มี `prompt` แบบมาตรฐาน ส่วนวลี color grading ยังคงเป็นไปตามธีมสีของแต่ละ habitat ตามเดิม ไม่บังคับให้เป็น cool-tone เดียวกันหมด
 
 **ห้ามเติมคำอื่นแทรกเข้าไปในบล็อกนี้** (พลาดมาแล้วครั้งหนึ่งกับ Karvos ที่เคยมี "with the head turned to camera" แทรกอยู่ — แก้แล้ว) ปรับได้เฉพาะคำในวงเล็บเท่านั้น
 
 **ข้อยกเว้น**: สิ่งมีชีวิตขนาดจิ๋ว/แมลง (เช่น Glimmerwing) ใช้ตัวแปร "macro photography" ของย่อหน้าที่ 2 แทน (macro lens, extreme close-up, glowing bokeh ของฝูงเบื้องหลัง) แต่ยังต้องคงโครงสร้างย่อหน้าที่ 1 ครบทุกข้อ
+
+**ตัวแปรที่ 3 — "Creature-Effects Studio" (opt-in, เพิ่ม 2026-09-10)**: สำหรับตัวที่ต้องการความรู้สึก "มอนสเตอร์ดุร้ายแบบ kaiju/creature-effects" ชัดเจน (โดยทั่วไปคือ Tier IV-V หรือตัวที่ขอสไตล์นี้ตรงๆ อย่าง Nethrix):
+
+```
+Photorealistic 3D creature render, high-end creature-effects
+practical-model quality, standing full-body in the deepest, darkest
+reaches of its own natural habitat, three-quarter view, shot with a
+telephoto lens at eye level, near-total darkness around it broken
+only by a single dramatic low-key light source carving deep shadows
+across [wet glistening skin/scale texture], coiled asymmetric
+stalking posture, hyper-sharp micro-detail texturing on every
+wrinkle, scar and pore, subsurface scattering, physically-based
+rendering, desaturated moody color grading with crushed blacks,
+1:1 square composition, subject centered and fully visible from
+head to feet, no readable text.
+```
+
+ยังต้องยืนอยู่ในถิ่นอาศัยจริงของมันเองเสมอ (แค่มืดมาก ไม่ใช่ฉากว่างเปล่า/studio backdrop) ย่อหน้าที่ 1 ยังต้องเขียนตามโครงสร้างเดิมทุกข้อ ต่างกันแค่ mood แสง/สี — เป็น **opt-in ต่อตัว ไม่ใช่มาตรฐานใหม่ของทั้งโปรเจกต์** เพราะตัวที่มีอยู่แล้ว 20+ ตัวถูก render ด้วยโทนสว่างนุ่มนวลแบบสารคดีธรรมชาติไปแล้ว
 
 ห้ามใส่ markup พิเศษ, ห้ามมีข้อความอ่านได้ในภาพ, เขียนเป็นร้อยแก้วต่อเนื่องไม่ใช้ bullet
 

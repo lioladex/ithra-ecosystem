@@ -99,5 +99,5 @@ const RULEBOOK_HTML = `
                 <span class="pill">Full body visible</span>
             </div>
             <div class="note-block warn">ห้ามใช้คำว่า "concept art", "illustration", "painting", "ArtStation" ในพรอมต์ — จะดึงผลลัพธ์กลับไปเป็นภาพวาดแทน 3D render ต้องยืนอยู่ในสภาพแวดล้อมถิ่นอาศัยจริงเสมอ ไม่ใช่พื้นหลังเปล่า</div>
-            <div class="note-block">เอกสารกฎฉบับเต็ม (Workflow 12 ขั้น, Checklist, คลังอัตลักษณ์อ้างอิง) อยู่ในไฟล์ <em>codex/design-codex.md</em></div>
+            <div class="note-block">เอกสารกฎฉบับเต็ม (Workflow 12 ขั้น, Checklist, คลังอัตลักษณ์อ้างอิง, Monster Design Toolkit) อยู่ในไฟล์ <em>codex/creature-design.md</em></div>
 `;
