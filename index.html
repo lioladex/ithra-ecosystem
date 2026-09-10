@@ -1020,8 +1020,8 @@
 
                 return `
                     <div class="species-card" style="cursor:default;">
-                        <div class="card-bg-image" style="background-image:url('${mem.image}');"></div>
-                        <div class="no-image" style="position:absolute; inset:0; z-index:0; font-size:0.75rem; text-align:center;">NO VISUAL DATA</div>
+                        <img src="${mem.image}" alt="" class="card-bg-image" style="width:100%; height:100%; object-fit:cover; object-position:center 22%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+                        <div class="no-image" style="display:none; position:absolute; inset:0; z-index:0; font-size:0.75rem; text-align:center;">NO VISUAL DATA</div>
                         <div class="card-bg-gradient"></div>
                         <div class="card-content">
                             <span class="card-id font-hud">บทที่ ${mem.chapter} — ${mem.tag}</span>
