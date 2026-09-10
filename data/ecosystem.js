@@ -61,6 +61,34 @@ const ECOSYSTEM_HTML = `
             </div>
             <div class="note-block"><strong>อิทธิพลของแรงโน้มถ่วง (0.85G):</strong> แรงโน้มถ่วงที่ต่ำกว่าโลก ทำให้สิ่งมีชีวิตบน Ithra มีโครงสร้างที่สูงใหญ่และเพรียวบางกว่าปกติ พืชสามารถเติบโตทะลุเมฆหมอกได้สูงกว่า 200 เมตรโดยที่น้ำหนักของลำต้นไม่พังทลายลงมา และสัตว์ขนาดใหญ่อย่าง <em>Vorthak</em> สามารถมีมวลเกือบ 4 ตันได้โดยที่กระดูกขาไม่ต้องรับภาระหนักเท่าบนโลก</div>
 
+            <div class="section-label">◈ วงโคจรและปฏิทิน (ORBITAL MECHANICS & CALENDAR)</div>
+            <div class="content-grid two">
+                <div class="info-box">
+                    <h3 class="font-hud">วงโคจรรอบ ASHVEL</h3>
+                    <div class="data-row"><span class="data-label">ระยะห่างจากดาวฤกษ์</span><span class="data-value">~0.60 AU</span></div>
+                    <div class="data-row"><span class="data-label">คาบการโคจร</span><span class="data-value">~198 วันโลก (~4,736 ชม.)</span></div>
+                    <div class="data-row"><span class="data-label">1 ปี Ithra</span><span class="data-value">140 วัน (≈0.54 ปีโลก)</span></div>
+                    <div class="data-row"><span class="data-label">ดวงจันทร์</span><span class="data-value">Ren (7 วัน) · Kol (15 วัน)</span></div>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud">ปฏิทิน ITHRA</h3>
+                    <div class="data-row"><span class="data-label">1 วัน</span><span class="data-value">34 ชั่วโมง</span></div>
+                    <div class="data-row"><span class="data-label">1 สัปดาห์ (อิง Ren)</span><span class="data-value">7 วัน — 20 สัปดาห์/ปีพอดี</span></div>
+                    <div class="data-row"><span class="data-label">1 เดือน (อิง Kol)</span><span class="data-value">15 วัน</span></div>
+                    <div class="data-row"><span class="data-label">1 ปี</span><span class="data-value">9 เดือน (135 วัน) + 5 วัน Clash Tide</span></div>
+                </div>
+            </div>
+            <div class="note-block"><strong>วัฏจักรกัมมันตภาพของ Ashvel (The Ashvel Cycle):</strong> แม้ Ashvel จะเสถียรมากและไม่มีเปลวสุริยะรุนแรง แต่ความสว่างของดาวแกว่งขึ้นลงอย่างค่อยเป็นค่อยไปเป็นวัฏจักร คาบ <strong>4 ปี Ithra (≈2.17 ปีโลก)</strong> ส่งผลถึงทั้งดาวพร้อมกันเป็นเนื้อเดียว — ต่างจากฤดูที่มาจากแกนเอียงของดาว (ซึ่งทำให้สองซีกโลกมีฤดูตรงข้ามกันในปีเดียว) วัฏจักรนี้ทำให้ <strong>ทั้งดาวอยู่ในฤดูเดียวกันตลอดทั้งปี</strong> ก่อนขยับเข้าสู่ฤดูถัดไปในปีถัดไป รวม 4 ปีต่อ 1 Cycle เต็ม</div>
+
+            <table class="data-table">
+                <tr><th>ปีที่ (ใน Cycle)</th><th>ฤดู</th><th>สถานะของ Ashvel</th><th>ลักษณะภูมิอากาศ</th></tr>
+                <tr><td>1</td><td>แล้ง (Dry)</td><td>เริ่มดรอปจากจุดสูงสุด</td><td>ความร้อนสะสมจากปีอบอุ่นก่อนหน้ายังอยู่ แต่ไอน้ำระเหยใหม่น้อยลง อากาศเริ่มแห้ง</td></tr>
+                <tr><td>2</td><td>ฝน (Rain)</td><td>ดรอปต่อเนื่องลงสู่จุดต่ำสุด</td><td>ความชื้นที่สะสมไว้ตอนพีคความร้อนควบแน่นกลั่นตัวเป็นฝน/พายุหนักทั่วดาว</td></tr>
+                <tr><td>3</td><td>หนาว (Cold)</td><td>จุดต่ำสุดของวัฏจักร</td><td>แสง-ความร้อนน้อยที่สุด ฝนตกจนหมดสะสมแล้ว เหลือแต่ความหนาวแห้ง</td></tr>
+                <tr><td>4</td><td>อบอุ่น (Warm)</td><td>ไต่กลับขึ้นสู่จุดสูงสุด</td><td>น้ำแข็ง/น้ำค้างแข็งเริ่มละลาย ดาวอุ่นขึ้นเรื่อยๆ จนถึงพีคอีกครั้งก่อนวนกลับสู่ปีแล้ง</td></tr>
+            </table>
+            <div class="note-block">ความรุนแรงของแต่ละฤดูต่างกันตามโซน — ป่าหมอก Verath (ชื้นสม่ำเสมอตลอดปีจากแสง Ashvel ที่มั่นคง) จะรู้สึกถึงปี "แล้ง" แค่เป็นช่วงฝนน้อยลง ไม่ใช่แล้งจริง ส่วน <strong>"The Long Winter"</strong> ของทวีป Kessara ยังคงเป็นเหตุการณ์พิเศษที่แยกจากปี "หนาว" ปกติในวัฏจักรนี้ — เป็นบาง Cycle ที่ Ashvel ดรอปต่ำกว่าค่าเฉลี่ยเป็นพิเศษ ยาวนานและรุนแรงกว่าปีหนาวทั่วไปมาก</div>
+
             <div class="section-label">◈ ยุคสมัยของดาว ITHRA</div>
             <table class="data-table">
                 <tr><th>ยุค</th><th>ช่วงเวลาโดยประมาณ</th><th>เหตุการณ์สำคัญ</th></tr>
