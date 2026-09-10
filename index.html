@@ -1043,7 +1043,21 @@
             const container = document.getElementById('core-memories-content');
             if (!container || typeof CORE_MEMORIES === 'undefined') return;
 
-            container.innerHTML = `<div class="grid">${CORE_MEMORIES.map(mem => {
+            /* เรียงตาม timeline เนื้อเรื่องจริงเสมอ (เลขบท แล้วค่อย T+N ที่แกะจาก
+               `tag`) แทนที่จะพึ่งลำดับที่เขียนไว้ใน array เฉยๆ — กันปัญหาถ้า
+               แก้/เพิ่ม entry ใหม่ในอนาคตแล้วลืมแทรกให้ตรงตำแหน่ง เลนคู่ขนานที่
+               T เท่ากัน (เช่น near/high บทที่ 3) จะเรียงตามลำดับเดิมใน array
+               (sort เสถียร) */
+            const parseTimelineValue = tag => {
+                const match = /T([+-]\d+)/.exec(tag || '');
+                return match ? parseInt(match[1], 10) : 0;
+            };
+            const ordered = CORE_MEMORIES.slice().sort((a, b) => {
+                if (a.chapter !== b.chapter) return a.chapter - b.chapter;
+                return parseTimelineValue(a.tag) - parseTimelineValue(b.tag);
+            });
+
+            container.innerHTML = `<div class="grid">${ordered.map(mem => {
                 const chapterFinished = typeof journeyChapterFinished === 'function'
                     ? journeyChapterFinished(mem.chapter - 1)
                     : false;
@@ -1074,7 +1088,7 @@
                     </div>`;
             }).join('')}</div>
             <div style="margin-top:28px; display:flex; flex-direction:column; gap:18px;">
-                ${CORE_MEMORIES.map(mem => {
+                ${ordered.map(mem => {
                     if (!coreMemoryUnlocked(mem)) return '';
                     return `
                         <div>
