@@ -941,6 +941,13 @@
                         </div>
                     </div>
                     <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
+                        <!-- ปุ่มลัดไปดู Life-Form Database / Core Memories ระหว่างอ่าน Journey อยู่
+                             โดยไม่ต้องกด ABORT SIMULATION ออกไปหน้า landing ก่อน — journeyChapterIdx/
+                             journeyIndex ยังอยู่ครบเมื่อกลับมาเพราะ switchView() แค่สลับ view-section
+                             ไม่ได้ reset state ของ journey เลย -->
+
+                        <button class="dev-toggle-btn" onclick="switchView('species-view')" title="เปิดฐานข้อมูลสิ่งมีชีวิตระหว่างอ่าน Journey">🧬 LIFE-FORM</button>
+                        <button class="dev-toggle-btn" onclick="switchView('core-memories-view')" title="เปิด Core Memories ระหว่างอ่าน Journey">✺ CORE MEMORY</button>
                         <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">SYS-SIM</div>
                         <button class="dev-toggle-btn" onclick="exportSaveFile()" title="ดาวน์โหลดความคืบหน้าทั้งหมดเป็นไฟล์ .json เพื่อย้ายไปเล่นต่อเครื่องอื่น">⬇ EXPORT SAVE</button>
                         <button class="dev-toggle-btn" onclick="triggerImportSaveFile()" title="โหลดไฟล์เซฟที่เคย export ไว้ ทับความคืบหน้าปัจจุบันในเครื่องนี้">⬆ IMPORT SAVE</button>
@@ -1031,6 +1038,7 @@
            journey/chapter3.js ใช้แยกข้อความเองใน sharper-question
            เรียกจาก switchView() ทุกครั้งที่เปิดหน้านี้ เพื่อให้ state อัปเดตสดเสมอ */
         function coreMemoryUnlocked(mem) {
+            if (devModeOn) return true;
             const finished = typeof journeyChapterFinished === 'function'
                 ? journeyChapterFinished(mem.chapter - 1)
                 : false;
@@ -1445,6 +1453,9 @@
             devModeOn = !devModeOn;
             saveDevMode();
             renderSpeciesGrid();
+            if (document.getElementById('core-memories-view').classList.contains('active')) {
+                renderCoreMemories();
+            }
             updateDevModeButtonLabel();
         }
 
