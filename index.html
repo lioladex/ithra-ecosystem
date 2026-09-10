@@ -807,7 +807,7 @@
                 </div>
                 <div style="display:flex; align-items:center; gap:16px; flex-wrap:wrap;">
                     <div class="font-hud" style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
-                        KNOWN: <span id="known-count" style="color: white;">0</span> / 14
+                        KNOWN: <span id="known-count" style="color: white;">0</span> / <span id="known-total">0</span>
                     </div>
                 </div>
             </div>
@@ -1652,6 +1652,8 @@
 
             const countEl = document.getElementById('known-count');
             if (countEl) countEl.textContent = knownCount;
+            const totalEl = document.getElementById('known-total');
+            if (totalEl) totalEl.textContent = creaturesData.length;
         }
 
         function loadCreatureImage(imageKey) {
