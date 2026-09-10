@@ -796,7 +796,7 @@
         </div>
 
         <div id="species-view" class="view-section">
-            <button class="btn-back" onclick="switchView('landing-view')">
+            <button class="btn-back" onclick="switchView(speciesReturnTo)">
                 <span>&lt;</span> RETURN TO TERMINAL
             </button>
 
@@ -901,7 +901,7 @@
         </div>
 
         <div id="core-memories-view" class="view-section">
-            <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> RETURN TO TERMINAL</button>
+            <button class="btn-back" onclick="switchView(coreMemoriesReturnTo)"><span>&lt;</span> RETURN TO TERMINAL</button>
             <div class="sub-header">
                 <div>
                     <h1>CORE MEMORIES</h1>
@@ -1157,7 +1157,20 @@
             return 'status-alive';
         }
 
+        /* ปุ่ม RETURN TO TERMINAL ของ species-view/core-memories-view ปกติกลับไป
+           landing-view เสมอ แต่ถ้าเข้ามาจากปุ่มลัด LIFE-FORM/CORE MEMORY ระหว่าง
+           อ่าน Journey อยู่ (story-view) ให้ย้อนกลับไปที่ story-view แทน — จำแค่
+           "มาจากไหน" ตอน switchView() สลับ view ไม่ต้องทำ history stack เต็มรูปแบบ
+           เพราะมีแค่สอง view นี้ที่ต้องการพฤติกรรมนี้ */
+        let speciesReturnTo = 'landing-view';
+        let coreMemoriesReturnTo = 'landing-view';
+
         function switchView(viewId) {
+            const prevActive = document.querySelector('.view-section.active');
+            const prevId = prevActive ? prevActive.id : null;
+            if (viewId === 'species-view') speciesReturnTo = (prevId === 'story-view') ? 'story-view' : 'landing-view';
+            if (viewId === 'core-memories-view') coreMemoriesReturnTo = (prevId === 'story-view') ? 'story-view' : 'landing-view';
+
             document.querySelectorAll('.view-section').forEach(el => el.classList.remove('active'));
             document.getElementById(viewId).classList.add('active');
             window.scrollTo(0, 0);
