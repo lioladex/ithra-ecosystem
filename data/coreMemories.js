@@ -8,6 +8,18 @@
    Confluence จริง (ไม่ใช่แค่ฉากที่สวย) — ผูกกับ step id ใน journey/chapterN.js
    ตรงๆ เพื่อให้แก้เนื้อเรื่องแล้วไม่ลืม sync จุดนี้
 
+   บทที่มีทางแยก (choice/lane) รองรับ Core Memory "ขนาน" ได้หลายอัน: ใส่
+   field `lane` (ต้องตรงกับค่า lane ที่ใช้จริงใน journey/chapterN.js เช่น
+   "near"/"high") แล้วเพิ่ม entry เดียวกันของ chapter นั้นได้หลายรายการ หนึ่ง
+   รายการต่อหนึ่งเลน — ตอน render (ดู resolveCoreMemoryForChapter() ใน
+   index.html) จะเลือกแสดงแค่อันเดียวเสมอ โดยเช็คว่า journeyUnlockedIds มี
+   `stepId` ของเลนไหนอยู่จริง (ผู้เล่นเดินเลนไหนก็เห็นความทรงจำของเลนนั้น)
+   กันสปอยล์เส้นทางที่ไม่ได้เลือกไปในตัว — entry ที่ไม่มี field `lane` ถือว่า
+   ใช้ได้กับทุกเลน (บทที่ไม่มีทางแยก หรือ step ที่อยู่ก่อน/หลังจุดแยกพอดี)
+   ทุกเลนของบทหนึ่งต้องมี Core Memory ให้ครบก่อน merge — ถ้ายังทำไม่ครบ
+   ผู้เล่นที่เดินเลนที่ยังไม่มี entry จะเห็นการ์ดล็อกแทนแม้จะอ่านจบบทแล้ว
+   (ดูตัวอย่างจริงที่บทที่ 3 ด้านล่าง — near-strike กับ high-escape)
+
    ปลดล็อกทีละอันตามที่อ่านจบแต่ละบทจริง (เช็คผ่าน journeyChapterFinished()
    ที่นิยามไว้ใน data/journey.js) — ก่อนปลดล็อกแสดงเป็นการ์ดเงาแบบเดียวกับ
    Life-Form Database เพื่อไม่สปอยล์ล่วงหน้า
@@ -56,12 +68,34 @@ const CORE_MEMORIES = [
     {
         chapter: 3,
         chapterTitle: "จุดบอด",
+        /* บทนี้แยกทางที่ watch-fork (T+7): lane "near" = ร่อนลงเกาะกิ่งใกล้ฝูง,
+           lane "high" = ลอยสูงในกระแสลมร้อน สองเลนเจอเหตุการณ์เดียวกัน (ฝูง
+           Karvos ย่องเข้าล่าฝูงร่างเดิม) แต่ผลต่างกันจริง จึงแยกเป็น Core
+           Memory คนละอันต่อเลนแทนที่จะหา step ร่วม — ตัวนี้คือเลน "near":
+           ตัวเฝ้าระวังเผลอจ้องเงาปีกกว้างบนกิ่งจนโดนฝูง Karvos ล้อมได้ */
+        lane: "near",
         stepId: "near-strike",
         tag: "T+7 — จุดบอดร่วม",
         title: "จุดบอดร่วม",
         caption: "เจ้าตัวสี่ขาฝูงหนึ่งพุ่งออกจากฝั่งตรงข้ามพร้อมกัน ขณะที่ตัวเฝ้าระวังของฝูงเผลอไปมัวล็อกสายตากับเงาปีกกว้างที่เกาะนิ่งอยู่บนกิ่ง — บทเรียนแรกเรื่องจุดบอดที่ทุกฝ่ายมีเหมือนกัน",
-        image: `${ITHRA_CDN_BASE}/memories/chapter3.jpg`,
+        image: `${ITHRA_CDN_BASE}/memories/chapter3-near.jpg`,
         prompt: "Photorealistic 3D render, cinematic film-VFX quality, wide point-of-view shot in 16:9 widescreen cinematic composition, framed as if looking outward from a low branch — no creature's own body, wings or perch visible in frame, just the view out into the clearing. A forest clearing at high midday, bright hazy overhead sunlight breaking through gaps in the dense canopy in sharp-edged shafts, hot hard-edged light rather than warm golden dusk tones. A small herd of exactly seven tall horse-sized alien grazers stands in the clearing, no more than seven animals total, each with correct natural quadruped anatomy: a deceptively light, hollow-boned frame with a deep chest and flat belly, a long raised neck, slender high-jointed forelegs that bend backward at the knee like a deer's, and reversed-jointed hind legs of the same long slender build, all four legs planted naturally and bearing its weight in a normal standing or running gait, never bent at an unnatural angle or twisted out of proportion — small beaked heads held level on the raised neck, emerald-green glowing eyes, tall translucent leaf-shaped ears. Six of them have their fan-like solar ruffs fully unfurled wide open behind their heads catching the direct overhead sun; only one, a few meters out, has its ruff half-collapsed and its long neck lowered halfway in a wary half-alert stare directed straight back toward the hidden vantage point, its body still standing in the same correct natural anatomy as the rest of the herd. From the treeline on the far side of the clearing, exactly four lean dog-sized wolf-like predators with thick necks, four-way radial split jaws and glowing orange-red cheek stripes have already closed in around that one distracted grazer from several directions at once, boxing it in on multiple sides rather than a single predator chasing alongside it, cutting off every line of escape in the same instant, its fan now collapsing in alarm as it realizes it is surrounded. The other six grazers explode into scattering motion away from the ambush in the opposite direction, their solar ruffs snapping shut and folding flat against their necks as they flee rather than staying open, each still moving with correct natural leg articulation, no twisted or malformed limbs. No other creatures of any kind are present in the scene — no flying reptile, no additional predators or grazers beyond these eleven animals. Dust kicked up glows in the overhead sunbeams, subsurface scattering on the translucent ear-membranes and solar fans, shallow depth of field keeping the ambush in sharp focus while the scattering herd blurs, full scene visible, no text, no illustration, no painting, no concept art style."
+    },
+    {
+        chapter: 3,
+        chapterTitle: "จุดบอด",
+        /* คู่ขนานของ entry ด้านบน — lane "high": ลอยสูงในกระแสลมร้อนแทน
+           ระยะที่ไม่มีจุดบอด เห็นฝูง Karvos เข้ามาแต่ไกล เลยเลือกทิ้งตัวดิ่ง
+           ผ่านฝูงร่างเดิมครั้งเดียวให้เห็นเงา เตือนทั้งฝูงให้เปลี่ยนเส้นทางทัน
+           — ต่างจากเลน near ตรงที่เลนนี้ตัวเอกเข้าไปมีส่วนเปลี่ยนเหตุการณ์เอง
+           เป็นครั้งแรก ไม่ใช่แค่เฝ้าสังเกตเฉยๆ */
+        lane: "high",
+        stepId: "high-escape",
+        tag: "T+7 — เหยื่อที่รู้ตัวทัน",
+        title: "เงาที่ทาบลงมาทัน",
+        caption: "ทิ้งตัวดิ่งผ่านเหนือฝูงเพียงครั้งเดียว เงาที่ทาบผ่านพื้นทำให้ทั้งฝูงเงยหน้าขึ้นพร้อมกันแล้วเปลี่ยนเส้นทางหนีได้ทัน — ครั้งแรกที่เข้าไปมีส่วนเปลี่ยนเหตุการณ์ตรงหน้าด้วยตัวเอง ไม่ใช่แค่เฝ้าดูอยู่ห่างๆ",
+        image: `${ITHRA_CDN_BASE}/memories/chapter3-high.jpg`,
+        prompt: "Photorealistic 3D render, cinematic film-VFX quality, dynamic high-angle wide shot in 16:9 widescreen cinematic composition, looking down and slightly ahead over a sunlit forest clearing at midday, bright hard overhead light. A herd of exactly seven tall horse-sized alien grazers — small beaked heads, emerald-green glowing eyes, tall translucent leaf-shaped ears, fan-like solar ruffs of slender frond-ribbons — stands with their ruffs fully unfurled catching the sun, when a single fast-moving winged shadow sweeps low and sudden across the clearing floor directly over them: a shadow only, cast on the sunlit ground and racing across every animal in the herd in an instant, with no creature's own body visible anywhere in the frame, just its dark silhouette-shaped shadow crossing the dirt. Every head in the herd snaps upward in the same instant, their solar ruffs snapping shut together, the whole herd wheeling as one and bursting away from the shadow's path in a single unified turn. In the distance at the treeline, exactly four lean dog-sized wolf-like predators with thick necks and glowing orange-red cheek stripes have already broken off their approach, peeling back into the treeline empty-handed. No other creatures of any kind are present in the scene beyond these eleven animals and the passing shadow. Dust kicked up by the herd's sudden turn catches the overhead sunbeams, subsurface scattering on the translucent ear-membranes and solar fans, motion blur on the wheeling herd, shallow depth of field with the retreating predators softly blurred in the background, full scene visible, no text, no illustration, no painting, no concept art style."
     },
     {
         chapter: 4,
@@ -71,7 +105,7 @@ const CORE_MEMORIES = [
         title: "วินาทีที่ควบคุมไม่ทัน",
         caption: "กลางพายุเถ้าที่หายใจแทบไม่ได้ ร่างกายฝืนวิ่งปนไปกับขบวนที่เบียดกันแน่น จนบางอย่างเริ่มขยับอยู่ใต้ผิวเองโดยไม่รอให้คิดทัน",
         image: `${ITHRA_CDN_BASE}/memories/chapter4.jpg`,
-        prompt: "Photorealistic 3D render, cinematic film-VFX quality, chaotic ground-level shot in 16:9 widescreen cinematic composition. Thick grey volcanic ash storm choking a dense, mixed stampede of alien creatures of every size running shoulder to shoulder in the same direction, visibility reduced to a few body-lengths, dull orange embers drifting through the haze. In the middle of the crush, a massive wyvern-like flyer — its four glowing sun-gold eyes, toothless hooked beak with serrated blade-like edges, and translucent solar-sail crest only half-visible through the swirling ash — runs awkwardly on legs unused to bearing its full weight, its immense wings clamped tight and half-spread for balance rather than flight, its shark-like micro-scaled wings and slate-blue-grey countershading dulled and caked with grey ash, chest heaving for air that will not come, its silhouette rippling faintly at the edges as something shifts and moves beneath its own skin without being told to, though its overall wyvern shape is still clearly recognizable. Just ahead, the shape of another creature lies motionless on the ground, already being stepped over by the unbroken stampede. Volumetric orange ember-light diffusing through the ash cloud, subsurface scattering on the rippling silhouette's edges, motion-blurred legs of the stampede pressing in from both sides, shallow depth of field, full scene visible, no text, no illustration, no painting, no concept art style."
+        prompt: "Photorealistic 3D render, cinematic film-VFX quality, chaotic ground-level shot in 16:9 widescreen cinematic composition. Thick grey volcanic ash storm choking a dense stampede running shoulder to shoulder in the same direction, visibility reduced to a few body-lengths, dull orange embers drifting through the haze. The stampede is made ONLY of species from this specific alien ecosystem's own established fauna, not generic dinosaurs, dragons or invented monsters: small hare-sized reddish-umber-brown creatures with short squat round bodies, flashing a bright golden-yellow rump patch as they bolt in scattering clusters underfoot; tall horse-sized long-necked grazers with small beaked heads and folded-flat leaf-shaped ears running alongside them; lean dog-sized four-legged pack predators with thick necks and glowing orange-red cheek stripes caught up in the same panicked flight as the herbivores around them, no longer hunting. In the middle of the crush, a massive wyvern-like flyer with an immense wingspan runs awkwardly on its long powerful zygodactyl raptor legs, unused to bearing its full weight on the ground — its four glowing sun-gold eyes, toothless hooked beak with serrated blade-like edges, and translucent solar-sail crest webbed with branching fracture-line veins are all clearly visible despite the ash, its shark-like micro-scaled wings clamped tight against its body and half-spread only for balance rather than flight, its slate-blue-grey and pale fog-blue countershading dulled and caked with grey ash, and its short but densely muscled grasping arms with three talons each, normally used to pin down carrion, now held tucked defensively against its chest rather than missing or absent. Its chest heaves for air that will not come, its silhouette rippling faintly at the edges as something shifts and moves beneath its own skin without being told to, though its overall wyvern shape with all three limb pairs — wings, grasping arms, and legs — stays clearly recognizable throughout. Just ahead, the shape of another creature lies motionless on the ground, already being stepped over by the unbroken stampede. Volumetric orange ember-light diffusing through the ash cloud, subsurface scattering on the rippling silhouette's edges, motion-blurred legs of the stampede pressing in from both sides, shallow depth of field, full scene visible, no text, no illustration, no painting, no concept art style."
     },
     {
         chapter: 5,
