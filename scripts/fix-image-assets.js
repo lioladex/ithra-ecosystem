@@ -27,7 +27,7 @@ const path = require("path");
 const { execFileSync } = require("child_process");
 
 const ROOT = path.join(__dirname, "..");
-const ASSET_DIRS = ["assets/creatures", "assets/world"];
+const ASSET_DIRS = ["assets/creatures", "assets/world", "assets/memories"];
 const CONVERTIBLE_EXT = [".png", ".webp", ".jpeg"];
 const MAX_DIM = 1200;
 const QUALITY = 85;
