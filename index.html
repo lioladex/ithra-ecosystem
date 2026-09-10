@@ -226,6 +226,10 @@
         .dev-toggle-btn { background: rgba(255,255,255,0.05); border: 1px solid #475569; color: #94a3b8; padding: 6px 12px; border-radius: 4px; font-family: 'Rajdhani', sans-serif; font-size: 0.72rem; letter-spacing: 1.5px; cursor: pointer; text-transform: uppercase; transition: all 0.2s ease; }
         .dev-toggle-btn:hover { border-color: var(--accent-default); color: var(--accent-default); }
         .dev-toggle-btn.active { background: rgba(255,184,74,0.12); border-color: #ffb84a; color: #ffb84a; }
+        .dev-mode-float {
+            position: fixed; top: 20px; right: 20px; z-index: 200;
+            background: rgba(10,14,18,0.85); backdrop-filter: blur(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
 
         /* แถบเซ็นเซอร์ชื่อสิ่งมีชีวิตที่ Confluence ยังไม่รู้จัก (ดู applySpoilerRedaction)
            ถมทับแทนการลบทิ้ง เพื่อให้เห็นว่า "มีบางอย่างอยู่ตรงนี้" โดยไม่สปอยล์ว่าคืออะไร */
@@ -707,6 +711,11 @@
 
     <div class="hud-frame-tl"></div>
     <div class="hud-frame-br"></div>
+    <!-- ลอยอยู่ทุกหน้าตลอด (ไม่ผูกกับ view-section ไหน) ย้ายมาจากใน sub-header ของ
+         species-view เดิม เพื่อสลับ DEV MODE ได้จากหน้าไหนก็ได้โดยไม่ต้องสลับ view
+         ไปหน้า Life-Form Database ก่อน — toggleDevMode()/updateDevModeButtonLabel()
+         ใช้ id="dev-mode-toggle" เดิม ไม่ต้องแก้ JS ฝั่งนั้นเลย -->
+    <button id="dev-mode-toggle" class="dev-toggle-btn dev-mode-float" onclick="toggleDevMode()">🔒 DEV MODE: OFF</button>
     <div class="radar-bg"></div>
     <div class="ambient-motes" aria-hidden="true">
         <span style="left:6%; --drift:14px; animation-duration:15s; animation-delay:0s;"></span>
@@ -800,7 +809,6 @@
                     <div class="font-hud" style="color: #64748b; font-size: 0.8rem; letter-spacing: 2px;">
                         KNOWN: <span id="known-count" style="color: white;">0</span> / 14
                     </div>
-                    <button id="dev-mode-toggle" class="dev-toggle-btn" onclick="toggleDevMode()">🔒 DEV MODE: OFF</button>
                 </div>
             </div>
 
