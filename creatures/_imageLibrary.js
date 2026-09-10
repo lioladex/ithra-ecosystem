@@ -40,4 +40,5 @@ const IMAGE_LIBRARY = {
     RUSTLEBACK: `${ITHRA_CDN_BASE}/creatures/rustleback.jpg`,
     MURROW: `${ITHRA_CDN_BASE}/creatures/murrow.jpg`,
     TORVANE: `${ITHRA_CDN_BASE}/creatures/torvane.jpg`,
+    NETHRIX: `${ITHRA_CDN_BASE}/creatures/nethrix.jpg`,
 };

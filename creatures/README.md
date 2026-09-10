@@ -38,7 +38,7 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 **หมวดที่ใช้ได้ (เลือกได้ข้อเดียวต่อตัว):**
 - `ผู้ผลิต (สังเคราะห์แสง)` — สิ่งมีชีวิตที่ดำรงชีวิตด้วยแสงเป็นหลัก (Luvenn, Lumenveil)
 - `สัตว์กินพืช` — Herbivore/nectarivore (Vashli, Frostmane, Ozgrun, Glimmerwing)
-- `สัตว์กินเนื้อ` — Carnivore/predator ทุกขนาด รวมนักล่าที่กินซากเสริมด้วย (Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin, Duskchime)
+- `สัตว์กินเนื้อ` — Carnivore/predator ทุกขนาด รวมนักล่าที่กินซากเสริมด้วย (Karvos, Skyther, Mistcrawler, Korrune, Threndle, Vorthak, Thessek, Ashkarn, Sevrin, Duskchime, Nethrix)
 - `สัตว์กินซาก/ผู้ย่อยสลาย` — กินเฉพาะซาก ไม่ล่าเองเลย (Dunkrell, Palegrim, Rustleback, Murrow)
 - `ผู้กรองอาหาร` — Filter feeder ทั้งในน้ำและอากาศ (Pallowfin, Vellith, Torvane)
 - `สิ่งมีชีวิตสังเคราะห์เคมี` — Chemosynthetic (Cindergrub)
@@ -52,7 +52,7 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 
 - **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler, Duskchime, Rustleback, Torvane — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
 - **Tier II (เข้มข้น)**: Thessek, Glimmerwing, Murrow
-- **Tier III (สุดขั้ว)**: Korrune, Frostmane — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
+- **Tier III (สุดขั้ว)**: Korrune, Frostmane, Nethrix — อิสระเต็มที่ ไม่ต้องอิงสัตว์โลกเลย
 - **Tier IV (หลุดกรอบกายวิภาค)**: Vorthak, Cindergrub, Ashkarn
 - **Tier V (เหนือจริง)**: Threndle, Kethyr
 

@@ -61,6 +61,7 @@ const RULEBOOK_HTML = `
                 <tr><td>Cindergrub</td><td>IV</td><td>ไม่มี (redesign 2026-09-01 — แก้ขาจาก "4-6 คู่ไม่สมมาตร" เป็น 4 คู่คงที่ตามกฎแขนขาหลักต้องสมมาตร)</td></tr>
                 <tr><td>Ashkarn</td><td>IV</td><td>DRAFT — ทดสอบ Tier ใหม่ (ปีก 1 คู่ขนาดต่างกันสุดขั้ว)</td></tr>
                 <tr><td>Kethyr</td><td>V</td><td>DRAFT — ทดสอบ Tier ใหม่ (ไม่เคยเห็นตัวเต็ม)</td></tr>
+                <tr><td>Nethrix</td><td>III</td><td>ไม่มี — ออกแบบจากสเก็ตช์ผู้ใช้ (2026-09-10) นักล่าซุ่มลวงล่อ 6 ขา + แขนคู่หน้า</td></tr>
             </table>
 
             <div class="section-label">◈ MUTATION — ยีนเด่น ⇄ ยีนด้อย</div>
