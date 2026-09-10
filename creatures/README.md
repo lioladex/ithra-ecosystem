@@ -48,7 +48,7 @@ category: "สัตว์กินเนื้อ · นักล่าฝู�
 
 ## ALIEN INTENSITY SCALE (Tier I–V)
 
-ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและหมายเหตุรายตัวได้ในหน้า Design Rulebook (`data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE") สรุปสั้นๆ:
+ก่อนเขียน/แก้ anatomy หรือ prompt ของตัวใดก็ตาม **ต้องเช็ก Tier ความเอเลี่ยนของตัวนั้นก่อนเสมอ** — ดูตารางเต็มและหมายเหตุรายตัวได้ที่ `codex/creature-design.md` (สรุปจาก `data/rulebook.js` หัวข้อ "ALIEN INTENSITY SCALE" — ไม่ได้ render บนหน้าเว็บแล้ว) สรุปสั้นๆ:
 
 - **Tier I (ปานกลาง)**: Karvos, Luvenn, Skyther, Vashli, Dunkrell, Pallowfin, Mistcrawler, Duskchime, Rustleback, Torvane — ปรับลวดลาย/พื้นผิวอิสระ เพิ่มความไม่สมมาตรได้บ้าง
 - **Tier II (เข้มข้น)**: Thessek, Glimmerwing, Murrow

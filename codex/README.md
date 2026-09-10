@@ -21,7 +21,7 @@
 
 ## ลำดับความสำคัญเมื่อกฎขัดกัน
 1. ไฟล์ skill ใน `.claude/skills/` (โหลดอัตโนมัติเข้า context เสมอ) ชนะไฟล์มิเรอร์ใน codex
-2. ไฟล์ต้นทาง (`data/rulebook.js`, `data/ecosystem.js`, `data/memoryMechanics.js`, `creatures/README.md`) ชนะไฟล์สรุปใน codex ถ้าพบว่าไม่ตรงกัน — เพราะไฟล์เหล่านั้น render จริงในเว็บไซต์
+2. ไฟล์ต้นทาง (`data/rulebook.js`, `data/ecosystem.js`, `data/memoryMechanics.js`, `creatures/README.md`) ชนะไฟล์สรุปใน codex ถ้าพบว่าไม่ตรงกัน — `data/ecosystem.js` ยัง render จริงในเว็บไซต์ ส่วน `data/rulebook.js`/`data/memoryMechanics.js` ถอดออกจากหน้าเว็บแล้ว (ดูหัวข้อ CORE MEMORIES แทน) แต่ยังเป็น source of truth ของกฎที่ codex สรุปมา
 3. ถ้าพบว่า codex ไม่ตรงกับต้นทางแล้ว ให้ sync codex ให้ตรง ไม่ใช่แก้ต้นทางตาม codex
 
 ## เมื่อต้นทางถูกแก้ไข

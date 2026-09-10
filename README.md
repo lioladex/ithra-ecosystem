@@ -14,8 +14,9 @@ creatures/               ข้อมูลสิ่งมีชีวิต 1 �
   <creature>.js            โปรไฟล์เต็มของแต่ละตัว (รวม prompt สำหรับ AI image-gen)
 data/                     เนื้อหาข้อความยาวของหน้าเว็บ แยกเป็น module
   ecosystem.js              เนื้อหาส่วน Ecosystem
-  memoryMechanics.js        เนื้อหาส่วน Memory Mechanics
-  rulebook.js                Design Rulebook (รวม Alien Intensity Scale)
+  coreMemories.js            เนื้อหาส่วน Core Memories (1 ฉากสำคัญต่อบท + prompt AI gen ภาพ)
+  memoryMechanics.js        Memory Mechanics — ถอดออกจากหน้าเว็บแล้ว เหลือเป็น source of truth ให้ codex/memory-and-transformation.md
+  rulebook.js                Design Rulebook (รวม Alien Intensity Scale) — ถอดออกจากหน้าเว็บแล้ว เหลือเป็น source of truth ให้ codex/creature-design.md
   skillSystem.js              ระบบ AP/skill ของ Journey
   journey.js                 engine ของ Journey of Confluence (ตัวเดินเรื่อง,
                               state, JOURNEY_CHAPTERS) — เนื้อหาแต่ละบทอยู่ที่

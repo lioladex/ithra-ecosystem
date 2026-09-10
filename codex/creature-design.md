@@ -4,7 +4,7 @@
 - `data/rulebook.js` (`RULEBOOK_HTML`) — ระบบ Part Combination, ตารางขนาด, Alien Intensity Scale เต็ม, กฎยีนเด่น/ด้อย, Danger Rating, กฎสี, AI prompt style suffix
 - `creatures/README.md` — โครงสร้างไฟล์, Monster Design Toolkit, กฎ field `abilities`, สูตร AI image-gen prompt เต็ม
 
-ถ้าสองแหล่งขัดกัน ให้ยึด `creatures/README.md` เป็นหลักสำหรับเรื่องโครงสร้างไฟล์/field และยึด `data/rulebook.js` เป็นหลักสำหรับตัวเลข/ตาราง (มันคือ HTML ที่ render ให้ผู้ใช้เว็บไซต์เห็นจริง)
+ถ้าสองแหล่งขัดกัน ให้ยึด `creatures/README.md` เป็นหลักสำหรับเรื่องโครงสร้างไฟล์/field และยึด `data/rulebook.js` เป็นหลักสำหรับตัวเลข/ตาราง (เดิมคือ HTML ที่ render ให้ผู้ใช้เว็บไซต์เห็น ตอนนี้ถอดออกจากหน้าเว็บแล้วแต่ยังเป็น source of truth ของกฎ)
 
 ---
 

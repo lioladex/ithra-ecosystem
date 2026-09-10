@@ -69,7 +69,7 @@ const JOURNEY_CHAPTERS = [
         startId: "long-flight",
         endId: "__end_ch2__",
         closeTag: "// จบบทที่ 2 — Confluence มองฝูงร่างเดิมของตัวเองจากฟากฟ้าเป็นครั้งแรก",
-        closeText: "คำถามที่ค้างไว้ตั้งแต่คืนที่เห็นผู้ล่าสูงสุดกลายเป็นผู้ถูกล่ายังไม่มีคำตอบ และการเฝ้ามองฝูงร่างเดิมจากข้างนอกเพิ่งเริ่มต้นเท่านั้น บทถัดไปยังอยู่ระหว่างการพัฒนา ดูสรุปเชิงวิเคราะห์ของฉากตื่นรู้ (T-0 → T+1) ฉบับเต็มได้ที่เอกสาร MEMORY MECHANICS",
+        closeText: "คำถามที่ค้างไว้ตั้งแต่คืนที่เห็นผู้ล่าสูงสุดกลายเป็นผู้ถูกล่ายังไม่มีคำตอบ และการเฝ้ามองฝูงร่างเดิมจากข้างนอกเพิ่งเริ่มต้นเท่านั้น",
         reflections: [
             { kind: "loss", text: "ฉันเสียความรู้สึกว่าโลกนี้เล็กพอจะรู้จักได้ทั้งหมด" },
             { kind: "gain", text: "ฉันได้ตั้งคำถามกับตัวเองเป็นครั้งแรก" },
@@ -1064,7 +1064,7 @@ function journeyBuildChapterCloseHTML() {
             : (ch.nextLabel || 'Continue Journey');
         buttons += `<button class="vn-next-chapter-btn" onclick="journeyStartChapter(${journeyChapterIdx + 1})">${label} <span class="arrow">►</span></button>`;
     }
-    buttons += `<button onclick="switchView('memory-view')">ดูบทวิเคราะห์เต็ม → MEMORY MECHANICS</button>`
+    buttons += `<button onclick="switchView('core-memories-view')">ดูความทรงจำของบทนี้ → CORE MEMORIES</button>`
         + `<button onclick="switchView('landing-view')">กลับสู่ฐานข้อมูล</button>`;
 
     let seqHtml = '';

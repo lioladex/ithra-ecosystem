@@ -739,17 +739,11 @@
                             <h3 class="card-title">WORLD & ECOSYSTEM</h3>
                             <p class="card-desc">พิกัดระบบดาว, แรงโน้มถ่วง, สภาพภูมิอากาศ และระบบนิเวศทั้ง 3 ทวีปหลัก</p>
                         </div>
-                        <div class="nav-card" onclick="switchView('memory-view')">
+                        <div class="nav-card" onclick="switchView('core-memories-view')">
                             <span class="card-id" style="position: absolute; top: 12px; right: 12px;">DIR-03</span>
-                            <div class="card-icon" style="color: #d15c9d;">🧠</div>
-                            <h3 class="card-title">MEMORY MECHANICS</h3>
-                            <p class="card-desc">วิเคราะห์กลไกความทรงจำของ Confluence และเส้นเวลาวิเคราะห์ฉากตื่นรู้</p>
-                        </div>
-                        <div class="nav-card" onclick="switchView('design-view')">
-                            <span class="card-id" style="position: absolute; top: 12px; right: 12px;">DIR-04</span>
-                            <div class="card-icon" style="color: #6c7a89;">📐</div>
-                            <h3 class="card-title">DESIGN RULEBOOK</h3>
-                            <p class="card-desc">คู่มือลับ: ระบบ Slot อวัยวะ, กฎการจับคู่สี และกลไก Mutation ยีนเด่น-ยีนด้อย</p>
+                            <div class="card-icon" style="color: #d15c9d;">✺</div>
+                            <h3 class="card-title">CORE MEMORIES</h3>
+                            <p class="card-desc">ฉากสำคัญที่สุดของแต่ละบท — บทละ 1 ความทรงจำที่เปลี่ยน Confluence ไปตลอดกาล</p>
                         </div>
                     </div>
                 </div>
@@ -880,32 +874,19 @@
             <div id="world-view-content"></div>
         </div>
 
-        <div id="memory-view" class="view-section">
+        <div id="core-memories-view" class="view-section">
             <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> RETURN TO TERMINAL</button>
             <div class="sub-header">
                 <div>
-                    <h1>MEMORY MECHANICS</h1>
+                    <h1>CORE MEMORIES</h1>
                     <p style="color:#64748b;margin:5px 0 0;font-size:0.85rem;letter-spacing:2px;">COGNITIVE ARCHIVE // CONFLUENCE ENTITY</p>
                 </div>
                 <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">DIR-03</div>
             </div>
 
-            <!-- เนื้อหาเต็มอยู่ใน data/memoryMechanics.js (MEMORY_MECHANICS_HTML) -->
-            <div id="memory-view-content"></div>
-        </div>
-
-        <div id="design-view" class="view-section">
-            <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> RETURN TO TERMINAL</button>
-            <div class="sub-header">
-                <div>
-                    <h1>DESIGN RULEBOOK</h1>
-                    <p style="color:#64748b;margin:5px 0 0;font-size:0.85rem;letter-spacing:2px;">MONSTER DESIGN CODEX v1.1 // CLASSIFIED</p>
-                </div>
-                <div class="font-hud" style="color:#64748b;font-size:0.8rem;letter-spacing:2px;">DIR-04</div>
-            </div>
-
-            <!-- เนื้อหาเต็มอยู่ใน data/rulebook.js (RULEBOOK_HTML) -->
-            <div id="design-view-content"></div>
+            <!-- render จาก CORE_MEMORIES (data/coreMemories.js) ผ่าน renderCoreMemories() —
+                 ปลดล็อกทีละบทตามที่อ่านจบจริง (journeyChapterFinished ใน data/journey.js) -->
+            <div id="core-memories-content"></div>
         </div>
 
         <div id="story-view" class="view-section">
@@ -987,10 +968,9 @@
     <script src="creatures/torvane.js"></script>
     <script src="creatures/nethrix.js"></script>
 
-    <!-- Content Documents (Ecosystem / Memory Mechanics / Rulebook / Journey of Confluence) -->
+    <!-- Content Documents (Ecosystem / Core Memories / Journey of Confluence) -->
     <script src="data/ecosystem.js"></script>
-    <script src="data/memoryMechanics.js"></script>
-    <script src="data/rulebook.js"></script>
+    <script src="data/coreMemories.js"></script>
     <script src="data/skillSystem.js"></script>
     <!-- เนื้อหาแต่ละบทของ Journey of Confluence — 1 ไฟล์ต่อ 1 บท (ดู
          journey/_registry.js) ต้องโหลดก่อน data/journey.js (engine) เสมอ
@@ -1009,11 +989,83 @@
         // จากไฟล์ data/*.js เข้า container ที่ตรงกันใน index.html
         function initContentSections() {
             document.getElementById('world-view-content').innerHTML = ECOSYSTEM_HTML;
-            document.getElementById('memory-view-content').innerHTML = MEMORY_MECHANICS_HTML;
-            document.getElementById('design-view-content').innerHTML = RULEBOOK_HTML;
             // เอกสารพวกนี้อ้างชื่อสิ่งมีชีวิตข้ามกันไปมา ต้องถมแถบทับชื่อที่ยังไม่ปลดล็อก
-            ['world-view-content', 'memory-view-content', 'design-view-content']
+            ['world-view-content']
                 .forEach(id => applySpoilerRedaction(document.getElementById(id)));
+        }
+
+        /* วาดการ์ด Core Memories 6 ใบ (1 ใบต่อบท) จาก CORE_MEMORIES —
+           ปลดล็อกทีละใบตามที่อ่านจบบทนั้นจริง (journeyChapterFinished, นิยาม
+           ใน data/journey.js) เพื่อไม่ให้สปอยล์ฉากสำคัญของบทที่ยังไปไม่ถึง
+           เรียกจาก switchView() ทุกครั้งที่เปิดหน้านี้ เพื่อให้ state อัปเดตสดเสมอ */
+        function renderCoreMemories() {
+            const container = document.getElementById('core-memories-content');
+            if (!container || typeof CORE_MEMORIES === 'undefined') return;
+
+            container.innerHTML = `<div class="grid">${CORE_MEMORIES.map((mem, i) => {
+                const finished = typeof journeyChapterFinished === 'function'
+                    ? journeyChapterFinished(mem.chapter - 1)
+                    : false;
+
+                if (!finished) {
+                    return `
+                        <div class="species-card locked">
+                            <div class="card-content">
+                                <div class="locked-icon">◈</div>
+                                <div class="locked-title">??? UNRESOLVED MEMORY</div>
+                                <div class="locked-desc">ปลดล็อกเมื่ออ่านจบบทที่ ${mem.chapter}</div>
+                            </div>
+                        </div>`;
+                }
+
+                return `
+                    <div class="species-card" style="cursor:default;">
+                        <div class="card-bg-image" style="background-image:url('${mem.image}');"></div>
+                        <div class="no-image" style="position:absolute; inset:0; z-index:0; font-size:0.75rem; text-align:center;">NO VISUAL DATA</div>
+                        <div class="card-bg-gradient"></div>
+                        <div class="card-content">
+                            <span class="card-id font-hud">บทที่ ${mem.chapter} — ${mem.tag}</span>
+                            <div class="species-card-name">${mem.title}</div>
+                            <div class="card-desc" style="margin-top:auto; padding-top:12px; border-top:1px dashed var(--border-color);">${mem.caption}</div>
+                        </div>
+                    </div>`;
+            }).join('')}</div>
+            <div style="margin-top:28px; display:flex; flex-direction:column; gap:18px;">
+                ${CORE_MEMORIES.map((mem, i) => {
+                    const finished = typeof journeyChapterFinished === 'function'
+                        ? journeyChapterFinished(mem.chapter - 1)
+                        : false;
+                    if (!finished) return '';
+                    return `
+                        <div>
+                            <div class="section-label">◈ AI IMAGE GEN PROMPT — บทที่ ${mem.chapter} "${mem.chapterTitle}"</div>
+                            <div class="info-box" style="padding:0; overflow:hidden;">
+                                <pre class="core-memory-prompt" style="margin:0; padding:18px 20px; font-family:monospace; font-size:0.78rem; line-height:1.7; color:#94a3b8; white-space:pre-wrap; word-break:break-word; max-height:280px; overflow-y:auto; background:rgba(0,0,0,0.3);">${mem.prompt}</pre>
+                                <div style="display:flex; justify-content:flex-end; align-items:center; gap:14px; padding:12px 20px; border-top:1px solid var(--border-color);">
+                                    <span class="font-hud core-memory-copy-ok" style="font-size:0.8rem; color:var(--alive); opacity:0; transition:opacity .2s;">✓ COPIED TO CLIPBOARD</span>
+                                    <button class="btn-back" style="margin:0;" onclick="copyCoreMemoryPrompt(this)">⧉ COPY AI PROMPT</button>
+                                </div>
+                            </div>
+                        </div>`;
+                }).join('')}
+            </div>`;
+        }
+
+        /* เหมือน copyPrompt() ของ detail-view แต่ generic — คัดลอกจาก <pre> ที่อยู่
+           ในกล่อง info-box เดียวกับปุ่มที่ถูกกด แทนที่จะอ้าง id เดียวตายตัว */
+        function copyCoreMemoryPrompt(btn) {
+            const box = btn.closest('.info-box');
+            const text = box.querySelector('.core-memory-prompt').textContent;
+            const okMsg = box.querySelector('.core-memory-copy-ok');
+            const showOk = () => {
+                okMsg.style.opacity = 1;
+                setTimeout(() => { okMsg.style.opacity = 0; }, 1800);
+            };
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(showOk).catch(() => fallbackCopy(text, showOk));
+            } else {
+                fallbackCopy(text, showOk);
+            }
         }
 
         function statusClassFor(status) {
@@ -1027,6 +1079,7 @@
             document.getElementById(viewId).classList.add('active');
             window.scrollTo(0, 0);
             if (viewId === 'story-view') { journeyReset(); }
+            if (viewId === 'core-memories-view') { renderCoreMemories(); }
         }
 
         /* --- Unknown Species lock system + Lore Tier reveal ---
