@@ -256,9 +256,15 @@
             align-items: center; justify-content: center; padding: 40px; cursor: zoom-out;
         }
         .memory-lightbox.active { display: flex; }
-        .memory-lightbox-inner { max-width: min(1100px, 92vw); max-height: 90vh; display: flex; flex-direction: column; gap: 14px; cursor: default; }
-        .memory-lightbox-inner img { width: 100%; max-height: 76vh; object-fit: contain; border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.6); background: rgba(0,0,0,0.3); }
-        .memory-lightbox-caption { text-align: center; }
+        .memory-lightbox-inner { width: min(1100px, 92vw); max-height: 90vh; display: flex; flex-direction: column; cursor: default; }
+        /* ภาพ + scrim + ข้อความ ซ้อนกันเป็นชั้นเดียว (คำอธิบายที่เคยอยู่บนการ์ด
+           ย้ายมาซ้อนบนภาพตรงนี้แทน ไม่ได้อยู่แยกเป็นบล็อกใต้ภาพอีกต่อไป) */
+        .memory-lightbox-image-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border: 1px solid var(--border-color); box-shadow: 0 20px 60px rgba(0,0,0,0.6); background: rgba(0,0,0,0.3); overflow: hidden; }
+        .memory-lightbox-image-wrap img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+        .memory-lightbox-scrim { position: absolute; inset: 0; background: linear-gradient(to top, rgba(4,8,12,0.92) 0%, rgba(4,8,12,0.55) 32%, rgba(4,8,12,0) 62%); pointer-events: none; }
+        .memory-lightbox-caption { position: absolute; left: 0; right: 0; bottom: 0; padding: 28px 32px 22px; text-align: center; }
+        .memory-lightbox-caption #memory-lightbox-title { font-size: 1.3rem; color: white; font-weight: 600; }
+        .memory-lightbox-caption #memory-lightbox-desc { font-size: 0.85rem; color: #b8c4d4; line-height: 1.6; margin-top: 8px; max-width: 640px; margin-left: auto; margin-right: auto; }
         .memory-lightbox-close {
             position: fixed; top: 24px; right: 28px; z-index: 501;
             width: 38px; height: 38px; border-radius: 50%; cursor: pointer;
@@ -918,9 +924,13 @@
         <div id="memory-lightbox" class="memory-lightbox" onclick="if (event.target === this) closeMemoryLightbox();">
             <button class="memory-lightbox-close" onclick="closeMemoryLightbox()">✕</button>
             <div class="memory-lightbox-inner">
-                <img id="memory-lightbox-img" src="" alt="">
-                <div class="memory-lightbox-caption">
-                    <div id="memory-lightbox-title" style="font-size:1.3rem; color:white; margin-top:4px; font-weight:600;"></div>
+                <div class="memory-lightbox-image-wrap">
+                    <img id="memory-lightbox-img" src="" alt="">
+                    <div class="memory-lightbox-scrim"></div>
+                    <div class="memory-lightbox-caption">
+                        <div id="memory-lightbox-title"></div>
+                        <div id="memory-lightbox-desc"></div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -1093,13 +1103,12 @@
                 }
 
                 return `
-                    <div class="species-card" style="cursor:zoom-in;" onclick='openMemoryLightbox(${JSON.stringify(mem.image)}, ${JSON.stringify(mem.title)})'>
+                    <div class="species-card" style="cursor:zoom-in;" onclick='openMemoryLightbox(${JSON.stringify(mem.image)}, ${JSON.stringify(mem.title)}, ${JSON.stringify(mem.caption)})'>
                         <img src="${mem.image}" alt="" class="card-bg-image" style="width:100%; height:100%; object-fit:cover; object-position:center 22%;" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex'; this.closest('.species-card').style.cursor='default'; this.closest('.species-card').onclick=null;">
                         <div class="no-image" style="display:none; position:absolute; inset:0; z-index:0; font-size:0.75rem; text-align:center;">NO VISUAL DATA</div>
                         <div class="card-bg-gradient"></div>
                         <div class="card-content">
-                            <div class="species-card-name">${mem.title}</div>
-                            <div class="card-desc" style="margin-top:auto; padding-top:12px; border-top:1px dashed var(--border-color);">${mem.caption}</div>
+                            <div class="species-card-name" style="margin-top:auto;">${mem.title}</div>
                         </div>
                     </div>`;
             }).join('')}</div>
@@ -1138,9 +1147,10 @@
             }
         }
 
-        function openMemoryLightbox(imageUrl, title) {
+        function openMemoryLightbox(imageUrl, title, caption) {
             document.getElementById('memory-lightbox-img').src = imageUrl;
             document.getElementById('memory-lightbox-title').textContent = title;
+            document.getElementById('memory-lightbox-desc').textContent = caption || '';
             document.getElementById('memory-lightbox').classList.add('active');
         }
         function closeMemoryLightbox() {
