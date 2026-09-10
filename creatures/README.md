@@ -128,12 +128,15 @@ quarter view, shot with a telephoto lens at eye level, shallow
 depth of field with softly blurred background [foliage/terrain],
 volumetric god rays [filtering through mist from above / raking
 low across the plain], soft naturalistic backlighting that makes
-the [glowing feature] glow from within, hyper-detailed micro-
-texturing on every [hair/scale] and surface, subsurface
-scattering, physically-based rendering, muted natural color
-grading with deep shadows, 1:1 square composition, subject
-centered and fully visible from head to feet, no readable text.
+the [glowing feature] glow from within, crisp rim lighting along
+its silhouette, hyper-sharp micro-detail texturing on every
+[hair/scale] and surface, subsurface scattering, physically-based
+rendering, muted natural color grading with deep shadows, 1:1
+square composition, subject centered and fully visible from head
+to feet, no readable text.
 ```
+
+**อัปเดต 2026-09-10**: เพิ่ม `crisp rim lighting along its silhouette` และเปลี่ยน `hyper-detailed micro-texturing` เป็น `hyper-sharp micro-detail texturing` เข้าไปในบล็อกคงที่ถาวร (แรงบันดาลใจจากภาพ Korrune/Palegrim เวอร์ชันใหม่ที่คมชัดกว่าเดิมชัดเจน) — ใช้กับทุกตัวที่มี `prompt` แบบมาตรฐาน (ไม่ใช่ macro variant) ส่วนวลี color grading ยังคงเป็นไปตามธีมสีของแต่ละ habitat ตามเดิม (เช่น "muted volcanic color grading" ของ Ashkarn, "muted cold natural color grading" ของ Kethyr) ไม่บังคับให้เป็น cool-tone เดียวกันหมดเพราะจะขัดกับธีมสีของ creature ที่มาจากสภาพแวดล้อมร้อน/แห้งแล้ง
 
 **ข้อยกเว้น**: สิ่งมีชีวิตขนาดจิ๋ว/แมลง (เช่น Glimmerwing) ใช้ตัวแปร "macro photography" ของย่อหน้าที่ 2 แทน (macro lens, extreme close-up, glowing bokeh ของฝูงเบื้องหลัง) แต่ยังต้องคงโครงสร้างย่อหน้าที่ 1 ครบทุกข้อข้างต้น
 
