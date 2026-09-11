@@ -153,6 +153,35 @@ No motion-graphics skill is installed (the registry has none; the GitHub ones ta
 - **Honour `prefers-reduced-motion`.** The sequence is hidden entirely and the close card with its ledger appears at once. Nobody loses content, only the animation.
 - **Always leave the skip.** Twenty seconds is a long time to hold a reader who has already read it.
 
+## 19. Action-scene checklist (distilled from the Chapter 6 titans-collide edit passes)
+This is the pattern behind the heaviest hand-editing this project has seen on one step. Five recurring fixes, worth running as a checklist on any new fight/chase scene before it goes to review:
+
+- **One origin point, not "every direction."** A first draft tends to reach for scale — "attacked from every direction, from every strand of web at once" — because it sounds bigger. But a single creature cannot physically attack from everywhere simultaneously, and the reader's mental picture breaks the moment they try to stage it. Name the one direction/position the attack actually comes from. Save "surrounded from every side" for when there genuinely is more than one attacker, or for the *encirclement* that follows the opening strike, not the strike itself.
+- **Match the sensory channel to the actual distance.** Close-up detail (individual teeth, iris texture, a mouth's interior) reads as something only a near observer could register. If the POV character is watching from concealment at range (see rule 0), swap that detail for one that travels — a sound, a smell, a silhouette-scale motion — carrying the same threat information without claiming a vantage the character doesn't have. This is rule 0's distance charter applied sentence-by-sentence, not just scene-by-scene.
+- **Give the beaten side a micro-action before every counter lands.** "It couldn't escape, so the arm hooked its leg" reads as pure reception. "It kicked at the web to break free — the arm hooked its leg before it could" reads as an exchange. Every hit should follow a visible attempt by the side receiving it, even a failed one; that's what keeps a one-sided beatdown feeling like a fight instead of a cutscene.
+- **Cut "first time ever" framing from fast beats.** "Claws that stayed sheathed unfurled for the first time that night" is narrator commentary on significance, and it slows a beat that should be reflexive and immediate. Grand-framing belongs to slow, reflective prose (rule 6); a fight exchange wants the plain verb (claws out, swipe, miss) with no aside about how rare or first-time the moment is. If the moment's significance matters, let the *consequence* carry it, not a narrator's aside.
+- **Vary the nickname once contrast makes the cast unambiguous.** Rule 2 bans real names, not repetition of one exact phrase. When two entities in one scene are already impossible to confuse (stark white vs. solid black, here), rotate between equivalent descriptive phrasings (สิ่งขาวซีด / เจ้าตัวสีขาว, ตัวดำสนิท / เจ้าตัวสีดำ) and drop in a bare มัน when the subject was just named in the same paragraph. Forcing one fixed string on every reference reads as repetitive, not consistent. Keep the *trait* used to describe a creature stable across chapters — only the exact wording within one scene is free to vary.
+
+## Appendix: reference vocabulary pools
+Pulled from public Thai writer's-vocabulary and onomatopoeia lists, then filtered hard against this project's own constraints — most of what's out there is written for human-social/romance fiction and doesn't survive contact with rule 0 (no human-social gestures for a body-shifting alien narrator) or rule 1 (no pre-labeled emotion words). What's left is what actually clears that filter. Treat every entry as a starting point to reshape into the specific creature/scene at hand, never as a drop-in phrase — a pool word used verbatim and unmodified is a sign the sentence around it wasn't written for this body.
+
+**Impact / combat sounds** (rule 19's "sound travels farther than close detail" — these work at range, unlike visual micro-detail):
+กร้วม · กรอบเกรียบ · กรุบ · กรูด · แกรก · ขวับ · คั่ก · ฉาด · ฉาบ · ซู่ · ซู้ด · ตึง · ตูม · เปรี้ยง · แปะ · แป๊ะ · โป๊ะ · ผัวะ · ผ่าง · เผง · เผียะ · เพียะ · หวือ · หวูด
+
+Use for: claw/impact strikes, something snapping or tearing (web, hide, bone), a body hitting ground or water, wind off a wing-beat. Match the harshness of the sound to the harshness of the blow — เผง/ผ่าง read heavier than แปะ/แป๊ะ.
+
+**Creature / vocal sounds** (for a cry, warning call, or distress sound heard from concealment — never paired with human words like "scream" that imply human vocal cords):
+กรี๊ด · กรีดกราด · เจี๊ยก · เจี๊ยบ · แง · แง่ง · หวือ · หวูด · เฮือก · โฮกฮาก · คำราม (not from the source lists, but the project's own established word for Nethrix/large-predator vocalization — keep using it)
+
+Avoid the source lists' purely domestic/human entries (555, ชักโครก, รองเท้าแตะ, อ้วก) — they carry a comedic or mundane real-world register this project's tone (rule 0: หม่น เหงา) can't absorb.
+
+**External motion & gaze** (rule 0/19 — only the entries that read as pure observable motion, with no assumption of human anatomy or clothing, survive):
+เหลือบมอง · จ้องนิ่ง · กวาดสายตา · หลบตา · กลืนน้ำลาย (works for any throat, not just human) · ขยับถอยครึ่งก้าว · ชะงัก · สะดุ้ง · เกร็งตัว
+
+Dropped from the source lists as unusable here: anything naming human-specific body parts or actions doing human-social work — "กอดอก" (crossed arms — no arms to cross on most bodies in this story), "ยิ้มมุมปาก"/"เม้มปากแน่น" (mouth shapes assuming human facial musculature and human social smiling, which none of Confluence's bodies have reason to do), "พิงพนักสบาย ๆ" (leaning on a chair back — no furniture in this world's wild settings). If a future scene needs a *calm/confident* external cue for a creature, build it from that creature's own established anatomy instead of reaching for this pool.
+
+**What didn't make the cut at all:** the emotion-vocabulary lists found (tunwalai's "คลังคำศัพท์ หมวดหมู่อารมณ์และความรู้สึก" and similar) are organized around categories like romantic tenderness, infatuation, and social disappointment — none of it fits a story with no romance, no human social contract, and a rule (1) that bans naming an emotion before the body demonstrates it anyway. Don't pull from that genre of list for this project; if a new emotional beat needs vocabulary, build it the way rule 14's stiffness checklist already does — from the specific physical demonstration, not a named-emotion word bank.
+
 ## Workflow when asked to polish existing prose
 1. Read the target step(s) in full context (surrounding steps too — tone must flow between them).
 2. Check each paragraph against rules 1–6 above.
