@@ -32,14 +32,18 @@ Confluence feels a thing before it can name or understand it. Never let narratio
 - Good: `รู้สึกว่า เจ็บ` / a raw physical description, with naming arriving only at the exact moment understanding clicks (see `shock-collapse`: pain gets its name only in that instant, marked with `<em class="glow-danger">`).
 - Apply this to every new sensation (hunger, smell-as-direction, flight, pain) — describe the raw sensory data first, let the "aha" be a separate, visible beat.
 
-## 2. No real species names in-story
+## 2. No real species/place/celestial names in-story
 Confluence doesn't know real names. In dialogue/narration (not tags, sysnotes, comments, or UI labels — those may use real names freely), creatures get in-world descriptive nicknames from Confluence's naive POV:
 - Karvos → เจ้าตัวสี่ขา
 - Skyther → เจ้าเงาปีกกว้าง / เงาปีกกว้าง
 - Vashli → เจ้าตาโต
 - Confluence's own former body → ร่างเดิม / ร่างสี่ขาที่เคยสวมอยู่ (never "Luvenn" by name inside `paragraphs`)
 
-When adding a new creature to the story, invent its nickname from a single striking visual/behavioral trait, not its taxonomy.
+The same rule applies to geographic/celestial proper nouns from the worldbuilding codex — Confluence has no cartographic or astronomical concept of names either:
+- Ashvel (the star) → ดวงไฟบนฟ้า
+- Verath (the continent) → แผ่นดินหมอก (or just "ป่าหมอก" when the immediate forest, not the landmass, is meant)
+
+When adding a new creature — or a new named place/star from `codex/world-building.md` — to the story, invent its nickname from a single striking visual/behavioral/sensory trait, not its taxonomy or catalog name.
 
 ## 3. Distance-calibrated description
 How much anatomical detail a paragraph gives must match how close/how long Confluence has been looking:
