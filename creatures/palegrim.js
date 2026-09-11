@@ -3,7 +3,7 @@ creaturesData.push({
         id: "ITH-215-847", name: "Palegrim", nickname: "เจ้าเงาสีซีด", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "PALEGRIM", color: "#e4e4e7",
         category: "สัตว์กินซาก/ผู้ย่อยสลาย · สัตว์กินซากตามรอยเจ้าไร้เสียงระยะปลอดภัย (Long-range trailing scavenger)",
-        habitat: "เคลื่อนย้ายตามอาณาเขตของเจ้าไร้เสียงทั่วทวีป Verath ไม่ยึดถิ่นตายตัว",
+        habitat: "เคลื่อนย้ายตามอาณาเขตของเจ้าไร้เสียงทั่วทวีป Verath ไม่ยึดถิ่นตายตัว — พบบ่อยที่สุดที่ Zone 15: The Still Reach ตามอาณาเขตหลักของมัน",
         foodChain: "ผู้ย่อยสลายฉวยโอกาส — กินเศษซากที่เจ้าไร้เสียงทิ้งไว้เท่านั้น ไม่ล่าเองเลย",
         danger: "3% (Harmless, extremely skittish)", size: "ระดับ 2 — เล็ก (เท่าสุนัขจิ้งจอกตัวเล็ก)",
         height: "0.35 ม. ที่ไหล่ · ลำตัวยาว 0.55 ม.", weight: "7 กก.",

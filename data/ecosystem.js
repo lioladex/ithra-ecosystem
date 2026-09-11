@@ -113,6 +113,55 @@ const ECOSYSTEM_HTML = `
                 </div>
             </div>
 
+            <h4 class="font-hud" style="margin-top:20px; color:#cbd5e1; letter-spacing:1px;">VERATH EXPANDED ZONES (เขตภูมิประเทศเพิ่มเติม) — Zone 5-15</h4>
+            <p style="font-size:0.8rem;color:#64748b;line-height:1.6;margin-bottom:16px;">แต่ละชื่อด้านล่างคือ <strong style="color:#cbd5e1;">"ประเภทภูมิประเทศ"</strong> ที่กระจายเป็นหย่อมๆ ซ้ำได้หลายจุดทั่ว Verath ไม่ใช่พิกัดเดียวตายตัว — ต่างจาก POI แบบ The Awakening Glade ที่เป็นจุดเฉพาะเจาะจงจริง ระดับ <strong style="color:#cbd5e1;">DANGER TIER</strong> ใช้มาตราเดียวกับ Alien Intensity Scale (ดู <em>creature-design.md</em>): <span style="color:#4ade80;">I ต่ำสุด</span> ถึง <span style="color:#f87171;">V อันตรายสูงสุด</span></p>
+            <div class="content-grid two">
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 5: The Webbed Deep <span style="color:#f87171;font-size:0.7rem;">// TIER V</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">ผืนป่าลึกที่ไม่มีแผนที่ใดบันทึกไว้ เส้นใยสีขาวซีดขึงพาดทับกันหนาแน่นระหว่างต้นไม้นับสิบต้นรอบทิศจนดูเหมือนม่านทึบมากกว่าเส้นใยเดี่ยวๆ ทำหน้าที่เป็นระบบสื่อสารเดียวกันทั้งผืน รับรู้แรงสั่นจากทุกจุดพร้อมกัน แสงในนี้สลัวถาวรแม้กลางวัน เป็นอาณาเขตซ้อนทับของ <em style="color:#bfe6ff;">เจ้าไร้เสียง</em> และ <em style="color:var(--accent-default);">Nethrix</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 6: The Hollow Roots <span style="color:#38bdf8;font-size:0.7rem;">// TIER II</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">เครือข่ายโพรงธรรมชาติภายในระบบรากของต้นไม้ยักษ์สูงเกิน 150 เมตร ไม่ใช่ทุกต้นที่มีโพรงแบบนี้ พบเป็นกลุ่มเฉพาะบางแนวป่าเท่านั้น เชื้อราเรืองแสงจางๆ ตามผนังโพรงให้แสงสลัวพอมองเห็นทาง เงียบและมั่นคงกว่าพื้นป่าด้านบนมาก ถิ่นอาศัยของ <em style="color:var(--accent-default);">Torvane</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 7: The Ashfall Scar <span style="color:#fb923c;font-size:0.7rem;">// TIER IV</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">แนวเขตชายแดนที่รับเถ้าจากภูเขาไฟ Ashkarn ทางใต้ (ดู BIOME 03: DOTHEN) พัดมาทับถมซ้ำทุกรอบปะทุ พื้นดินไม่มั่นคง ฝุ่นเถ้าหนาพอจะทำให้หายใจไม่ออกได้ในบางจุด พืชพรรณฟื้นตัวช้ามากหลังแต่ละรอบ แทบไม่มีสิ่งมีชีวิตประจำถิ่นถาวร มีแต่ฝูงที่หนีภัยพัดผ่านเป็นครั้งคราว</p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 8: The Sunken Grove <span style="color:#fb923c;font-size:0.7rem;">// TIER IV</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">แนวป่าลุ่มใกล้ชายฝั่งที่จมอยู่ใต้น้ำลึกหลายเมตรทุกครั้งที่ดวงจันทร์ทั้งสองโคจรมาบรรจบกัน (The Clash Tide) ก่อนจะแห้งขอดกลับมาเป็นป่าปกติในไม่กี่ชั่วโมง สิ่งมีชีวิตที่นี่ต้องปรับตัวรับมือกับทั้งสองสภาพในรอบเดียว ความเสี่ยงหลักคือจังหวะน้ำท่วมที่คาดเดาแม่นยำได้ยาก</p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 9: The Petrified Stand <span style="color:#4ade80;font-size:0.7rem;">// TIER I</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">ป่าโบราณที่ตายไปนานแล้วแต่ยังคงยืนต้นอยู่ เพราะน้ำใต้ดินที่มีแร่ธาตุเข้มข้นสูงแทรกซึมเข้าไปแทนที่เนื้อไม้ทีละน้อยจนกลายเป็นหินทั้งต้น เงียบผิดปกติกว่าป่าส่วนอื่นของ Verath มาก สิ่งมีชีวิตที่นี่มักเคลื่อนไหวช้าและกลืนไปกับพื้นผิวหินจนแยกไม่ออก ถิ่นอาศัยของ <em style="color:var(--accent-default);">Murrow</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 10: The Cloud Bridges <span style="color:#f87171;font-size:0.7rem;">// TIER V</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">แนวหินโค้งธรรมชาติที่ลมกัดเซาะจนเชื่อมยอดหินสูงชันเข้าด้วยกันเหนือระดับเรือนยอดทั้งหมด กระแสลมแรงจัดตลอดเวลาจนแทบยืนนิ่งไม่ได้ถ้าไม่มีปีกหรือกรงเล็บยึดเกาะที่แข็งแรงพอ เป็นถิ่นทำรังของ <em style="color:var(--accent-default);">Skyther</em> และน่านฟ้าล่าเหยื่อของ <em style="color:var(--accent-default);">Vellith</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 11: The Chorus Marsh <span style="color:#4ade80;font-size:0.7rem;">// TIER I</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">บึงน้ำตื้นชั้นกลางที่ทุกพลบค่ำจะเต็มไปด้วยเสียงร้องประสานจากสัตว์สะเทินน้ำสะเทินบกตัวจิ๋วนับพันตัวพร้อมกัน แสงเรืองสีฟ้าอมเขียวกะพริบเป็นจังหวะเดียวกันทั่วทั้งบึงราวกับคลื่น เป็นหนึ่งในไม่กี่จุดของ Verath ที่แทบไม่มีนักล่าประจำถิ่น ถิ่นชุมนุมหนาแน่นที่สุดของ <em style="color:var(--accent-default);">Duskchime</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 12: The Bramble Maze <span style="color:#fb923c;font-size:0.7rem;">// TIER IV</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">พื้นป่าชั้นล่างที่พุ่มไม้มีหนามขึ้นพันกันหนาแน่นจนเป็นเหมือนเขาวงกตตามธรรมชาติ เส้นทางเปลี่ยนไปเรื่อยๆ ตามการเติบโตของพุ่มไม้เอง ยากจะจำเส้นทางเดิมได้สองครั้ง นักล่าหลายชนิดใช้ความสับสนของเขาวงกตนี้ซุ่มโจมตีเหยื่อที่หลงทาง ถิ่นหลบภัยของฝูง <em style="color:var(--accent-default);">Rustleback</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 13: The Weeping Cliffs <span style="color:#38bdf8;font-size:0.7rem;">// TIER II</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">แนวหน้าผาที่ขอบสุดทางตะวันออกของ Verath ติดกับมหาสมุทรไทดัล มีน้ำจืดซึมออกจากรอยแตกในหน้าผาตลอดเวลาไม่มีวันหยุด ไหลเป็นทางยาวลงสู่ทะเลด้านล่างจนดูเหมือนหน้าผาร้องไห้ เป็นรอยต่อสุดท้ายระหว่างป่าหมอกกับโลกใต้ทะเล ถิ่นอาศัยรองของ <em style="color:var(--accent-default);">Pallowfin</em></p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 14: The Black Throat <span style="color:#f87171;font-size:0.7rem;">// TIER V</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">โพรงถ้ำลึกที่เจาะทะลุลงไปใต้พื้นป่าโดยตรง ไม่เกี่ยวข้องกับระบบรากไม้แบบ Zone 6 มืดสนิทไม่มีแสงธรรมชาติส่องถึงเลยแม้แต่น้อย ระบบนิเวศภายในพึ่งพาความร้อนและแร่ธาตุจากใต้พิภพแทนแสงอาทิตย์ ยังไม่มีบันทึกยืนยันว่ามีสิ่งมีชีวิตชนิดใดอาศัยอยู่ก้นถ้ำจริงๆ มีแต่เสียงและรอยที่เหลือทิ้งไว้</p>
+                </div>
+                <div class="info-box">
+                    <h3 class="font-hud" style="color:#4ade80;">ZONE 15: The Still Reach <span style="color:#fb923c;font-size:0.7rem;">// TIER IV</span></h3>
+                    <p style="font-size:0.85rem;color:#94a3b8;line-height:1.7;">หุบเขาแคบที่ภูมิประเทศรอบข้างกันลมและเสียงไว้อย่างประหลาด เสียงใดๆ ที่เกิดขึ้นในนี้แทบไม่สะท้อนไปไกลเหมือนที่อื่นในป่าหมอก นักล่าที่คุ้นเคยกับพื้นที่นี้จึงมักอาศัยกลิ่นนำทางแทนเสียง ความเงียบผิดธรรมชาติทำให้เหยื่อไม่ทันรู้ตัวจนกว่าจะสายเกินไป เขตล่าที่ <em style="color:#bfe6ff;">เจ้าไร้เสียง</em> ใช้บ่อยที่สุด</p>
+                </div>
+            </div>
+
             <h4 class="font-hud" style="margin-top:20px; color:#cbd5e1; letter-spacing:1px;">VERATH ECOLOGICAL LAYERS (ระบบนิเวศแนวดิ่ง)</h4>
             <table class="data-table">
                 <tr><th style="width:25%;">ชั้น (Layer)</th><th>ลักษณะและสิ่งมีชีวิต</th></tr>

@@ -3,7 +3,7 @@ creaturesData.push({
         id: "ITH-203-882", name: "Glimmerwing", nickname: "ฝูงแสงกะพริบ", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "GLIMMERWING", color: "#06b6d4",
         category: "สัตว์กินพืช · แมลงแกนกลางระบบนิเวศ (Keystone Species)", 
-        habitat: "ทั่วทั้งทวีป Verath",
+        habitat: "ทั่วทั้งทวีป Verath — พบได้แทบทุก Zone ยกเว้นเขตอันตรายสุดขั้วอย่าง Zone 5: The Webbed Deep และ Zone 14: The Black Throat",
         danger: "0% (Harmless)", size: "ระดับ 1 — จิ๋ว", 
         height: "10 ซม.", weight: "0.1 กก.",
         desc: "แมลงโปร่งแสงที่สื่อสารกันด้วยแสงสีฟ้า (Hive Mind) ชอบตอมแผงคอของร่างสี่ขาเพื่อกินน้ำหวาน เป็นแหล่งอาหารให้ผู้ล่าและเป็นเข็มทิศแห่งป่า",

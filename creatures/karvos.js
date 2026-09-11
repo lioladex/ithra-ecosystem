@@ -2,7 +2,7 @@
 creaturesData.push({
         id: "ITH-510-961", name: "Karvos", nickname: "เจ้าตัวสี่ขา", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "KARVOS", color: "#ff7a3d",
-        category: "สัตว์กินเนื้อ · นักล่าฝูงรับความร้อน (Thermoreceptive pack-hunter)", habitat: "ป่าหมอกชั้นพื้นดิน (Verath)",
+        category: "สัตว์กินเนื้อ · นักล่าฝูงรับความร้อน (Thermoreceptive pack-hunter)", habitat: "ป่าหมอกชั้นพื้นดิน (Verath, Zone 3: The Dark Mire) — บางฝูงยังไล่ต้อนเหยื่อเข้า Zone 12: The Bramble Maze และเคยพบผ่าน Zone 7: The Ashfall Scar ตอนหนีภัยภูเขาไฟ",
         foodChain: "ผู้ล่าระดับสูงของชั้นพื้นดิน — ล่าร่างสี่ขาเป็นอาหารหลัก",
         danger: "48% (Dangerous) - ต่อ 1 ตัว", size: "ระดับ 4 — กลาง (เท่าสุนัขใหญ่)", height: "0.95 ม. ที่ไหล่", weight: "58 กก.",
         desc: "นักล่าฝูงที่โจมตีร่างสี่ขาในฉากตื่นรู้ ล่าด้วยการต้อนให้เหยื่อวิ่งจนตัวร้อน สื่อสารกันในฝูงด้วยแถบเรืองแสงข้างแก้ม มีระบบตาสองชั้น (ภาพปกติ + รังสีความร้อน)",

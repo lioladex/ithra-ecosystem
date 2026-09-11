@@ -3,7 +3,7 @@ creaturesData.push({
         id: "ITH-212-118", name: "Ozgrun", nickname: "เจ้าก้อนหินกลม", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "OZGRUN", color: "#f97316",
         category: "สัตว์กินพืช · สัตว์หุ้มเกราะแร่ธาตุกินราก (Mineral-plated root-forager, defensive roller)",
-        habitat: "พื้นป่าและหนองบึง (Verath, The Dark Mire)",
+        habitat: "พื้นป่าและหนองบึง (Verath, Zone 3: The Dark Mire)",
         foodChain: "ผู้บริโภคปฐมภูมิภาคพื้น — เหยื่อสำคัญของฝูงเจ้าตัวสี่ขา (ต้องล่าเป็นทีมเท่านั้น)",
         danger: "22% (Low, but costly to hunt alone)", size: "ระดับ 4 — กลาง (เท่าหมูป่าตัวใหญ่)",
         height: "0.6 ม. ที่ไหล่ (ท่ายืดตัวเดิน) · ม้วนตัวเหลือเส้นผ่านศูนย์กลาง 0.9 ม.", weight: "85 กก.",

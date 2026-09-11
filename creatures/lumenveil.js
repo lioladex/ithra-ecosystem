@@ -3,7 +3,7 @@ creaturesData.push({
         id: "ITH-213-064", name: "Lumenveil", nickname: "แผ่นเรืองทอง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "LUMENVEIL", color: "#86efac",
         category: "ผู้ผลิต (สังเคราะห์แสง) · สิ่งมีชีวิตกินแสงเกาะกิ่งไม้กึ่งเคลื่อนที่ (Semi-sessile light-absorbing canopy organism)",
-        habitat: "รอยต่อชั้นเรือนยอดกับชั้นหมอกกลาง (Verath, Canopy-Mist Boundary)",
+        habitat: "รอยต่อชั้นเรือนยอดกับชั้นหมอกกลาง (Verath, Zone 1-2 Boundary: Canopy-Mist Boundary)",
         foodChain: "ผู้ผลิตปฐมภูมิลอยตัวชั้นเรือนยอด — แหล่งอาหารหลักที่แท้จริงของร่างสี่ขา",
         danger: "0% (Harmless, non-motile)", size: "ระดับ 2 — เล็กต่อผืน (ผืนหนึ่งกว้างเฉลี่ย 1.5 ม.)",
         height: "หนา 5-15 ซม. · ผืนหนึ่งแผ่กว้างได้ถึง 2 ม.", weight: "6-10 กก. ต่อผืน",

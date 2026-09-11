@@ -3,7 +3,7 @@ creaturesData.push({
         id: "ITH-219-742", name: "Rustleback", nickname: "เจ้าพุ่มไม้วิ่ง", status: "ALIVE", era: "ยุคป่าหมอก (Mistwood Era)",
         imageKey: "RUSTLEBACK", color: "#e8c15a",
         category: "สัตว์กินซาก/ผู้ย่อยสลาย · สัตว์เล็กหากินซากพืชเป็นฝูงเล็กตามพื้นป่า (Small gregarious forest-floor detritivore)",
-        habitat: "พื้นป่าหมอกทั่วทวีป Verath (Forest Floor, ต่อเนื่องถึงชายขอบ The Dark Mire)",
+        habitat: "พื้นป่าหมอกทั่วทวีป Verath (Forest Floor, ต่อเนื่องถึงชายขอบ Zone 3: The Dark Mire) — หลบภัยชุกชุมที่สุดใน Zone 12: The Bramble Maze",
         foodChain: "ผู้ย่อยสลายชั้นล่าง — กินใบ Lumenveil ที่ร่วงหล่น เชื้อรา และเศษพืชเน่าตามพื้นป่า เป็นเหยื่อพื้นฐานของ Karvos, Mistcrawler และสัตว์กินเนื้อขนาดเล็ก-กลางแทบทุกชนิด",
         danger: "2% (Harmless)", size: "ระดับ 2 — เล็ก (เท่ากระต่ายป่า)",
         height: "0.25 ม. ที่ไหล่ · ลำตัวยาว 0.4 ม.", weight: "3-4 กก.",
