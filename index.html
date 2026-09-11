@@ -27,6 +27,11 @@
             --alive: #6ef2a0;
         }
 
+        /* ซ่อน scrollbar ของ browser ทั้งเว็บ (ยังเลื่อนหน้าได้ปกติ แค่ไม่โชว์แถบ)
+           ต้องประกาศทั้งสามชุดเพราะแต่ละ engine ใช้ชื่อ property/selector ต่างกัน */
+        html { scrollbar-width: none; -ms-overflow-style: none; }
+        html::-webkit-scrollbar { display: none; }
+
         body {
             font-family: 'Sarabun', sans-serif;
             background-color: var(--bg-color);
@@ -67,7 +72,6 @@
             100% { opacity: 0; transform: translateY(-112vh) translateX(var(--drift, 20px)); }
         }
 
-        .hud-frame-tl { position: fixed; top: 20px; left: 20px; width: 40px; height: 40px; border-top: 2px solid var(--accent-default); border-left: 2px solid var(--accent-default); opacity: 0.5; pointer-events: none; z-index: 100; }
         .hud-frame-br { position: fixed; bottom: 20px; right: 20px; width: 40px; height: 40px; border-bottom: 2px solid var(--border-color); border-right: 2px solid var(--border-color); opacity: 0.5; pointer-events: none; z-index: 100; }
         
         .radar-bg { position: fixed; top: 50%; left: 70%; transform: translate(-50%, -50%); width: 800px; height: 800px; border: 1px solid rgba(74, 100, 120, 0.1); border-radius: 50%; pointer-events: none; z-index: 0; }
@@ -730,7 +734,6 @@
 </head>
 <body>
 
-    <div class="hud-frame-tl"></div>
     <div class="hud-frame-br"></div>
     <!-- ลอยอยู่ทุกหน้าตลอด (ไม่ผูกกับ view-section ไหน) ย้ายมาจากใน sub-header ของ
          species-view เดิม เพื่อสลับ DEV MODE ได้จากหน้าไหนก็ได้โดยไม่ต้องสลับ view
