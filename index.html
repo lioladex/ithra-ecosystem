@@ -75,7 +75,14 @@
 
         .view-section { display: none; animation: fadeIn 0.3s ease-out; position: relative; z-index: 10; }
         .view-section.active { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        /* กันหัวข้อ view ชนกับปุ่มย้อนกลับที่ลอยตายตัวมุมบนซ้ายแล้ว (.btn-back-float
+           ไม่กินพื้นที่ใน flow ปกติอีกต่อไป เพราะ position:fixed) */
+        .view-section:has(> .btn-back-float) { padding-top: 60px; }
+        /* opacity เพียวๆ ไม่มี transform ตั้งใจ — transform (แม้ปลายทางจะเป็น
+           translateY(0)) ทำให้ .view-section กลายเป็น containing block ใหม่
+           ระหว่างเล่นแอนิเมชัน ทำให้ลูกที่เป็น position:fixed (เช่น
+           .btn-back-float) หลุดจากการ fixed จริงชั่วคราว/บางสภาพแวดล้อม */
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
         #landing-view .main-layout { display: flex; gap: 50px; align-items: flex-start; }
         #landing-view .left-col { flex: 0 0 520px; display: flex; flex-direction: column; }
@@ -228,6 +235,14 @@
         .dev-toggle-btn.active { background: rgba(255,184,74,0.12); border-color: #ffb84a; color: #ffb84a; }
         .dev-mode-float {
             position: fixed; top: 20px; right: 20px; z-index: 200;
+            background: rgba(10,14,18,0.85); backdrop-filter: blur(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.4);
+        }
+        /* ปุ่มย้อนกลับลอยตำแหน่งเดิมตลอด (มุมตรงข้ามกับ .dev-mode-float) แทนที่
+           จะเลื่อนหายไปตาม scroll เหมือนก่อน — ใช้เฉพาะปุ่ม "กลับ" จริงๆ ที่หัว
+           แต่ละ view เท่านั้น ไม่ใช้กับปุ่ม .btn-back อื่นที่ยืมสไตล์ไปใช้ (เช่น
+           COPY AI PROMPT) เพราะปุ่มพวกนั้นต้องอยู่กับที่ในเนื้อหาตามปกติ */
+        .btn-back-float {
+            position: fixed; top: 20px; left: 20px; z-index: 200; margin: 0;
             background: rgba(10,14,18,0.85); backdrop-filter: blur(4px); box-shadow: 0 4px 16px rgba(0,0,0,0.4);
         }
 
@@ -802,7 +817,7 @@
         </div>
 
         <div id="species-view" class="view-section">
-            <button class="btn-back" onclick="switchView(speciesReturnTo)">
+            <button class="btn-back btn-back-float" onclick="switchView(speciesReturnTo)">
                 <span>&lt;</span> RETURN TO TERMINAL
             </button>
 
@@ -822,7 +837,7 @@
         </div>
 
         <div id="detail-view" class="view-section">
-            <button class="btn-back" onclick="switchView('species-view')">
+            <button class="btn-back btn-back-float" onclick="switchView('species-view')">
                 <span>&lt;</span> RETURN TO DATABASE
             </button>
 
@@ -893,7 +908,7 @@
         </div>
 
         <div id="world-view" class="view-section">
-            <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> RETURN TO TERMINAL</button>
+            <button class="btn-back btn-back-float" onclick="switchView('landing-view')"><span>&lt;</span> RETURN TO TERMINAL</button>
             <div class="sub-header">
                 <div>
                     <h1>WORLD & ECOSYSTEM</h1>
@@ -907,7 +922,7 @@
         </div>
 
         <div id="core-memories-view" class="view-section">
-            <button class="btn-back" onclick="switchView(coreMemoriesReturnTo)"><span>&lt;</span> RETURN TO TERMINAL</button>
+            <button class="btn-back btn-back-float" onclick="switchView(coreMemoriesReturnTo)"><span>&lt;</span> RETURN TO TERMINAL</button>
             <div class="sub-header">
                 <div>
                     <h1>CORE MEMORIES</h1>
@@ -936,7 +951,7 @@
         </div>
 
         <div id="story-view" class="view-section">
-            <button class="btn-back" onclick="switchView('landing-view')"><span>&lt;</span> ABORT SIMULATION</button>
+            <button class="btn-back btn-back-float" onclick="switchView('landing-view')"><span>&lt;</span> ABORT SIMULATION</button>
 
             <div class="sub-header">
                 <div>
